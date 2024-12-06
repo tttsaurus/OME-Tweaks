@@ -5,6 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import java.util.*;
 
@@ -71,17 +72,25 @@ public final class OMEConfig
                 OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.put(args[0], level);
             }
 
-            if (ENABLE && ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
+            if (Loader.isModLoaded("industrialforegoing"))
             {
                 Item item = ForgeRegistries.ITEMS.getValue((new ItemInfinityDrill()).getRegistryName());
-                if (item != null)
+                if (ENABLE && ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
                 {
-                    item.setHarvestLevel("pickaxe", -1);
-                    item.setHarvestLevel("shovel", -1);
-                    for (Map.Entry<String, Integer> entry: OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.entrySet())
-                        item.setHarvestLevel(entry.getKey(), entry.getValue());
+                    if (item != null)
+                        for (Map.Entry<String, Integer> entry: OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.entrySet())
+                            item.setHarvestLevel(entry.getKey(), entry.getValue());
+                }
+                else
+                {
+                    if (item != null)
+                    {
+                        item.setHarvestLevel("pickaxe", Integer.MAX_VALUE);
+                        item.setHarvestLevel("shovel", Integer.MAX_VALUE);
+                    }
                 }
             }
+
             //</editor-fold>
         }
         catch (Exception ignored) { }

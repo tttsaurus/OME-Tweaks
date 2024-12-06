@@ -15,6 +15,7 @@ public final class InfinityDrillHarvestLevel
     public static void onHarvestDrops(BlockEvent.HarvestDropsEvent event)
     {
         EntityPlayer player = event.getHarvester();
+        if (player == null) return;
         World world = player.world;
         if (world.isRemote) return;
 
