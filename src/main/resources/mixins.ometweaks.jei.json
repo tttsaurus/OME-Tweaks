@@ -1,0 +1,13 @@
+{
+  "package": "com.tttsaurus.ometweaks.mixins.jei",
+  "refmap": "mixins.ometweaks.refmap.json",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "JEIRecipeCategoryComparatorMixin",
+    "JEIRecipeRegistryMixin"
+  ],
+  "client": [],
+  "server": []
+}
