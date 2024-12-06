@@ -1,4 +1,4 @@
-This mod aims to add a bunch of QoL tweaks to other mods.
+This mod aims to add a bunch of configurable QoL tweaks to other mods.
 
 ## Features For Now
 - Support custom JEI category order

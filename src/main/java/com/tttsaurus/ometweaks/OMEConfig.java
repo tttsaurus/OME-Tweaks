@@ -5,7 +5,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import java.util.*;
 
@@ -34,14 +33,16 @@ public final class OMEConfig
 
             ENABLE = CONFIG.getBoolean("Enable", "general", false, "Enable All OME Tweaks");
 
-            // jei mixins
+            //<editor-fold desc="jei mixins">
             ENABLE_JEI_CATEGORY_ORDER = CONFIG.getBoolean("Enable", "general.jei.category_order", false, "Enable JEI Category Order Mixin");
             JEI_CATEGORY_ORDER = CONFIG.getStringList("JEI Category Order", "general.jei.category_order", new String[]{}, "A list of jei category uids that determines the in-game jei displaying order");
+            //</editor-fold>
 
-            // if mixins
+            //<editor-fold desc="if mixins">
             ENABLE_IF_INFINITY_DRILL_BLACKLIST = CONFIG.getBoolean("Enable", "general.if.infinity_drill.blacklist", false, "Enable Industrial Foregoing Infinity Drill Blacklist Mixin");
             String[] IF_INFINITY_DRILL_BLACKLIST = CONFIG.getStringList("Infinity Drill Blacklist", "general.if.infinity_drill.blacklist", new String[]{}, "A list of block registry names that infinity drill cannot break (Example: minecraft:dirt@0 or ignore '@' like minecraft:dirt)");
 
+            OMEConfig.IF_INFINITY_DRILL_BLACKLIST.clear();
             for (String arg : IF_INFINITY_DRILL_BLACKLIST)
             {
                 String[] args = arg.split("@");
@@ -59,6 +60,7 @@ public final class OMEConfig
             ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL = CONFIG.getBoolean("Enable", "general.if.infinity_drill.harvest_level", false, "Enable Industrial Foregoing Infinity Drill Harvest Level Mixin");
             String[] IF_INFINITY_DRILL_HARVEST_LEVEL = CONFIG.getStringList("Infinity Drill Harvest Level", "general.if.infinity_drill.harvest_level", new String[]{"pickaxe:5", "shovel:5"}, "A list of harvest level specifications (Example: pickaxe:3)");
 
+            OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.clear();
             for (String arg : IF_INFINITY_DRILL_HARVEST_LEVEL)
             {
                 String[] args = arg.split(":");
@@ -69,15 +71,18 @@ public final class OMEConfig
                 OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.put(args[0], level);
             }
 
-            if (OMEConfig.ENABLE && OMEConfig.ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL && Loader.isModLoaded("industrialforegoing"))
+            if (ENABLE && ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
             {
                 Item item = ForgeRegistries.ITEMS.getValue((new ItemInfinityDrill()).getRegistryName());
-                item.setHarvestLevel("pickaxe", -1);
-                item.setHarvestLevel("shovel", -1);
-
-                for (Map.Entry<String, Integer> entry: OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.entrySet())
-                    item.setHarvestLevel(entry.getKey(), entry.getValue());
+                if (item != null)
+                {
+                    item.setHarvestLevel("pickaxe", -1);
+                    item.setHarvestLevel("shovel", -1);
+                    for (Map.Entry<String, Integer> entry: OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.entrySet())
+                        item.setHarvestLevel(entry.getKey(), entry.getValue());
+                }
             }
+            //</editor-fold>
         }
         catch (Exception ignored) { }
         finally

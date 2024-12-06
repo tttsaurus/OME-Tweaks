@@ -23,7 +23,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import java.util.Map;
 
 @SuppressWarnings("all")
 @Mixin(ItemInfinityDrill.class)
@@ -48,8 +47,33 @@ public abstract class ItemInfinityDrillMixin
     @Overwrite
     public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving)
     {
+        if (state.getBlock() == Blocks.AIR) return false;
         if (entityLiving instanceof EntityPlayer)
         {
+            if (OMEConfig.ENABLE)
+            {
+                Block block = state.getBlock();
+                if (OMEConfig.ENABLE_IF_INFINITY_DRILL_BLACKLIST)
+                {
+                    ItemStack itemStack = new ItemStack(block, 1, block.getMetaFromState(state));
+                    for (ItemStack blacklistItemStack : OMEConfig.IF_INFINITY_DRILL_BLACKLIST)
+                        if (itemStack.isItemEqual(blacklistItemStack)) return false;
+                }
+                if (OMEConfig.ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
+                {
+                    boolean canHarvest = state.getMaterial().isToolNotRequired();
+                    String requiredToolClass = block.getHarvestTool(state);
+                    if (requiredToolClass == null)
+                        canHarvest = true;
+                    else if (OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.containsKey(requiredToolClass))
+                    {
+                        int toolLevel = OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.get(requiredToolClass);
+                        if (toolLevel >= block.getHarvestLevel(state)) canHarvest = true;
+                    }
+                    if (!canHarvest) return false;
+                }
+            }
+
             RayTraceResult rayTraceResult = RayTraceUtils.rayTraceSimple(worldIn, entityLiving, 16, 0);
             EnumFacing facing = rayTraceResult.sideHit;
             DrillTier currentTier = getSelectedDrillTier(stack);
@@ -71,12 +95,16 @@ public abstract class ItemInfinityDrillMixin
                         }
                         if (OMEConfig.ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
                         {
-                            boolean flag = true;
-                            int targetHarvestLevel = block.getHarvestLevel(tempState);
-                            for (Map.Entry<String, Integer> entry : OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.entrySet())
-                                if (block.isToolEffective(entry.getKey(), tempState) && entry.getValue() >= targetHarvestLevel)
-                                    flag = false;
-                            if (flag) return;
+                            boolean canHarvest = tempState.getMaterial().isToolNotRequired();
+                            String requiredToolClass = block.getHarvestTool(tempState);
+                            if (requiredToolClass == null)
+                                canHarvest = true;
+                            else if (OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.containsKey(requiredToolClass))
+                            {
+                                int toolLevel = OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.get(requiredToolClass);
+                                if (toolLevel >= block.getHarvestLevel(tempState)) canHarvest = true;
+                            }
+                            if (!canHarvest) return;
                         }
                     }
                     if (block.getBlockHardness(tempState, worldIn, blockPos) < 0) return;
@@ -91,11 +119,13 @@ public abstract class ItemInfinityDrillMixin
                     }
                 }
             });
+
             worldIn.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(area.getLeft(), area.getRight()).grow(1)).forEach(entityItem ->
             {
                 entityItem.setPositionAndUpdate(entityLiving.posX, entityLiving.posY, entityLiving.posZ);
                 entityItem.setPickupDelay(0);
             });
+
             worldIn.getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(area.getLeft(), area.getRight()).grow(1)).forEach(entityXPOrb -> entityXPOrb.setPositionAndUpdate(entityLiving.posX, entityLiving.posY, entityLiving.posZ));
         }
 
