@@ -1,12 +1,15 @@
 package com.tttsaurus.ometweaks;
 
 import com.buuz135.industrial.item.infinity.ItemInfinityDrill;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+
 import java.util.*;
 
 @SuppressWarnings("all")
@@ -71,26 +74,6 @@ public final class OMEConfig
                 catch (NumberFormatException e) { continue; }
                 OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.put(args[0], level);
             }
-
-            if (Loader.isModLoaded("industrialforegoing"))
-            {
-                Item item = ForgeRegistries.ITEMS.getValue((new ItemInfinityDrill()).getRegistryName());
-                if (ENABLE && ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
-                {
-                    if (item != null)
-                        for (Map.Entry<String, Integer> entry: OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.entrySet())
-                            item.setHarvestLevel(entry.getKey(), entry.getValue());
-                }
-                else
-                {
-                    if (item != null)
-                    {
-                        item.setHarvestLevel("pickaxe", Integer.MAX_VALUE);
-                        item.setHarvestLevel("shovel", Integer.MAX_VALUE);
-                    }
-                }
-            }
-
             //</editor-fold>
         }
         catch (Exception ignored) { }

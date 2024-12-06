@@ -12,7 +12,6 @@ import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -24,9 +23,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @SuppressWarnings("all")
 @Mixin(ItemInfinityDrill.class)
@@ -134,13 +130,5 @@ public abstract class ItemInfinityDrillMixin
         }
 
         return false;
-    }
-
-    @Inject(method = "<init>", at = @At("RETURN"))
-    public void onConstruct(CallbackInfo ci)
-    {
-        Item item = (Item)(Object)this;
-        item.setHarvestLevel("pickaxe", -1);
-        item.setHarvestLevel("shovel", -1);
     }
 }
