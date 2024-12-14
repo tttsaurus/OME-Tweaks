@@ -3,6 +3,7 @@ package com.tttsaurus.ometweaks.mixins.industrialforegoing;
 import com.buuz135.industrial.item.infinity.ItemInfinityDrill;
 import com.buuz135.industrial.item.infinity.ItemInfinityDrill.DrillTier;
 import com.buuz135.industrial.utils.RayTraceUtils;
+import com.google.common.collect.ImmutableSet;
 import com.tttsaurus.ometweaks.OMEConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -12,6 +13,8 @@ import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -23,8 +26,14 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@SuppressWarnings("all")
+import java.util.Map;
+import java.util.Set;
+
+//@SuppressWarnings("all")
 @Mixin(ItemInfinityDrill.class)
 public abstract class ItemInfinityDrillMixin
 {
@@ -126,5 +135,61 @@ public abstract class ItemInfinityDrillMixin
         }
 
         return false;
+    }
+
+    /**
+     * @author tttsaurus
+     * @reason To add custom harvest level
+     */
+    @Overwrite(remap = false)
+    public Set<String> getToolClasses(ItemStack stack)
+    {
+        if (OMEConfig.ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
+            return OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.keySet();
+        else
+            return ImmutableSet.of("pickaxe", "shovel");
+    }
+
+    /**
+     * @author tttsaurus
+     * @reason To add custom harvest level and blacklist
+     */
+    @Overwrite
+    public boolean canHarvestBlock(IBlockState blockIn)
+    {
+        Block block = blockIn.getBlock();
+        if (OMEConfig.ENABLE_IF_INFINITY_DRILL_BLACKLIST)
+        {
+            ItemStack itemStack = new ItemStack(block, 1, block.getMetaFromState(blockIn));
+            for (ItemStack blacklistItemStack : OMEConfig.IF_INFINITY_DRILL_BLACKLIST)
+                if (itemStack.isItemEqual(blacklistItemStack)) return false;
+        }
+        if (OMEConfig.ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
+        {
+            boolean canHarvest = blockIn.getMaterial().isToolNotRequired();
+            String requiredToolClass = block.getHarvestTool(blockIn);
+            if (requiredToolClass == null)
+                canHarvest = true;
+            else if (OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.containsKey(requiredToolClass))
+            {
+                int toolLevel = OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.get(requiredToolClass);
+                if (toolLevel >= block.getHarvestLevel(blockIn)) canHarvest = true;
+            }
+            return canHarvest;
+        }
+        return Items.DIAMOND_PICKAXE.canHarvestBlock(blockIn) || Items.DIAMOND_SHOVEL.canHarvestBlock(blockIn);
+    }
+
+    @Inject(method = "<init>", at = @At("RETURN"), remap = false)
+    public void onConstruct(CallbackInfo ci)
+    {
+        if (OMEConfig.ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
+        {
+            Item this0 = (Item)(Object)this;
+            this0.setHarvestLevel("pickaxe", -1);
+            this0.setHarvestLevel("shovel", -1);
+            for (Map.Entry<String, Integer> entry: OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.entrySet())
+                this0.setHarvestLevel(entry.getKey(), entry.getValue());
+        }
     }
 }
