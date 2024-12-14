@@ -28,16 +28,16 @@ import org.spongepowered.asm.mixin.Shadow;
 @Mixin(ItemInfinityDrill.class)
 public abstract class ItemInfinityDrillMixin
 {
-    @Shadow
+    @Shadow(remap = false)
     public abstract DrillTier getSelectedDrillTier(ItemStack stack);
 
-    @Shadow
+    @Shadow(remap = false)
     public abstract Pair<BlockPos, BlockPos> getArea(BlockPos pos, EnumFacing facing, DrillTier currentTier, boolean withDepth);
 
-    @Shadow
+    @Shadow(remap = false)
     protected abstract boolean enoughFuel(ItemStack stack);
 
-    @Shadow
+    @Shadow(remap = false)
     protected abstract void consumeFuel(ItemStack stack);
 
     /**

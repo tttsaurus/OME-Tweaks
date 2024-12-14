@@ -1,5 +1,6 @@
 package com.tttsaurus.ometweaks;
 
+import com.cleanroommc.configanytime.ConfigAnytime;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -10,6 +11,8 @@ import java.util.*;
 @SuppressWarnings("all")
 public final class OMEConfig
 {
+    static { ConfigAnytime.register(OMEConfig.class); }
+
     public static boolean ENABLE;
 
     // jei

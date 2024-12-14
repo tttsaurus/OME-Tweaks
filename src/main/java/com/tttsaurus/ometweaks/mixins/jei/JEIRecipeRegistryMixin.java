@@ -29,11 +29,11 @@ import java.util.stream.Stream;
 public class JEIRecipeRegistryMixin
 {
     @Mutable
-    @Shadow
     @Final
+    @Shadow(remap = false)
     private ImmutableList<IRecipeCategory> recipeCategories;
 
-    @Inject(method = "<init>", at = @At("RETURN"))
+    @Inject(method = "<init>", at = @At("RETURN"), remap = false)
     public void onConstruct(
             List<IRecipeCategory> recipeCategories,
             List<IRecipeHandler> unsortedRecipeHandlers,

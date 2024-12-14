@@ -21,11 +21,11 @@ import java.util.stream.Stream;
 public class JEIRecipeCategoryComparatorMixin
 {
     @Mutable
-    @Shadow
     @Final
+    @Shadow(remap = false)
     private ImmutableList<String> recipeCategories;
 
-    @Inject(method = "<init>", at = @At("RETURN"))
+    @Inject(method = "<init>", at = @At("RETURN"), remap = false)
     public void onConstruct(List<IRecipeCategory> recipeCategories, CallbackInfo ci)
     {
         if (!(OMEConfig.ENABLE && OMEConfig.ENABLE_JEI_CATEGORY_ORDER)) return;
