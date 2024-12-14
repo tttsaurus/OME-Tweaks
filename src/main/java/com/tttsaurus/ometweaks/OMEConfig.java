@@ -12,19 +12,21 @@ public final class OMEConfig
 {
     public static boolean ENABLE;
 
-    // jei
+    //<editor-fold desc="jei">
     public static boolean ENABLE_JEI_MODULE;
     public static boolean ENABLE_JEI_CATEGORY_ORDER;
     public static String[] JEI_CATEGORY_ORDER;
+    //</editor-fold>
 
-    // if
+    //<editor-fold desc="if">
     public static boolean ENABLE_IF_MODULE;
     public static boolean ENABLE_IF_INFINITY_DRILL_BLACKLIST;
     public final static List<ItemStack> IF_INFINITY_DRILL_BLACKLIST = new ArrayList<>();
     public static boolean ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL;
     public final static Map<String, Integer> IF_INFINITY_DRILL_HARVEST_LEVEL = new Hashtable<>();
+    //</editor-fold>
 
-    // scp
+    //<editor-fold desc="scp">
     public static boolean ENABLE_SCP_MODULE;
     public static boolean DISABLE_SCP_SLEEP_DEPRIVATION_CAP;
     public static boolean DISABLE_SCP_SHADOW_INFESTATION_CAP;
@@ -33,6 +35,12 @@ public final class OMEConfig
     public static boolean DISABLE_SCP_KILLED_ENTITIES_CAP;
     public static boolean DISABLE_SCP_COWBELL_CAP;
     public static boolean DISABLE_SCP_LOST_ITEMS_CAP;
+    //</editor-fold>
+
+    //<editor-fold desc="iwc">
+    public static boolean ENABLE_IWC_MODULE;
+    public static boolean ENABLE_IWC_JEI_I18N;
+    //</editor-fold>
 
     public static Configuration CONFIG;
 
@@ -42,19 +50,19 @@ public final class OMEConfig
         {
             CONFIG.load();
 
-            ENABLE = CONFIG.getBoolean("Enable", "general", false, "Enable All OME Tweaks");
+            ENABLE = CONFIG.getBoolean("Enable", "general", false, "Enable OME Tweaks");
 
-            //<editor-fold desc="jei mixins">
+            //<editor-fold desc="jei config">
             ENABLE_JEI_MODULE = CONFIG.getBoolean("Enable", "general.jei", false, "Enable JEI Module / Whether mixins will be loaded");
 
-            ENABLE_JEI_CATEGORY_ORDER = CONFIG.getBoolean("Enable", "general.jei.category_order", false, "Enable JEI Category Order Mixin");
+            ENABLE_JEI_CATEGORY_ORDER = CONFIG.getBoolean("Enable", "general.jei.category_order", false, "Enable JEI Category Order");
             JEI_CATEGORY_ORDER = CONFIG.getStringList("JEI Category Order", "general.jei.category_order", new String[]{}, "A list of jei category uids that determines the in-game jei displaying order");
             //</editor-fold>
 
-            //<editor-fold desc="if mixins">
+            //<editor-fold desc="if config">
             ENABLE_IF_MODULE = CONFIG.getBoolean("Enable", "general.if", false, "Enable Industrial Foregoing Module / Whether mixins will be loaded");
 
-            ENABLE_IF_INFINITY_DRILL_BLACKLIST = CONFIG.getBoolean("Enable", "general.if.infinity_drill.blacklist", false, "Enable Industrial Foregoing Infinity Drill Blacklist Mixin");
+            ENABLE_IF_INFINITY_DRILL_BLACKLIST = CONFIG.getBoolean("Enable", "general.if.infinity_drill.blacklist", false, "Enable Industrial Foregoing Infinity Drill Blacklist");
             String[] IF_INFINITY_DRILL_BLACKLIST = CONFIG.getStringList("Infinity Drill Blacklist", "general.if.infinity_drill.blacklist", new String[]{}, "A list of block registry names that infinity drill cannot break (Example: minecraft:dirt@0 or ignore '@' like minecraft:dirt)");
 
             OMEConfig.IF_INFINITY_DRILL_BLACKLIST.clear();
@@ -72,7 +80,7 @@ public final class OMEConfig
                 OMEConfig.IF_INFINITY_DRILL_BLACKLIST.add(itemStack);
             }
 
-            ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL = CONFIG.getBoolean("Enable", "general.if.infinity_drill.harvest_level", false, "Enable Industrial Foregoing Infinity Drill Harvest Level Mixin");
+            ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL = CONFIG.getBoolean("Enable", "general.if.infinity_drill.harvest_level", false, "Enable Industrial Foregoing Infinity Drill Harvest Level");
             String[] IF_INFINITY_DRILL_HARVEST_LEVEL = CONFIG.getStringList("Infinity Drill Harvest Level", "general.if.infinity_drill.harvest_level", new String[]{"pickaxe:5", "shovel:5"}, "A list of harvest level specifications (Example: pickaxe:3)");
 
             OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.clear();
@@ -87,7 +95,7 @@ public final class OMEConfig
             }
             //</editor-fold>
 
-            //<editor-fold desc="scp mixins">
+            //<editor-fold desc="scp config">
             ENABLE_SCP_MODULE = CONFIG.getBoolean("Enable", "general.scp", false, "Enable SCP Lockdown Module / Whether mixins will be loaded");
 
             DISABLE_SCP_SLEEP_DEPRIVATION_CAP = CONFIG.getBoolean("Disable", "general.scp.capability.sleep_deprivation", false, "Disable SCP Sleep Deprivation Capability");
@@ -97,6 +105,12 @@ public final class OMEConfig
             DISABLE_SCP_KILLED_ENTITIES_CAP = CONFIG.getBoolean("Disable", "general.scp.capability.killed_entities", false, "Disable SCP Killed Entities Capability");
             DISABLE_SCP_COWBELL_CAP = CONFIG.getBoolean("Disable", "general.scp.capability.cowbell", false, "Disable SCP Cowbell Capability");
             DISABLE_SCP_LOST_ITEMS_CAP = CONFIG.getBoolean("Disable", "general.scp.capability.lost_items", false, "Disable SCP Lost Items Capability");
+            //</editor-fold>
+
+            //<editor-fold desc="iwc config">
+            ENABLE_IWC_MODULE = CONFIG.getBoolean("Enable", "general.inworldcrafting", false, "Enable In World Crafting Module / Whether mixins will be loaded");
+
+            ENABLE_IWC_JEI_I18N = CONFIG.getBoolean("Enable", "general.inworldcrafting.jei", false, "Enable In World Crafting JEI I18n Support");
             //</editor-fold>
         }
         catch (Exception ignored) { }

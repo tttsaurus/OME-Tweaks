@@ -82,8 +82,11 @@ public class CommonEventsMixin
 
         if (OMEConfig.DISABLE_SCP_COWBELL_CAP)
             capabilities.cowbell.setHasRungCowbell(false);
+
         if (OMEConfig.DISABLE_SCP_LOST_ITEMS_CAP)
             capabilities.lostItems.getLostItems().clear();
+
+
 
         if (!OMEConfig.DISABLE_SCP_SLEEP_DEPRIVATION_CAP)
             capabilities.sleepDeprivation.applySleepDeprivation(player);

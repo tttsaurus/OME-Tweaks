@@ -30,6 +30,8 @@ public class MixinConfig implements ILateMixinLoader
                 list.add("mixins.ometweaks.industrialforegoing.json");
             if (OMEConfig.ENABLE_SCP_MODULE && Loader.isModLoaded("scp"))
                 list.add("mixins.ometweaks.scp.json");
+            if (OMEConfig.ENABLE_IWC_MODULE && Loader.isModLoaded("inworldcrafting"))
+                list.add("mixins.ometweaks.inworldcrafting.json");
         }
 
         return list;

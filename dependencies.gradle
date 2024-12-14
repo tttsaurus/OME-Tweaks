@@ -49,4 +49,7 @@ dependencies {
 
     // SCP Lockdown
     compileOnly rfg.deobf('curse.maven:scp-lockdown-298995:3937127')
+
+    // In World Craft
+    compileOnly rfg.deobf('curse.maven:inworldcrafting-311938:2683267')
 }
