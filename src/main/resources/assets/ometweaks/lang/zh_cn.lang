@@ -1,0 +1,13 @@
+
+ometweaks.inworldcrafting.jei.burn_item_recipe.str1=燃烧物品
+ometweaks.inworldcrafting.jei.burn_item_recipe.str2=配方时长: %d ticks
+ometweaks.inworldcrafting.jei.explode_block_recipe.str1=爆炸方块
+ometweaks.inworldcrafting.jei.explode_block_recipe.str2=成功几率: %d %
+ometweaks.inworldcrafting.jei.explode_item_recipe.str1=爆炸物品
+ometweaks.inworldcrafting.jei.explode_item_recipe.str2=成功几率: %d %
+ometweaks.inworldcrafting.jei.fluid2fluid_recipe.str1=流体至流体转换
+ometweaks.inworldcrafting.jei.fluid2fluid_recipe.str2=消耗物品:
+ometweaks.inworldcrafting.jei.yes=是
+ometweaks.inworldcrafting.jei.no=否
+ometweaks.inworldcrafting.jei.fluid2item_recipe.str1=流体至物品转换
+ometweaks.inworldcrafting.jei.fluid2item_recipe.str2=消耗流体:

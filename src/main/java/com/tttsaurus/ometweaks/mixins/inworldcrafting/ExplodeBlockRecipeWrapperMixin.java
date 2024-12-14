@@ -7,18 +7,18 @@ import net.minecraft.client.resources.I18n;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import xt9.inworldcrafting.common.recipe.BurnItemRecipe;
-import xt9.inworldcrafting.integrations.jei.BurnItemRecipeWrapper;
+import xt9.inworldcrafting.common.recipe.ExplodeBlockRecipe;
+import xt9.inworldcrafting.integrations.jei.ExplodeBlockRecipeWrapper;
 
-@Mixin(BurnItemRecipeWrapper.class)
-public class BurnItemRecipeWrapperMixin
+@Mixin(ExplodeBlockRecipeWrapper.class)
+public class ExplodeBlockRecipeWrapperMixin
 {
     @Shadow(remap = false)
-    private BurnItemRecipe recipe;
+    private ExplodeBlockRecipe recipe;
 
     /**
      * @author tttsaurus
-     * @reason To support i18n, and this method is modified from xt9.inworldcrafting.integrations.jei.BurnItemRecipeWrapper.drawInfo
+     * @reason To support i18n, and this method is modified from xt9.inworldcrafting.integrations.jei.ExplodeBlockRecipeWrapper.drawInfo
      */
     @Overwrite(remap = false)
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY)
@@ -26,12 +26,12 @@ public class BurnItemRecipeWrapperMixin
         if (OMEConfig.ENABLE_IWC_JEI_I18N)
         {
             FontRenderer renderer = minecraft.fontRenderer;
-            renderer.drawStringWithShadow(I18n.format("ometweaks.inworldcrafting.jei.burn_item_recipe.str2", recipe.getTicks()), 1, 30, 0xFFFFFF);
+            renderer.drawStringWithShadow(I18n.format("ometweaks.inworldcrafting.jei.explode_block_recipe.str2", recipe.getItemSpawnChance()), 1, 30, 0xFFFFFF);
         }
         else
         {
             FontRenderer renderer = minecraft.fontRenderer;
-            renderer.drawStringWithShadow("Recipe time: " + recipe.getTicks() + " ticks", 1, 30, 0xFFFFFF);
+            renderer.drawStringWithShadow("Success chance: " + recipe.getItemSpawnChance() + "%", 1, 30, 0xFFFFFF);
         }
     }
 }
