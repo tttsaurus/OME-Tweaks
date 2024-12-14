@@ -26,9 +26,9 @@ public class CommonProxy
 
         if (Loader.isModLoaded("industrialforegoing"))
         {
-            if (OMEConfig.ENABLE && OMEConfig.ENABLE_IF_INFINITY_DRILL_BLACKLIST)
+            if (OMEConfig.ENABLE && OMEConfig.ENABLE_IF_MODULE && OMEConfig.ENABLE_IF_INFINITY_DRILL_BLACKLIST)
                 MinecraftForge.EVENT_BUS.register(InfinityDrillBlacklist.class);
-            if (OMEConfig.ENABLE && OMEConfig.ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
+            if (OMEConfig.ENABLE && OMEConfig.ENABLE_IF_MODULE && OMEConfig.ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
                 MinecraftForge.EVENT_BUS.register(InfinityDrillHarvestLevel.class);
         }
     }

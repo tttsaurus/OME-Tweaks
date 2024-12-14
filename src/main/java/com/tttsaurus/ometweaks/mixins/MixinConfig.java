@@ -22,12 +22,15 @@ public class MixinConfig implements ILateMixinLoader
 
         List<String> list = new ArrayList<>();
 
-        if (Loader.isModLoaded("jei"))
-            list.add("mixins.ometweaks.jei.json");
-        if (Loader.isModLoaded("industrialforegoing"))
-            list.add("mixins.ometweaks.industrialforegoing.json");
-        if (Loader.isModLoaded("scp"))
-            list.add("mixins.ometweaks.scp.json");
+        if (OMEConfig.ENABLE)
+        {
+            if (OMEConfig.ENABLE_JEI_MODULE && Loader.isModLoaded("jei"))
+                list.add("mixins.ometweaks.jei.json");
+            if (OMEConfig.ENABLE_IF_MODULE && Loader.isModLoaded("industrialforegoing"))
+                list.add("mixins.ometweaks.industrialforegoing.json");
+            if (OMEConfig.ENABLE_SCP_MODULE && Loader.isModLoaded("scp"))
+                list.add("mixins.ometweaks.scp.json");
+        }
 
         return list;
     }

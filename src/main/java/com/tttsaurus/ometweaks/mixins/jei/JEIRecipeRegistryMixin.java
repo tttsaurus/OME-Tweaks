@@ -48,7 +48,7 @@ public class JEIRecipeRegistryMixin
             CallbackInfo ci
     )
     {
-        if (!(OMEConfig.ENABLE && OMEConfig.ENABLE_JEI_CATEGORY_ORDER)) return;
+        if (!OMEConfig.ENABLE_JEI_CATEGORY_ORDER) return;
 
         List<IRecipeCategory> list = new ArrayList<>();
         for (String uid: OMEConfig.JEI_CATEGORY_ORDER)

@@ -28,7 +28,7 @@ public class JEIRecipeCategoryComparatorMixin
     @Inject(method = "<init>", at = @At("RETURN"), remap = false)
     public void onConstruct(List<IRecipeCategory> recipeCategories, CallbackInfo ci)
     {
-        if (!(OMEConfig.ENABLE && OMEConfig.ENABLE_JEI_CATEGORY_ORDER)) return;
+        if (!OMEConfig.ENABLE_JEI_CATEGORY_ORDER) return;
 
         List<String> list = new ArrayList<>();
         for (String uid: OMEConfig.JEI_CATEGORY_ORDER)

@@ -59,39 +59,35 @@ public class CommonEventsMixin
             OME_Tweaks$negativeCapabilityCache.put(player, capabilities);
         }
 
-        if (OMEConfig.ENABLE)
+        if (OMEConfig.DISABLE_SCP_SLEEP_DEPRIVATION_CAP)
+            capabilities.sleepDeprivation.cure(player);
+
+        if (OMEConfig.DISABLE_SCP_SHADOW_INFESTATION_CAP)
         {
-            if (OMEConfig.DISABLE_SCP_SLEEP_DEPRIVATION_CAP)
-                capabilities.sleepDeprivation.cure(player);
-
-            if (OMEConfig.DISABLE_SCP_SHADOW_INFESTATION_CAP)
-            {
-                capabilities.shadowInfestation.setInfestationStage(0);
-                capabilities.shadowInfestation.setInfestationTime(-1);
-            }
-
-            if (OMEConfig.DISABLE_SCP_BLOODSTONE_CAP)
-                capabilities.bloodstone.resetBloodstoneState();
-
-            if (OMEConfig.DISABLE_SCP_INFECTION_CAP)
-            {
-                capabilities.infection.setActive(false);
-                capabilities.infection.setDuration(0);
-            }
-
-            if (OMEConfig.DISABLE_SCP_KILLED_ENTITIES_CAP)
-                capabilities.killedEntities.getStoredEntities().clear();
-
-            if (OMEConfig.DISABLE_SCP_COWBELL_CAP)
-                capabilities.cowbell.setHasRungCowbell(false);
-
-            if (OMEConfig.DISABLE_SCP_LOST_ITEMS_CAP)
-                capabilities.lostItems.getLostItems().clear();
+            capabilities.shadowInfestation.setInfestationStage(0);
+            capabilities.shadowInfestation.setInfestationTime(-1);
         }
 
-        if (!(OMEConfig.ENABLE && OMEConfig.DISABLE_SCP_SLEEP_DEPRIVATION_CAP))
+        if (OMEConfig.DISABLE_SCP_BLOODSTONE_CAP)
+            capabilities.bloodstone.resetBloodstoneState();
+
+        if (OMEConfig.DISABLE_SCP_INFECTION_CAP)
+        {
+            capabilities.infection.setActive(false);
+            capabilities.infection.setDuration(0);
+        }
+
+        if (OMEConfig.DISABLE_SCP_KILLED_ENTITIES_CAP)
+            capabilities.killedEntities.getStoredEntities().clear();
+
+        if (OMEConfig.DISABLE_SCP_COWBELL_CAP)
+            capabilities.cowbell.setHasRungCowbell(false);
+        if (OMEConfig.DISABLE_SCP_LOST_ITEMS_CAP)
+            capabilities.lostItems.getLostItems().clear();
+
+        if (!OMEConfig.DISABLE_SCP_SLEEP_DEPRIVATION_CAP)
             capabilities.sleepDeprivation.applySleepDeprivation(player);
-        if (!(OMEConfig.ENABLE && OMEConfig.DISABLE_SCP_BLOODSTONE_CAP))
+        if (!OMEConfig.DISABLE_SCP_BLOODSTONE_CAP)
             if (Utils.isPlayerInSurvivalMode(player))
                 capabilities.bloodstone.handleBloodstoneEffects(playerTickEvent.player);
 
