@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.mixins.scp;
+package com.tttsaurus.ometweaks.api.scp;
 
 import alexiy.secure.contain.protect.capability.bloodstone.IBloodstoneCapability;
 import alexiy.secure.contain.protect.capability.cowbell.ICowbellCapability;

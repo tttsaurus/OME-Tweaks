@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
      version = Tags.VERSION,
      name = Tags.MODNAME,
      acceptedMinecraftVersions = "[1.12.2]",
-     dependencies = "after:scp"
+     dependencies = ""
 )
 public class OMETweaks
 {

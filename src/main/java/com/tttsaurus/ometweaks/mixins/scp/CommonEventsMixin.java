@@ -12,6 +12,7 @@ import alexiy.secure.contain.protect.capability.sleepdeprivation.ISleepDeprivati
 import alexiy.secure.contain.protect.capability.zombievirus.Infection;
 import alexiy.secure.contain.protect.events.CommonEvents;
 import com.tttsaurus.ometweaks.OMEConfig;
+import com.tttsaurus.ometweaks.api.scp.SCPNegativeCapabilities;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
