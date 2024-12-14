@@ -16,6 +16,8 @@ public class MixinConfig implements ILateMixinLoader
             list.add("mixins.ometweaks.jei.json");
         if (Loader.isModLoaded("industrialforegoing"))
             list.add("mixins.ometweaks.industrialforegoing.json");
+        if (Loader.isModLoaded("scp"))
+            list.add("mixins.ometweaks.scp.json");
 
         return list;
     }

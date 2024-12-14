@@ -1,15 +1,10 @@
 package com.tttsaurus.ometweaks;
 
-import com.buuz135.industrial.item.infinity.ItemInfinityDrill;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-
 import java.util.*;
 
 @SuppressWarnings("all")
@@ -26,6 +21,15 @@ public final class OMEConfig
     public final static List<ItemStack> IF_INFINITY_DRILL_BLACKLIST = new ArrayList<>();
     public static boolean ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL;
     public final static Map<String, Integer> IF_INFINITY_DRILL_HARVEST_LEVEL = new Hashtable<>();
+
+    // scp
+    public static boolean DISABLE_SCP_SLEEP_DEPRIVATION_CAP;
+    public static boolean DISABLE_SCP_SHADOW_INFESTATION_CAP;
+    public static boolean DISABLE_SCP_BLOODSTONE_CAP;
+    public static boolean DISABLE_SCP_INFECTION_CAP;
+    public static boolean DISABLE_SCP_KILLED_ENTITIES_CAP;
+    public static boolean DISABLE_SCP_COWBELL_CAP;
+    public static boolean DISABLE_SCP_LOST_ITEMS_CAP;
 
     public static Configuration CONFIG;
 
@@ -74,6 +78,16 @@ public final class OMEConfig
                 catch (NumberFormatException e) { continue; }
                 OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.put(args[0], level);
             }
+            //</editor-fold>
+
+            //<editor-fold desc="scp mixins">
+            DISABLE_SCP_SLEEP_DEPRIVATION_CAP = CONFIG.getBoolean("Disable", "general.scp.capability.sleep_deprivation", false, "Disable SCP Sleep Deprivation Capability");
+            DISABLE_SCP_SHADOW_INFESTATION_CAP = CONFIG.getBoolean("Disable", "general.scp.capability.shadow_infestation", false, "Disable SCP Shadow Infestation Capability");
+            DISABLE_SCP_BLOODSTONE_CAP = CONFIG.getBoolean("Disable", "general.scp.capability.bloodstone", false, "Disable SCP Bloodstone Capability");
+            DISABLE_SCP_INFECTION_CAP = CONFIG.getBoolean("Disable", "general.scp.capability.infection", false, "Disable SCP Infection Capability");
+            DISABLE_SCP_KILLED_ENTITIES_CAP = CONFIG.getBoolean("Disable", "general.scp.capability.killed_entities", false, "Disable SCP Killed Entities Capability");
+            DISABLE_SCP_COWBELL_CAP = CONFIG.getBoolean("Disable", "general.scp.capability.cowbell", false, "Disable SCP Cowbell Capability");
+            DISABLE_SCP_LOST_ITEMS_CAP = CONFIG.getBoolean("Disable", "general.scp.capability.lost_items", false, "Disable SCP Lost Items Capability");
             //</editor-fold>
         }
         catch (Exception ignored) { }

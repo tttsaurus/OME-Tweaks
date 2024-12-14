@@ -43,4 +43,7 @@ dependencies {
 
     // Industrial Foregoing
     compileOnly rfg.deobf('curse.maven:industrialforegoing-266515:2745321')
+
+    // SCP Lockdown
+    compileOnly rfg.deobf('curse.maven:scp-lockdown-298995:3937127')
 }

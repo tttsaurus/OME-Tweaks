@@ -1,6 +1,5 @@
 package com.tttsaurus.ometweaks;
 
-import com.tttsaurus.ometweaks.Tags;
 import com.tttsaurus.ometweaks.proxy.CommonProxy;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -17,7 +16,7 @@ import org.apache.logging.log4j.Logger;
      version = Tags.VERSION,
      name = Tags.MODNAME,
      acceptedMinecraftVersions = "[1.12.2]",
-     dependencies = ""
+     dependencies = "after:scp"
 )
 public class OMETweaks
 {
