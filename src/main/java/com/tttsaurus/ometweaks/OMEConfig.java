@@ -63,7 +63,7 @@ public final class OMEConfig
             ENABLE_IF_MODULE = CONFIG.getBoolean("Enable", "general.if", false, "Enable Industrial Foregoing Module / Whether mixins will be loaded");
 
             ENABLE_IF_INFINITY_DRILL_BLACKLIST = CONFIG.getBoolean("Enable", "general.if.infinity_drill.blacklist", false, "Enable Industrial Foregoing Infinity Drill Blacklist");
-            String[] IF_INFINITY_DRILL_BLACKLIST = CONFIG.getStringList("Infinity Drill Blacklist", "general.if.infinity_drill.blacklist", new String[]{}, "A list of block registry names that infinity drill cannot break (Example: minecraft:dirt@0 or ignore '@' like minecraft:dirt)");
+            String[] IF_INFINITY_DRILL_BLACKLIST = CONFIG.getStringList("Infinity Drill Blacklist", "general.if.infinity_drill.blacklist", new String[]{}, "A list of block registry names that infinity drill cannot harvest (Example: minecraft:dirt@0 or ignore '@' like minecraft:dirt)");
 
             OMEConfig.IF_INFINITY_DRILL_BLACKLIST.clear();
             for (String arg : IF_INFINITY_DRILL_BLACKLIST)
