@@ -12,5 +12,40 @@ This mod aims to add a bunch of configurable QoL tweaks to other mods.
 - **Thermal Foundation**
   - Add config to disable default fluid interactions
 
+## Config
+Here's an example/snapshot of the config file.
+Everything is set to `false` by default.
+```
+# Configuration file
+
+general {
+    # Enable OME Tweaks [default: false]
+    B:Enable=true
+
+    jei {
+        # Enable JEI Module / Whether mixins will be loaded [default: false]
+        B:Enable=true
+
+        category_order {
+            # Enable JEI Category Order [default: false]
+            B:Enable=true
+
+            # A list of jei category uids that determines the in-game jei displaying order [default: ]
+            S:"JEI Category Order" <
+                ORE_WASHER
+                ORE_FERMENTER
+                ORE_SIEVE
+                tconstruct.alloy
+                tconstruct.smeltery
+                tconstruct.casting_table
+                tconstruct.dryingrack
+                mctsmelteryio:casting_machine
+             >
+        }
+    }
+    ...
+}
+```
+
 ## Credits
 This mod is created using [GregTechCEu's Buildscripts](https://github.com/GregTechCEu/Buildscripts)
