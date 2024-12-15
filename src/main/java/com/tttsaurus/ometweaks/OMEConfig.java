@@ -42,6 +42,14 @@ public final class OMEConfig
     public static boolean ENABLE_IWC_JEI_I18N;
     //</editor-fold>
 
+    //<editor-fold desc="tf">
+    public static boolean ENABLE_TF_MODULE;
+    public static boolean DISABLE_TF_CRYOTHEUM_INTERACTIONS;
+    public static boolean DISABLE_TF_MANA_INTERACTIONS;
+    public static boolean DISABLE_TF_PETROTHEUM_INTERACTIONS;
+    public static boolean DISABLE_TF_PYROTHEUM_INTERACTIONS;
+    //</editor-fold>
+
     public static Configuration CONFIG;
 
     public static void loadConfig()
@@ -111,6 +119,14 @@ public final class OMEConfig
             ENABLE_IWC_MODULE = CONFIG.getBoolean("Enable", "general.inworldcrafting", false, "Enable In World Crafting Module / Whether mixins will be loaded");
 
             ENABLE_IWC_JEI_I18N = CONFIG.getBoolean("Enable", "general.inworldcrafting.jei", false, "Enable In World Crafting JEI I18n Support");
+            //</editor-fold>
+
+            //<editor-fold desc="tf config">
+            ENABLE_TF_MODULE = CONFIG.getBoolean("Enable", "general.thermalfoundation", false, "Enable Thermal Foundation Module / Whether mixins will be loaded");
+            DISABLE_TF_CRYOTHEUM_INTERACTIONS = CONFIG.getBoolean("Disable", "general.thermalfoundation.cryotheum.interactions", false, "Disable Thermal Foundation Cryotheum Interactions");
+            DISABLE_TF_MANA_INTERACTIONS = CONFIG.getBoolean("Disable", "general.thermalfoundation.mana.interactions", false, "Disable Thermal Foundation Mana Interactions");
+            DISABLE_TF_PETROTHEUM_INTERACTIONS = CONFIG.getBoolean("Disable", "general.thermalfoundation.petrotheum.interactions", false, "Disable Thermal Foundation Petrotheum Interactions");
+            DISABLE_TF_PYROTHEUM_INTERACTIONS = CONFIG.getBoolean("Disable", "general.thermalfoundation.pyrotheum.interactions", false, "Disable Thermal Foundation Pyrotheum Interactions");
             //</editor-fold>
         }
         catch (Exception ignored) { }
