@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import xt9.inworldcrafting.common.recipe.BurnItemRecipe;
 import xt9.inworldcrafting.integrations.jei.BurnItemRecipeWrapper;
 
+@SuppressWarnings("all")
 @Mixin(BurnItemRecipeWrapper.class)
 public class BurnItemRecipeWrapperMixin
 {

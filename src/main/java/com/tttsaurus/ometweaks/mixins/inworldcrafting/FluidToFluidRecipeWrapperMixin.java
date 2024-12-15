@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import xt9.inworldcrafting.common.recipe.FluidToFluidRecipe;
 import xt9.inworldcrafting.integrations.jei.FluidToFluidRecipeWrapper;
 
+@SuppressWarnings("all")
 @Mixin(FluidToFluidRecipeWrapper.class)
 public class FluidToFluidRecipeWrapperMixin
 {

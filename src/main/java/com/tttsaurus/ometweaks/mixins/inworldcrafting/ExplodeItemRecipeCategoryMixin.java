@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import xt9.inworldcrafting.integrations.jei.ExplodeItemRecipeCategory;
 
+@SuppressWarnings("all")
 @Mixin(ExplodeItemRecipeCategory.class)
 public class ExplodeItemRecipeCategoryMixin
 {

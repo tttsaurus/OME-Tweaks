@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import xt9.inworldcrafting.common.recipe.ExplodeBlockRecipe;
 import xt9.inworldcrafting.integrations.jei.ExplodeBlockRecipeWrapper;
 
+@SuppressWarnings("all")
 @Mixin(ExplodeBlockRecipeWrapper.class)
 public class ExplodeBlockRecipeWrapperMixin
 {

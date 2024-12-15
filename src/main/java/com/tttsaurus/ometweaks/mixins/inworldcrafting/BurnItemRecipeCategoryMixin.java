@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import xt9.inworldcrafting.integrations.jei.BurnItemRecipeCategory;
 
+@SuppressWarnings("all")
 @Mixin(BurnItemRecipeCategory.class)
 public class BurnItemRecipeCategoryMixin
 {

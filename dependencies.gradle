@@ -38,9 +38,6 @@
  * For more details, see https://docs.gradle.org/8.4/userguide/java_library_plugin.html#sec:java_library_configurations_graph
  */
 dependencies {
-
-    //compileOnly rfg.deobf('curse.maven:configanytime-870276:5212709')
-
     // JEI
     compileOnly rfg.deobf('mezz.jei:jei_1.12.2:${jei_version}:api')
 
@@ -50,6 +47,12 @@ dependencies {
     // SCP Lockdown
     compileOnly rfg.deobf('curse.maven:scp-lockdown-298995:3937127')
 
-    // In World Craft
+    // In World Crafting
     compileOnly rfg.deobf('curse.maven:inworldcrafting-311938:2683267')
+
+    // Thermal Foundation
+    compileOnly rfg.deobf('curse.maven:thermal-foundation-222880:2926428')
+
+    // CoFH Core
+    compileOnly rfg.deobf('curse.maven:cofh-core-69162:2920433')
 }
