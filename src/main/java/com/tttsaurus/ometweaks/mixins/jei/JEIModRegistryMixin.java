@@ -1,6 +1,7 @@
 package com.tttsaurus.ometweaks.mixins.jei;
 
 import com.tttsaurus.ometweaks.OMEConfig;
+import com.tttsaurus.ometweaks.api.jei.CategoryModification;
 import com.tttsaurus.ometweaks.api.jei.DynamicCategoryWrapper;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.ingredients.IngredientRegistry;
@@ -53,9 +54,15 @@ public class JEIModRegistryMixin
             for (int i = 0; i < newRecipeCategories.size(); i++)
             {
                 IRecipeCategory category = newRecipeCategories.get(i);
-                for (Map.Entry<String, ResourceLocation> entry: OMEConfig.JEI_CATEGORY_MODIFICATION.entrySet())
+                for (Map.Entry<String, CategoryModification> entry: OMEConfig.JEI_CATEGORY_MODIFICATION.entrySet())
                     if (category.getUid().equals(entry.getKey()))
-                        substitutions.put(i, new DynamicCategoryWrapper(category, entry.getValue()));
+                    {
+                        CategoryModification categoryMod = entry.getValue();
+                        if (categoryMod.iconRL != null)
+                            substitutions.put(i, new DynamicCategoryWrapper(category, categoryMod.iconRL));
+                        else if (categoryMod.iconItem != null)
+                            substitutions.put(i, new DynamicCategoryWrapper(category, categoryMod.iconItem));
+                    }
             }
             for (Map.Entry<Integer, DynamicCategoryWrapper> entry: substitutions.entrySet())
                 newRecipeCategories.set(entry.getKey(), entry.getValue());

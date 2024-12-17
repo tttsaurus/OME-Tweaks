@@ -6,7 +6,10 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.gui.elements.DrawableBuilder;
+import mezz.jei.gui.elements.DrawableIngredient;
+import mezz.jei.plugins.vanilla.ingredients.item.ItemStackRenderer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import java.util.List;
 
@@ -20,6 +23,11 @@ public class DynamicCategoryWrapper<T extends IRecipeWrapper> implements IRecipe
     {
         this.originalCategory = originalCategory;
         newIcon = (new DrawableBuilder(iconRL, 0, 0, 16, 16)).setTextureSize(16, 16).build();
+    }
+    public DynamicCategoryWrapper(IRecipeCategory<T> originalCategory, ItemStack itemStack)
+    {
+        this.originalCategory = originalCategory;
+        newIcon = new DrawableIngredient<>(itemStack, new ItemStackRenderer());
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.tttsaurus.ometweaks;
 
+import com.tttsaurus.ometweaks.api.jei.CategoryModification;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -17,7 +18,7 @@ public final class OMEConfig
     public static boolean ENABLE_JEI_CATEGORY_ORDER;
     public static String[] JEI_CATEGORY_ORDER;
     public static boolean ENABLE_JEI_CATEGORY_MODIFICATION;
-    public final static Map<String, ResourceLocation> JEI_CATEGORY_MODIFICATION = new HashMap<>();
+    public final static Map<String, CategoryModification> JEI_CATEGORY_MODIFICATION = new HashMap<>();
     //</editor-fold>
 
     //<editor-fold desc="if">
@@ -68,14 +69,36 @@ public final class OMEConfig
             ENABLE_JEI_CATEGORY_ORDER = CONFIG.getBoolean("Enable", "general.jei.category_order", false, "Enable JEI Category Order");
             JEI_CATEGORY_ORDER = CONFIG.getStringList("JEI Category Order", "general.jei.category_order", new String[]{}, "A list of jei category uids that determines the in-game jei displaying order");
             ENABLE_JEI_CATEGORY_MODIFICATION = CONFIG.getBoolean("Enable", "general.jei.category_modification", false, "Enable JEI Category Modification");
-            String[] JEI_CATEGORY_MODIFICATION = CONFIG.getStringList("JEI Category Modification", "general.jei.category_modification", new String[]{}, "A list of info that defines the modifications to the existing categories (Example: tconstruct.alloy,ometweaks:textures/gui/jei/test.png which changes the icon of tconstruct.alloy to ometweaks:textures/gui/jei/test.png)");
+            String[] JEI_CATEGORY_MODIFICATION = CONFIG.getStringList("JEI Category Modification", "general.jei.category_modification", new String[]{"tconstruct.alloy,[RL]ometweaks:textures/gui/jei/test.png", "tconstruct.smeltery,[Item]minecraft:apple@0"}, "A list of info that defines the modifications to the existing categories (Example: tconstruct.alloy,[RL]ometweaks:textures/gui/jei/test.png which changes the icon of tconstruct.alloy to ometweaks:textures/gui/jei/test.png)");
 
             OMEConfig.JEI_CATEGORY_MODIFICATION.clear();
             for (String arg: JEI_CATEGORY_MODIFICATION)
             {
                 String[] args = arg.split(",");
                 if (args.length != 2) continue;
-                OMEConfig.JEI_CATEGORY_MODIFICATION.put(args[0].trim(), new ResourceLocation(args[1].trim()));
+                String key = args[0].trim();
+                String rawValue = args[1].trim();
+                CategoryModification value = new CategoryModification();
+
+                if (rawValue.startsWith("[RL]"))
+                    value.iconRL = new ResourceLocation(rawValue.substring(4).trim());
+                else if (rawValue.startsWith("[Item]"))
+                {
+                    String itemRegistryName = rawValue.substring(6).trim();
+                    String[] strs = itemRegistryName.split("@");
+                    if (strs.length == 0 || strs.length > 2) continue;
+                    int meta = 0;
+                    if (strs.length == 2)
+                        try { meta = Integer.parseInt(strs[1]); }
+                        catch (NumberFormatException e) { continue; }
+                    Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(strs[0]));
+                    if (item == null) continue;
+                    ItemStack itemStack = new ItemStack(item, 1, meta);
+                    value.iconItem = itemStack;
+                }
+                else continue;
+
+                OMEConfig.JEI_CATEGORY_MODIFICATION.put(key, value);
             }
             //</editor-fold>
 
