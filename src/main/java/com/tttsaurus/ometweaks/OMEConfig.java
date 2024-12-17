@@ -92,9 +92,17 @@ public final class OMEConfig
                         try { meta = Integer.parseInt(strs[1]); }
                         catch (NumberFormatException e) { continue; }
                     Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(strs[0]));
-                    if (item == null) continue;
-                    ItemStack itemStack = new ItemStack(item, 1, meta);
-                    value.iconItem = itemStack;
+                    if (item == null)
+                    {
+                        value.isGhostItem = true;
+                        value.itemRegistryName = strs[0];
+                        value.itemMeta = meta;
+                    }
+                    else
+                    {
+                        ItemStack itemStack = new ItemStack(item, 1, meta);
+                        value.iconItem = itemStack;
+                    }
                 }
                 else continue;
 

@@ -9,15 +9,17 @@ import mezz.jei.gui.elements.DrawableBuilder;
 import mezz.jei.gui.elements.DrawableIngredient;
 import mezz.jei.plugins.vanilla.ingredients.item.ItemStackRenderer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import java.util.List;
 
 @SuppressWarnings("all")
 public class DynamicCategoryWrapper<T extends IRecipeWrapper> implements IRecipeCategory<T>
 {
     private final IRecipeCategory<T> originalCategory;
-    private final IDrawable newIcon;
+    private IDrawable newIcon = null;
 
     public DynamicCategoryWrapper(IRecipeCategory<T> originalCategory, ResourceLocation iconRL)
     {
@@ -27,7 +29,20 @@ public class DynamicCategoryWrapper<T extends IRecipeWrapper> implements IRecipe
     public DynamicCategoryWrapper(IRecipeCategory<T> originalCategory, ItemStack itemStack)
     {
         this.originalCategory = originalCategory;
-        newIcon = new DrawableIngredient<>(itemStack, new ItemStackRenderer());
+        if (itemStack != null)
+            newIcon = new DrawableIngredient<>(itemStack, new ItemStackRenderer());
+    }
+
+    private IDrawableGhostItemHandler drawableGhostItemHandler = null;
+    public void setDrawableGhostItemHandler(CategoryModification categoryMod)
+    {
+        drawableGhostItemHandler = () ->
+        {
+            Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(categoryMod.itemRegistryName));
+            if (item == null) return;
+            ItemStack itemStack = new ItemStack(item, 1, categoryMod.itemMeta);
+            newIcon = new DrawableIngredient<>(itemStack, new ItemStackRenderer());
+        };
     }
 
     @Override
@@ -57,7 +72,12 @@ public class DynamicCategoryWrapper<T extends IRecipeWrapper> implements IRecipe
     @Override
     public IDrawable getIcon()
     {
-        return newIcon != null ? newIcon : originalCategory.getIcon();
+        if (drawableGhostItemHandler != null)
+        {
+            drawableGhostItemHandler.handle();
+            drawableGhostItemHandler = null;
+        }
+        return newIcon == null ? originalCategory.getIcon() : newIcon;
     }
 
     @Override

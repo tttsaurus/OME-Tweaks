@@ -7,7 +7,6 @@ import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.ingredients.IngredientRegistry;
 import mezz.jei.recipes.RecipeRegistry;
 import mezz.jei.startup.ModRegistry;
-import net.minecraft.util.ResourceLocation;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -60,8 +59,13 @@ public class JEIModRegistryMixin
                         CategoryModification categoryMod = entry.getValue();
                         if (categoryMod.iconRL != null)
                             substitutions.put(i, new DynamicCategoryWrapper(category, categoryMod.iconRL));
-                        else if (categoryMod.iconItem != null)
-                            substitutions.put(i, new DynamicCategoryWrapper(category, categoryMod.iconItem));
+                        else if (categoryMod.iconItem != null || categoryMod.isGhostItem)
+                        {
+                            DynamicCategoryWrapper dynamicCategoryWrapper = new DynamicCategoryWrapper(category, categoryMod.iconItem);
+                            if (categoryMod.isGhostItem)
+                                dynamicCategoryWrapper.setDrawableGhostItemHandler(categoryMod);
+                            substitutions.put(i, dynamicCategoryWrapper);
+                        }
                     }
             }
             for (Map.Entry<Integer, DynamicCategoryWrapper> entry: substitutions.entrySet())
