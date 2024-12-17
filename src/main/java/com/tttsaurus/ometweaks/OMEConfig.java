@@ -68,15 +68,14 @@ public final class OMEConfig
             ENABLE_JEI_CATEGORY_ORDER = CONFIG.getBoolean("Enable", "general.jei.category_order", false, "Enable JEI Category Order");
             JEI_CATEGORY_ORDER = CONFIG.getStringList("JEI Category Order", "general.jei.category_order", new String[]{}, "A list of jei category uids that determines the in-game jei displaying order");
             ENABLE_JEI_CATEGORY_MODIFICATION = CONFIG.getBoolean("Enable", "general.jei.category_modification", false, "Enable JEI Category Modification");
-            String[] JEI_CATEGORY_MODIFICATION = CONFIG.getStringList("JEI Category Modification", "general.jei.category_modification", new String[]{}, "A list of info that defines the modifications to the existing categories (Example: tconstruct.alloy,test.png which changes the icon of tconstruct.alloy to ometweaks:textures/gui/jei/test.png)");
+            String[] JEI_CATEGORY_MODIFICATION = CONFIG.getStringList("JEI Category Modification", "general.jei.category_modification", new String[]{}, "A list of info that defines the modifications to the existing categories (Example: tconstruct.alloy,ometweaks:textures/gui/jei/test.png which changes the icon of tconstruct.alloy to ometweaks:textures/gui/jei/test.png)");
 
             OMEConfig.JEI_CATEGORY_MODIFICATION.clear();
             for (String arg: JEI_CATEGORY_MODIFICATION)
             {
                 String[] args = arg.split(",");
                 if (args.length != 2) continue;
-                ResourceLocation rl = new ResourceLocation(Tags.MODID, "textures/gui/jei/" + args[1].trim());
-                OMEConfig.JEI_CATEGORY_MODIFICATION.put(args[0].trim(), rl);
+                OMEConfig.JEI_CATEGORY_MODIFICATION.put(args[0].trim(), new ResourceLocation(args[1].trim()));
             }
             //</editor-fold>
 
