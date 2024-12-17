@@ -16,6 +16,8 @@ public final class OMEConfig
     public static boolean ENABLE_JEI_MODULE;
     public static boolean ENABLE_JEI_CATEGORY_ORDER;
     public static String[] JEI_CATEGORY_ORDER;
+    public static boolean ENABLE_JEI_CATEGORY_MODIFICATION;
+    public final static Map<String, ResourceLocation> JEI_CATEGORY_MODIFICATION = new HashMap<>();
     //</editor-fold>
 
     //<editor-fold desc="if">
@@ -65,6 +67,17 @@ public final class OMEConfig
 
             ENABLE_JEI_CATEGORY_ORDER = CONFIG.getBoolean("Enable", "general.jei.category_order", false, "Enable JEI Category Order");
             JEI_CATEGORY_ORDER = CONFIG.getStringList("JEI Category Order", "general.jei.category_order", new String[]{}, "A list of jei category uids that determines the in-game jei displaying order");
+            ENABLE_JEI_CATEGORY_MODIFICATION = CONFIG.getBoolean("Enable", "general.jei.category_modification", false, "Enable JEI Category Modification");
+            String[] JEI_CATEGORY_MODIFICATION = CONFIG.getStringList("JEI Category Modification", "general.jei.category_modification", new String[]{}, "A list of info that defines the modifications to the existing categories (Example: tconstruct.alloy,test.png which changes the icon of tconstruct.alloy to ometweaks:textures/gui/jei/test.png)");
+
+            OMEConfig.JEI_CATEGORY_MODIFICATION.clear();
+            for (String arg: JEI_CATEGORY_MODIFICATION)
+            {
+                String[] args = arg.split(",");
+                if (args.length != 2) continue;
+                ResourceLocation rl = new ResourceLocation(Tags.MODID, "textures/gui/jei/" + args[1].trim());
+                OMEConfig.JEI_CATEGORY_MODIFICATION.put(args[0].trim(), rl);
+            }
             //</editor-fold>
 
             //<editor-fold desc="if config">
@@ -74,7 +87,7 @@ public final class OMEConfig
             String[] IF_INFINITY_DRILL_BLACKLIST = CONFIG.getStringList("Infinity Drill Blacklist", "general.if.infinity_drill.blacklist", new String[]{}, "A list of block registry names that infinity drill cannot harvest (Example: minecraft:dirt@0 or ignore '@' like minecraft:dirt)");
 
             OMEConfig.IF_INFINITY_DRILL_BLACKLIST.clear();
-            for (String arg : IF_INFINITY_DRILL_BLACKLIST)
+            for (String arg: IF_INFINITY_DRILL_BLACKLIST)
             {
                 String[] args = arg.split("@");
                 if (args.length == 0 || args.length > 2) continue;
@@ -92,7 +105,7 @@ public final class OMEConfig
             String[] IF_INFINITY_DRILL_HARVEST_LEVEL = CONFIG.getStringList("Infinity Drill Harvest Level", "general.if.infinity_drill.harvest_level", new String[]{"pickaxe:5", "shovel:5"}, "A list of harvest level specifications (Example: pickaxe:3)");
 
             OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.clear();
-            for (String arg : IF_INFINITY_DRILL_HARVEST_LEVEL)
+            for (String arg: IF_INFINITY_DRILL_HARVEST_LEVEL)
             {
                 String[] args = arg.split(":");
                 if (args.length != 2) continue;
