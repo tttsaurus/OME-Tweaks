@@ -1,8 +1,9 @@
 This mod aims to add a bunch of configurable QoL tweaks to other mods.
 
-## Features For Now
+## Latest Features
 - **JEI**
   - Support custom jei category order
+  - Support modifications to jei category icons
 - **Industrial Foregoing**
   - Add the harvest level and blacklist to Industrial Foregoing's infinity drill
 - **SCP Lockdown**
@@ -42,9 +43,7 @@ general {
                 mctsmelteryio:casting_machine
              >
         }
-    }
-    ...
-}
+...
 ```
 
 ## Credits
