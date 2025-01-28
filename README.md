@@ -11,7 +11,7 @@ This mod aims to add a bunch of configurable QoL tweaks to other mods.
 - **In World Crafting**
   - Add support of i18n to jei pages
 - **Thermal Foundation**
-  - Add config to disable default fluid interactions
+  - Add config to disable default fluid interactions (works with [Fluid-Interaction-Tweaker](https://github.com/tttsaurus/Fluid-Interaction-Tweaker)'s jei compat)
 
 ## Config
 Here's an example/snapshot of the config file.
