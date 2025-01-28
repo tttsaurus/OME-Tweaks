@@ -61,7 +61,7 @@ public final class OMEConfig
         {
             CONFIG.load();
 
-            ENABLE = CONFIG.getBoolean("Enable", "general", false, "Enable OME Tweaks");
+            ENABLE = CONFIG.getBoolean("Enable", "general", true, "Enable OME Tweaks");
 
             //<editor-fold desc="jei config">
             ENABLE_JEI_MODULE = CONFIG.getBoolean("Enable", "general.jei", false, "Enable JEI Module / Whether mixins will be loaded");
