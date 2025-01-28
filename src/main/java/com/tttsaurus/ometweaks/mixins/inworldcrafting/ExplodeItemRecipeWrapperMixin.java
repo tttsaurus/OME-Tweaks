@@ -27,7 +27,7 @@ public class ExplodeItemRecipeWrapperMixin
         if (OMEConfig.ENABLE_IWC_JEI_I18N)
         {
             FontRenderer renderer = minecraft.fontRenderer;
-            renderer.drawStringWithShadow(I18n.format("ometweaks.inworldcrafting.jei.explode_item_recipe.str2", recipe.getSurviveChance()), 1, 30, 0xFFFFFF);
+            renderer.drawStringWithShadow(I18n.format("ometweaks.inworldcrafting.jei.explode_item_recipe.str2", recipe.getSurviveChance() + "%"), 1, 30, 0xFFFFFF);
         }
         else
         {

@@ -2,9 +2,9 @@
 ometweaks.inworldcrafting.jei.burn_item_recipe.str1=Burning Items
 ometweaks.inworldcrafting.jei.burn_item_recipe.str2=Recipe time: %d ticks
 ometweaks.inworldcrafting.jei.explode_block_recipe.str1=Exploding Blocks
-ometweaks.inworldcrafting.jei.explode_block_recipe.str2=Success chance: %d %
+ometweaks.inworldcrafting.jei.explode_block_recipe.str2=Success chance: %s
 ometweaks.inworldcrafting.jei.explode_item_recipe.str1=Exploding Items
-ometweaks.inworldcrafting.jei.explode_item_recipe.str2=Success chance: %d %
+ometweaks.inworldcrafting.jei.explode_item_recipe.str2=Success chance: %s
 ometweaks.inworldcrafting.jei.fluid2fluid_recipe.str1=Fluid to Fluid Transformation
 ometweaks.inworldcrafting.jei.fluid2fluid_recipe.str2=Consumes Item:
 ometweaks.inworldcrafting.jei.yes=Yes
