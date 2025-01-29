@@ -1,5 +1,6 @@
 package com.tttsaurus.ometweaks;
 
+import com.tttsaurus.ometweaks.api.industrialforegoing.FuelDef;
 import com.tttsaurus.ometweaks.api.jei.CategoryModification;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -27,6 +28,8 @@ public final class OMEConfig
     public final static List<ItemStack> IF_INFINITY_DRILL_BLACKLIST = new ArrayList<>();
     public static boolean ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL;
     public final static Map<String, Integer> IF_INFINITY_DRILL_HARVEST_LEVEL = new Hashtable<>();
+    public static boolean ENABLE_IF_PETRIFIED_FUEL_GENERATOR;
+    public final static Map<ItemStack, FuelDef> IF_PETRIFIED_FUEL_GENERATOR_FUELS = new HashMap<>();
     //</editor-fold>
 
     //<editor-fold desc="scp">
@@ -100,8 +103,7 @@ public final class OMEConfig
                     }
                     else
                     {
-                        ItemStack itemStack = new ItemStack(item, 1, meta);
-                        value.iconItem = itemStack;
+                        value.iconItem = new ItemStack(item, 1, meta);
                     }
                 }
                 else continue;
@@ -143,6 +145,39 @@ public final class OMEConfig
                 try { level = Integer.parseInt(args[1]); }
                 catch (NumberFormatException e) { continue; }
                 OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.put(args[0], level);
+            }
+
+            ENABLE_IF_PETRIFIED_FUEL_GENERATOR = CONFIG.getBoolean("Enable", "general.if.petrified_fuel_generator", false, "Enable Industrial Foregoing Petrified Fuel Generator Fuel Def Override");
+            String[] IF_PETRIFIED_FUEL_GENERATOR_FUELS = CONFIG.getStringList("Petrified Fuel Generator Fuel Def Override", "general.if.petrified_fuel_generator", new String[]{"minecraft:dirt,100,40"}, "A list of fuel definitions (Example: minecraft:dirt,100,40 so dirt generates 100 RF/tick for 40 ticks)");
+
+            OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_FUELS.clear();
+            for (String arg: IF_PETRIFIED_FUEL_GENERATOR_FUELS)
+            {
+                String[] args = arg.split(",");
+                if (args.length != 3) continue;
+                String key = args[0].trim();
+                String rawValue1 = args[1].trim();
+                String rawValue2 = args[2].trim();
+
+                String[] itemArgs = key.split("@");
+                if (itemArgs.length == 0 || itemArgs.length > 2) continue;
+                int meta = 0;
+                if (itemArgs.length == 2)
+                    try { meta = Integer.parseInt(itemArgs[1]); }
+                    catch (NumberFormatException e) { continue; }
+                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemArgs[0]));
+                if (item == null) continue;
+                ItemStack itemStack = new ItemStack(item, 1, meta);
+
+                int rate = 0;
+                try { rate = Integer.parseInt(rawValue1); }
+                catch (NumberFormatException e) { continue; }
+
+                int duration = 0;
+                try { duration = Integer.parseInt(rawValue2); }
+                catch (NumberFormatException e) { continue; }
+
+                OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_FUELS.put(itemStack, new FuelDef(rate, duration));
             }
             //</editor-fold>
 

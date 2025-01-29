@@ -5,7 +5,9 @@
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "ItemInfinityDrillMixin"
+    "AbstractFuelGeneratorMixin",
+    "ItemInfinityDrillMixin",
+    "PetrifiedFuelGeneratorTileMixin"
   ],
   "client": [],
   "server": []

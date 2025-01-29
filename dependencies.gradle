@@ -44,6 +44,9 @@ dependencies {
     // Industrial Foregoing
     compileOnly rfg.deobf('curse.maven:industrialforegoing-266515:2745321')
 
+    // Tesla Core Lib
+    compileOnly rfg.deobf('curse.maven:tesla-core-lib-254602:3438487')
+
     // SCP Lockdown
     compileOnly rfg.deobf('curse.maven:scp-lockdown-298995:3937127')
 

@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public final class InfinityDrillHarvestLevel
 {
-    @SubscribeEvent()
+    @SubscribeEvent
     public static void onHarvestDrops(BlockEvent.HarvestDropsEvent event)
     {
         EntityPlayer player = event.getHarvester();
