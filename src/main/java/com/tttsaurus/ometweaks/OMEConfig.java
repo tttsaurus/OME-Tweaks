@@ -30,6 +30,7 @@ public final class OMEConfig
     public final static Map<String, Integer> IF_INFINITY_DRILL_HARVEST_LEVEL = new Hashtable<>();
     public static boolean ENABLE_IF_PETRIFIED_FUEL_GENERATOR;
     public final static Map<ItemStack, FuelDef> IF_PETRIFIED_FUEL_GENERATOR_FUELS = new HashMap<>();
+    public static boolean IF_PETRIFIED_FUEL_GENERATOR_JEI_OVERHAUL;
     //</editor-fold>
 
     //<editor-fold desc="scp">
@@ -179,6 +180,8 @@ public final class OMEConfig
 
                 OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_FUELS.put(itemStack, new FuelDef(rate, duration));
             }
+
+            IF_PETRIFIED_FUEL_GENERATOR_JEI_OVERHAUL = CONFIG.getBoolean("Petrified Fuel Generator JEI Overhaul", "general.if.petrified_fuel_generator", false, "Whether to add burn time and i18n to the existing petrified fuel generator jei page");
             //</editor-fold>
 
             //<editor-fold desc="scp config">

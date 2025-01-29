@@ -17,6 +17,8 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Map;
 
@@ -35,11 +37,13 @@ public class PetrifiedFuelGeneratorTileMixin
             Class<?> clazz = AbstractFuelGenerator.class;
             Field field = clazz.getDeclaredField("current");
             field.setAccessible(true);
+            MethodHandles.Lookup lookup = MethodHandles.lookup();
+            MethodHandle methodHandle = lookup.unreflectGetter(field);
             OME_Tweaks$fuelGetter = () ->
             {
                 try
                 {
-                    return (ItemStack)field.get(this0);
+                    return (ItemStack)methodHandle.invoke(this0);
                 }
                 catch (Throwable ignored) { return null; }
             };
