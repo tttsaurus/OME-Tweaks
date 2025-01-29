@@ -11,3 +11,7 @@ ometweaks.inworldcrafting.jei.yes=是
 ometweaks.inworldcrafting.jei.no=否
 ometweaks.inworldcrafting.jei.fluid2item_recipe.str1=流体至物品转换
 ometweaks.inworldcrafting.jei.fluid2item_recipe.str2=消耗流体:
+
+ometweaks.industrialforegoing.jei.petrified_fuel_gen.power=功率: %d RF/tick
+ometweaks.industrialforegoing.jei.petrified_fuel_gen.burn_time=燃烧时长: %d ticks
+ometweaks.industrialforegoing.jei.petrified_fuel_gen.title=石化燃料发电-燃烧时长

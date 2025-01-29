@@ -6,6 +6,7 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import java.awt.*;
 
@@ -14,13 +15,13 @@ public class PetrifiedBurnTimeWrapper implements IRecipeWrapper
 {
     public ItemStack itemStack;
     public int duration;
-    public long rate;
+    public int rate;
 
     public PetrifiedBurnTimeWrapper(ItemStack itemStack, int duration)
     {
         this.itemStack = itemStack;
         this.duration = duration;
-        this.rate = PetrifiedFuelGeneratorTile.getEnergy(duration);
+        this.rate = (int)PetrifiedFuelGeneratorTile.getEnergy(duration);
     }
     public PetrifiedBurnTimeWrapper(ItemStack itemStack, int duration, int rate)
     {
@@ -42,8 +43,8 @@ public class PetrifiedBurnTimeWrapper implements IRecipeWrapper
 
         if (OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_JEI_OVERHAUL)
         {
-            fontRenderer.drawString("Power: " + rate + " RF/tick", 24, 8, Color.gray.getRGB());
-            fontRenderer.drawString("Burn Time: " + duration + " RF/tick", 24, 20, Color.gray.getRGB());
+            fontRenderer.drawString(I18n.format("ometweaks.industrialforegoing.jei.petrified_fuel_gen.power", rate), 24, 8, Color.gray.getRGB());
+            fontRenderer.drawString(I18n.format("ometweaks.industrialforegoing.jei.petrified_fuel_gen.burn_time", duration), 24, 20, Color.gray.getRGB());
         }
         else
         {

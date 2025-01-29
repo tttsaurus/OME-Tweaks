@@ -3,7 +3,6 @@ package com.tttsaurus.ometweaks.mixins.industrialforegoing;
 import com.buuz135.industrial.jei.JEICustomPlugin;
 import com.buuz135.industrial.tile.generator.PetrifiedFuelGeneratorTile;
 import com.tttsaurus.ometweaks.OMEConfig;
-import com.tttsaurus.ometweaks.OMETweaks;
 import com.tttsaurus.ometweaks.api.industrialforegoing.FuelDef;
 import com.tttsaurus.ometweaks.api.industrialforegoing.PetrifiedBurnTimeCategory;
 import com.tttsaurus.ometweaks.api.industrialforegoing.PetrifiedBurnTimeWrapper;
@@ -13,13 +12,10 @@ import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -28,9 +24,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Mixin(JEICustomPlugin.class)
 public class JEICustomPluginMixin
 {
-    @Shadow(remap = false)
-    private com.buuz135.industrial.jei.petrifiedgen.PetrifiedBurnTimeCategory petrifiedBurnTimeCategory;
-
     @Unique
     private PetrifiedBurnTimeCategory OME_Tweaks$petrifiedBurnTimeCategory;
 
