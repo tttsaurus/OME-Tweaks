@@ -13,22 +13,28 @@ import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Mixin(JEICustomPlugin.class)
 public class JEICustomPluginMixin
 {
+    @Shadow(remap = false)
+    private com.buuz135.industrial.jei.petrifiedgen.PetrifiedBurnTimeCategory petrifiedBurnTimeCategory;
+
     @Unique
     private PetrifiedBurnTimeCategory OME_Tweaks$petrifiedBurnTimeCategory;
 
-    @Inject(
+    @Redirect(
             method = "register",
             at = @At(
                     value = "INVOKE",
@@ -38,19 +44,15 @@ public class JEICustomPluginMixin
                     from = @At(value = "INVOKE", target = "Lmezz/jei/api/IModRegistry;getIngredientRegistry()Lmezz/jei/api/ingredients/IIngredientRegistry;"),
                     to = @At(value = "INVOKE", target = "Lcom/buuz135/industrial/book/BookCategory;getEntries()Ljava/util/Map;")
             ),
-            cancellable = true,
             remap = false)
-    public void injectMyPetrifiedFuelRecipes(IModRegistry registry, CallbackInfo ci)
+    public void injectMyPetrifiedFuelRecipes(IModRegistry instance, Collection<?> objects, String s)
     {
-        OMETweaks.LOGGER.info("triggered");
-
         if (OMEConfig.ENABLE_IF_PETRIFIED_FUEL_GENERATOR)
         {
-            ci.cancel();
             List<PetrifiedBurnTimeWrapper> petrifiedBurnTimeWrappers = new ArrayList<>();
             List<ItemStack> modifiedItems = new CopyOnWriteArrayList<>(OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_FUELS.keySet());
 
-            registry.getIngredientRegistry().getFuels().stream().filter(PetrifiedFuelGeneratorTile::acceptsInputStack).forEach(itemStack ->
+            instance.getIngredientRegistry().getFuels().stream().filter(PetrifiedFuelGeneratorTile::acceptsInputStack).forEach(itemStack ->
             {
                 boolean modified = false;
                 for (ItemStack modifiedItem: modifiedItems)
@@ -74,11 +76,11 @@ public class JEICustomPluginMixin
                 petrifiedBurnTimeWrappers.add(new PetrifiedBurnTimeWrapper(modifiedItem, fuelDef.duration, fuelDef.rate));
             }
 
-            registry.addRecipes(petrifiedBurnTimeWrappers, OME_Tweaks$petrifiedBurnTimeCategory.getUid());
+            instance.addRecipes(petrifiedBurnTimeWrappers, OME_Tweaks$petrifiedBurnTimeCategory.getUid());
         }
     }
 
-    @Inject(
+    @Redirect(
             method = "registerCategories",
             at = @At(
                     value = "INVOKE",
@@ -88,15 +90,14 @@ public class JEICustomPluginMixin
                     from = @At(value = "INVOKE", target = "Lcom/buuz135/industrial/jei/petrifiedgen/PetrifiedBurnTimeCategory;<init>(Lmezz/jei/api/IGuiHelper;)V"),
                     to = @At(value = "INVOKE", target = "Lcom/buuz135/industrial/jei/fluiddictionary/FluidDictionaryCategory;<init>(Lmezz/jei/api/IGuiHelper;)V")
             ),
-            cancellable = true,
             remap = false)
-    public void injectMyPetrifiedBurnTimeCategory(IRecipeCategoryRegistration registry, CallbackInfo ci)
+    public void injectMyPetrifiedBurnTimeCategory(IRecipeCategoryRegistration instance, IRecipeCategory[] iRecipeCategories)
     {
         if (OMEConfig.ENABLE_IF_PETRIFIED_FUEL_GENERATOR)
         {
-            ci.cancel();
-            OME_Tweaks$petrifiedBurnTimeCategory = new PetrifiedBurnTimeCategory(registry.getJeiHelpers().getGuiHelper());
-            registry.addRecipeCategories(new IRecipeCategory[]{OME_Tweaks$petrifiedBurnTimeCategory});
+            OME_Tweaks$petrifiedBurnTimeCategory = new PetrifiedBurnTimeCategory(instance.getJeiHelpers().getGuiHelper());
+
+            instance.addRecipeCategories(new IRecipeCategory[]{OME_Tweaks$petrifiedBurnTimeCategory});
         }
     }
 }
