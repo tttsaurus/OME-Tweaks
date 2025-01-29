@@ -2,6 +2,8 @@ package com.tttsaurus.ometweaks.mixins.industrialforegoing;
 
 import com.buuz135.industrial.jei.JEICustomPlugin;
 import com.buuz135.industrial.tile.generator.PetrifiedFuelGeneratorTile;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.tttsaurus.ometweaks.OMEConfig;
 import com.tttsaurus.ometweaks.api.industrialforegoing.FuelDef;
 import com.tttsaurus.ometweaks.api.industrialforegoing.PetrifiedBurnTimeCategory;
@@ -14,7 +16,6 @@ import net.minecraft.tileentity.TileEntityFurnace;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,7 +28,7 @@ public class JEICustomPluginMixin
     @Unique
     private PetrifiedBurnTimeCategory OME_Tweaks$petrifiedBurnTimeCategory;
 
-    @Redirect(
+    @WrapOperation(
             method = "register",
             at = @At(
                     value = "INVOKE",
@@ -38,7 +39,7 @@ public class JEICustomPluginMixin
                     to = @At(value = "INVOKE", target = "Lcom/buuz135/industrial/book/BookCategory;getEntries()Ljava/util/Map;")
             ),
             remap = false)
-    public void injectMyPetrifiedFuelRecipes(IModRegistry instance, Collection<?> objects, String s)
+    public void addMyPetrifiedFuelRecipes(IModRegistry instance, Collection<?> objects, String s, Operation<Void> original)
     {
         if (OMEConfig.ENABLE_IF_PETRIFIED_FUEL_GENERATOR)
         {
@@ -71,9 +72,11 @@ public class JEICustomPluginMixin
 
             instance.addRecipes(petrifiedBurnTimeWrappers, OME_Tweaks$petrifiedBurnTimeCategory.getUid());
         }
+        else
+            original.call(instance, objects, s);
     }
 
-    @Redirect(
+    @WrapOperation(
             method = "registerCategories",
             at = @At(
                     value = "INVOKE",
@@ -84,7 +87,7 @@ public class JEICustomPluginMixin
                     to = @At(value = "INVOKE", target = "Lcom/buuz135/industrial/jei/fluiddictionary/FluidDictionaryCategory;<init>(Lmezz/jei/api/IGuiHelper;)V")
             ),
             remap = false)
-    public void injectMyPetrifiedBurnTimeCategory(IRecipeCategoryRegistration instance, IRecipeCategory[] iRecipeCategories)
+    public void addMyPetrifiedBurnTimeCategory(IRecipeCategoryRegistration instance, IRecipeCategory[] iRecipeCategories, Operation<Void> original)
     {
         if (OMEConfig.ENABLE_IF_PETRIFIED_FUEL_GENERATOR)
         {
@@ -92,5 +95,7 @@ public class JEICustomPluginMixin
 
             instance.addRecipeCategories(new IRecipeCategory[]{OME_Tweaks$petrifiedBurnTimeCategory});
         }
+        else
+            original.call(instance, iRecipeCategories);
     }
 }
