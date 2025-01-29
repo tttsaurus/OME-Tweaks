@@ -17,6 +17,9 @@ This mod aims to add a bunch of configurable QoL tweaks to other mods.
 - **Thermal Foundation**
   - Add config to disable default fluid interactions (works with [Fluid-Interaction-Tweaker](https://github.com/tttsaurus/Fluid-Interaction-Tweaker)'s jei compat)
 
+## Dependency
+- Mixinbooter 10.0+
+
 ## Config
 Here's an example/snapshot of the config file.
 Everything is set to `false` by default.

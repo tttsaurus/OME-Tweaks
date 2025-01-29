@@ -2,17 +2,13 @@ package com.tttsaurus.ometweaks.mixins.industrialforegoing;
 
 import com.buuz135.industrial.tile.generator.AbstractFuelGenerator;
 import com.buuz135.industrial.tile.generator.PetrifiedFuelGeneratorTile;
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.tttsaurus.ometweaks.OMEConfig;
 import com.tttsaurus.ometweaks.api.industrialforegoing.FuelDef;
 import com.tttsaurus.ometweaks.api.industrialforegoing.IFuelGetter;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.ForgeModContainer;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -55,8 +51,8 @@ public class PetrifiedFuelGeneratorTileMixin
      * @author tttsaurus
      * @reason To support custom fuels, and this method is modified from com.buuz135.industrial.tile.generator.PetrifiedFuelGeneratorTile.getEnergyProduced
      */
-    @Overwrite(remap = false)
-    public long getEnergyProduced(int burnTime)
+    @WrapMethod(method = "getEnergyProduced", remap = false)
+    public long getEnergyProduced(int burnTime, Operation<Long> original)
     {
         if (OMEConfig.ENABLE_IF_PETRIFIED_FUEL_GENERATOR)
         {
@@ -69,19 +65,19 @@ public class PetrifiedFuelGeneratorTileMixin
             return PetrifiedFuelGeneratorTile.getEnergy(burnTime);
         }
         else
-            return PetrifiedFuelGeneratorTile.getEnergy(burnTime);
+            return original.call(burnTime);
     }
 
     /**
      * @author tttsaurus
      * @reason To support custom fuels, and this method is modified from com.buuz135.industrial.tile.generator.PetrifiedFuelGeneratorTile.acceptsInputStack
      */
-    @Overwrite(remap = false)
-    public static boolean acceptsInputStack(ItemStack stack)
+    @WrapMethod(method = "acceptsInputStack", remap = false)
+    private static boolean acceptsInputStack(ItemStack stack, Operation<Boolean> original)
     {
         if (OMEConfig.ENABLE_IF_PETRIFIED_FUEL_GENERATOR)
         {
-            boolean accept = !stack.isEmpty() && TileEntityFurnace.isItemFuel(stack) && !stack.getItem().equals(Items.LAVA_BUCKET) && !stack.getItem().equals(ForgeModContainer.getInstance().universalBucket) && PetrifiedFuelGeneratorTile.getEnergy(TileEntityFurnace.getItemBurnTime(stack)) > 0L && !stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, (EnumFacing)null);
+            boolean accept = original.call(stack);
 
             for (ItemStack fuel: OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_FUELS.keySet())
                 if (stack.isItemEqual(fuel) && !stack.isEmpty())
@@ -90,6 +86,6 @@ public class PetrifiedFuelGeneratorTileMixin
             return accept;
         }
         else
-            return !stack.isEmpty() && TileEntityFurnace.isItemFuel(stack) && !stack.getItem().equals(Items.LAVA_BUCKET) && !stack.getItem().equals(ForgeModContainer.getInstance().universalBucket) && PetrifiedFuelGeneratorTile.getEnergy(TileEntityFurnace.getItemBurnTime(stack)) > 0L && !stack.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, (EnumFacing)null);
+            return original.call(stack);
     }
 }

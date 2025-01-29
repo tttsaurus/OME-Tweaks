@@ -2,12 +2,13 @@ package com.tttsaurus.ometweaks.mixins.industrialforegoing;
 
 import com.buuz135.industrial.tile.generator.AbstractFuelGenerator;
 import com.buuz135.industrial.utils.WorkUtils;
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.tttsaurus.ometweaks.OMEConfig;
 import com.tttsaurus.ometweaks.api.industrialforegoing.FuelDef;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import java.util.Map;
 
@@ -21,8 +22,8 @@ public class AbstractFuelGeneratorMixin
      * @author tttsaurus
      * @reason To support custom fuels, and this method is modified from com.buuz135.industrial.tile.generator.AbstractFuelGenerator.consumeFuel
      */
-    @Overwrite(remap = false)
-    public long consumeFuel()
+    @WrapMethod(method = "consumeFuel", remap = false)
+    public long consumeFuel(Operation<Long> original)
     {
         AbstractFuelGenerator this0 = (AbstractFuelGenerator)(Object)this;
 

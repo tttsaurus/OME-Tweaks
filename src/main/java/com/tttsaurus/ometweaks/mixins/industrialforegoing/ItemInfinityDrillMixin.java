@@ -3,7 +3,8 @@ package com.tttsaurus.ometweaks.mixins.industrialforegoing;
 import com.buuz135.industrial.item.infinity.ItemInfinityDrill;
 import com.buuz135.industrial.item.infinity.ItemInfinityDrill.DrillTier;
 import com.buuz135.industrial.utils.RayTraceUtils;
-import com.google.common.collect.ImmutableSet;
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.tttsaurus.ometweaks.OMEConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -13,7 +14,6 @@ import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -24,7 +24,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import org.apache.commons.lang3.tuple.Pair;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -52,8 +51,8 @@ public abstract class ItemInfinityDrillMixin
      * @author tttsaurus
      * @reason To add a custom blacklist and harvest level check to infinity drill's harvest logic, and this method is modified from com.buuz135.industrial.item.infinity.ItemInfinityDrill.onBlockDestroyed
      */
-    @Overwrite
-    public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving)
+    @WrapMethod(method = "onBlockDestroyed")
+    public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving, Operation<Boolean> original)
     {
         if (state.getBlock() == Blocks.AIR) return false;
         if (entityLiving instanceof EntityPlayer)
@@ -138,23 +137,23 @@ public abstract class ItemInfinityDrillMixin
 
     /**
      * @author tttsaurus
-     * @reason To add custom harvest level
+     * @reason To add custom tool classes
      */
-    @Overwrite(remap = false)
-    public Set<String> getToolClasses(ItemStack stack)
+    @WrapMethod(method = "getToolClasses", remap = false)
+    public Set<String> getToolClasses(ItemStack stack, Operation<Set<String>> original)
     {
         if (OMEConfig.ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
             return OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.keySet();
         else
-            return ImmutableSet.of("pickaxe", "shovel");
+            return original.call(stack);
     }
 
     /**
      * @author tttsaurus
      * @reason To add custom harvest level and blacklist
      */
-    @Overwrite
-    public boolean canHarvestBlock(IBlockState blockIn)
+    @WrapMethod(method = "canHarvestBlock")
+    public boolean canHarvestBlock(IBlockState blockIn, Operation<Boolean> original)
     {
         Block block = blockIn.getBlock();
         if (OMEConfig.ENABLE_IF_INFINITY_DRILL_BLACKLIST)
@@ -176,7 +175,7 @@ public abstract class ItemInfinityDrillMixin
             }
             return canHarvest;
         }
-        return Items.DIAMOND_PICKAXE.canHarvestBlock(blockIn) || Items.DIAMOND_SHOVEL.canHarvestBlock(blockIn);
+        return original.call(blockIn);
     }
 
     @Inject(method = "<init>", at = @At("RETURN"), remap = false)

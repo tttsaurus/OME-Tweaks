@@ -11,6 +11,8 @@ import alexiy.secure.contain.protect.capability.shadowinfestation.IShadowInfesta
 import alexiy.secure.contain.protect.capability.sleepdeprivation.ISleepDeprivationCapability;
 import alexiy.secure.contain.protect.capability.zombievirus.Infection;
 import alexiy.secure.contain.protect.events.CommonEvents;
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.tttsaurus.ometweaks.OMEConfig;
 import com.tttsaurus.ometweaks.api.scp.SCPNegativeCapabilities;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,7 +23,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Unique;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,9 +37,9 @@ public class CommonEventsMixin
      * @author tttsaurus
      * @reason To disable capabilities by config, and this method is modified from alexiy.secure.contain.protect.events.CommonEvents.onPlayerTick
      */
-    @Overwrite(remap = false)
+    @WrapMethod(method = "onPlayerTick", remap = false)
     @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent playerTickEvent)
+    private static void onPlayerTick(TickEvent.PlayerTickEvent playerTickEvent, Operation<Void> original)
     {
         EntityPlayer player = playerTickEvent.player;
         World world = player.world;
