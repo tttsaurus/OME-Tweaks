@@ -6,6 +6,10 @@ This mod aims to add a bunch of configurable QoL tweaks to other mods.
   - Support modifications to jei category icons
 - **Industrial Foregoing**
   - Add the harvest level and blacklist to Industrial Foregoing's infinity drill
+  - Make petrified fuel generator more configurable
+    - Support custom fuels
+    - Support tweaking existing fuels
+    - Optional jei page overhaul
 - **SCP Lockdown**
   - Add config to disable several scp capabilities
 - **In World Crafting**
