@@ -20,6 +20,7 @@ public final class OMEConfig
     public static String[] JEI_CATEGORY_ORDER;
     public static boolean ENABLE_JEI_CATEGORY_MODIFICATION;
     public final static Map<String, CategoryModification> JEI_CATEGORY_MODIFICATION = new HashMap<>();
+    public static boolean DISABLE_JEI_CONFIG_BUTTON;
     //</editor-fold>
 
     //<editor-fold desc="if">
@@ -111,6 +112,8 @@ public final class OMEConfig
 
                 OMEConfig.JEI_CATEGORY_MODIFICATION.put(key, value);
             }
+
+            DISABLE_JEI_CONFIG_BUTTON = CONFIG.getBoolean("Disable", "general.jei.config_button", false, "Disable JEI Right-Bottom Corner Config Button");
             //</editor-fold>
 
             //<editor-fold desc="if config">
