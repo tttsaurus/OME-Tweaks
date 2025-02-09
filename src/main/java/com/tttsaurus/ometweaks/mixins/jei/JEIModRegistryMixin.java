@@ -14,7 +14,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.*;
-import java.util.stream.Stream;
 
 @SuppressWarnings("all")
 @Mixin(ModRegistry.class)
@@ -29,23 +28,6 @@ public class JEIModRegistryMixin
     {
         List<IRecipeCategory> newRecipeCategories = new ArrayList<>();
         newRecipeCategories.addAll(recipeCategories);
-
-        if (OMEConfig.ENABLE_JEI_CATEGORY_ORDER)
-        {
-            newRecipeCategories.clear();
-            for (String uid: OMEConfig.JEI_CATEGORY_ORDER)
-            {
-                Stream<IRecipeCategory> stream = recipeCategories.stream().filter(category -> category.getUid().equals(uid));
-                Optional<IRecipeCategory> first = stream.findFirst();
-                if (first.isPresent())
-                {
-                    IRecipeCategory category = first.get();
-                    newRecipeCategories.add(category);
-                    recipeCategories.remove(category);
-                }
-            }
-            newRecipeCategories.addAll(recipeCategories);
-        }
 
         if (OMEConfig.ENABLE_JEI_CATEGORY_MODIFICATION)
         {

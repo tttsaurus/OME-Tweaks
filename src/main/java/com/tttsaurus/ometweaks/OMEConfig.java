@@ -16,11 +16,8 @@ public final class OMEConfig
 
     //<editor-fold desc="jei">
     public static boolean ENABLE_JEI_MODULE;
-    public static boolean ENABLE_JEI_CATEGORY_ORDER;
-    public static String[] JEI_CATEGORY_ORDER;
     public static boolean ENABLE_JEI_CATEGORY_MODIFICATION;
     public final static Map<String, CategoryModification> JEI_CATEGORY_MODIFICATION = new HashMap<>();
-    public static boolean DISABLE_JEI_CONFIG_BUTTON;
     //</editor-fold>
 
     //<editor-fold desc="if">
@@ -71,8 +68,6 @@ public final class OMEConfig
             //<editor-fold desc="jei config">
             ENABLE_JEI_MODULE = CONFIG.getBoolean("Enable", "general.jei", false, "Enable JEI Module / Whether mixins will be loaded");
 
-            ENABLE_JEI_CATEGORY_ORDER = CONFIG.getBoolean("Enable", "general.jei.category_order", false, "Enable JEI Category Order");
-            JEI_CATEGORY_ORDER = CONFIG.getStringList("JEI Category Order", "general.jei.category_order", new String[]{}, "A list of jei category uids that determines the in-game jei displaying order");
             ENABLE_JEI_CATEGORY_MODIFICATION = CONFIG.getBoolean("Enable", "general.jei.category_modification", false, "Enable JEI Category Modification");
             String[] JEI_CATEGORY_MODIFICATION = CONFIG.getStringList("JEI Category Modification", "general.jei.category_modification", new String[]{"tconstruct.alloy,[RL]ometweaks:textures/gui/jei/test.png", "tconstruct.smeltery,[Item]minecraft:apple@0"}, "A list of info that defines the modifications to the existing categories (Example: tconstruct.alloy,[RL]ometweaks:textures/gui/jei/test.png which changes the icon of tconstruct.alloy to ometweaks:textures/gui/jei/test.png)");
 
@@ -112,8 +107,6 @@ public final class OMEConfig
 
                 OMEConfig.JEI_CATEGORY_MODIFICATION.put(key, value);
             }
-
-            DISABLE_JEI_CONFIG_BUTTON = CONFIG.getBoolean("Disable", "general.jei.config_button", false, "Disable JEI Right-Bottom Corner Config Button");
             //</editor-fold>
 
             //<editor-fold desc="if config">
