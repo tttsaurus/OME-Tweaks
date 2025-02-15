@@ -4,6 +4,7 @@ import com.rwtema.extrautils2.itemhandler.SingleStackHandler;
 import com.rwtema.extrautils2.transfernodes.TransferNodeItem;
 import com.rwtema.extrautils2.transfernodes.Upgrade;
 import com.tttsaurus.fluidintetweaker.common.api.WorldIngredient;
+import com.tttsaurus.fluidintetweaker.common.api.WorldIngredientType;
 import com.tttsaurus.fluidintetweaker.common.api.event.CustomFluidInteractionEvent;
 import com.tttsaurus.fluidintetweaker.common.api.interaction.ComplexOutput;
 import com.tttsaurus.fluidintetweaker.common.api.interaction.InteractionEvent;
@@ -66,7 +67,6 @@ public class TransferNodeItemMixin
                 {
                     stack.insertItem(0, OME_Tweaks$simulatedOutput.get(0), false);
                     OME_Tweaks$simulatedOutput.remove(0);
-                    if (OME_Tweaks$simulatedOutput.size() > 10) OME_Tweaks$simulatedOutput.clear();
                     return;
                 }
 
@@ -130,8 +130,8 @@ public class TransferNodeItemMixin
                 // recipe matches
 
                 boolean isSourceA = ingredientA.getIsFluidSource();
-                boolean consumesA = isSourceA;
-                if (consumesA)
+                boolean consumesA = isSourceA || ingredientA.getIngredientType() == WorldIngredientType.BLOCK;
+                if (consumesA && ingredientA.getIngredientType() == WorldIngredientType.FLUID)
                 {
                     ingredientA.setIsFluidSource(false);
                     if (InternalMethods.instance.FluidInteractionRecipeManager$recipeExists.invoke(ingredientA, ingredientB))
