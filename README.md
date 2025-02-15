@@ -15,6 +15,8 @@ This mod aims to add a bunch of configurable QoL tweaks to other mods.
   - Add support of i18n to jei pages
 - **Thermal Foundation**
   - Add config to disable default fluid interactions (works with [Fluid-Interaction-Tweaker](https://github.com/tttsaurus/Fluid-Interaction-Tweaker)'s jei compat)
+- **Extra Utilities**
+  - Add compat to mining node so it can detect fluid interactions from [Fluid-Interaction-Tweaker](https://github.com/tttsaurus/Fluid-Interaction-Tweaker)
 
 ## Dependency
 - Mixinbooter 10.0+
