@@ -55,6 +55,11 @@ public final class OMEConfig
     public static boolean DISABLE_TF_PYROTHEUM_INTERACTIONS;
     //</editor-fold>
 
+    //<editor-fold desc="xu2">
+    public static boolean ENABLE_XU2_MODULE;
+    public static boolean ENABLE_XU2_NODE_MINING_FIT_COMPAT;
+    //</editor-fold>
+
     public static Configuration CONFIG;
 
     public static void loadConfig()
@@ -204,6 +209,11 @@ public final class OMEConfig
             DISABLE_TF_MANA_INTERACTIONS = CONFIG.getBoolean("Disable", "general.thermalfoundation.mana.interactions", false, "Disable Thermal Foundation Mana Interactions");
             DISABLE_TF_PETROTHEUM_INTERACTIONS = CONFIG.getBoolean("Disable", "general.thermalfoundation.petrotheum.interactions", false, "Disable Thermal Foundation Petrotheum Interactions");
             DISABLE_TF_PYROTHEUM_INTERACTIONS = CONFIG.getBoolean("Disable", "general.thermalfoundation.pyrotheum.interactions", false, "Disable Thermal Foundation Pyrotheum Interactions");
+            //</editor-fold>
+
+            //<editor-fold desc="xu2 config">
+            ENABLE_XU2_MODULE = CONFIG.getBoolean("Enable", "general.extrautils2", false, "Enable Extra Utilities Module / Whether mixins will be loaded");
+            ENABLE_XU2_NODE_MINING_FIT_COMPAT = CONFIG.getBoolean("Enable", "general.extrautils2.node_mining_upgrade", false, "Enable Fluid Interaction Tweaker Compat with Mining Node");
             //</editor-fold>
         }
         catch (Exception ignored) { }

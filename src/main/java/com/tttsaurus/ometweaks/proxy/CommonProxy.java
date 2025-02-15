@@ -33,7 +33,7 @@ public class CommonProxy
                 MinecraftForge.EVENT_BUS.register(InfinityDrillHarvestLevel.class);
         }
 
-        if (OMETweaks.IS_FLUIDINTETWEAKER_LOADED)
+        if (OMEConfig.ENABLE && OMEConfig.ENABLE_XU2_MODULE && OMEConfig.ENABLE_XU2_NODE_MINING_FIT_COMPAT && OMETweaks.IS_FLUIDINTETWEAKER_LOADED)
         {
             InternalMethods.instance = new InternalMethods();
         }

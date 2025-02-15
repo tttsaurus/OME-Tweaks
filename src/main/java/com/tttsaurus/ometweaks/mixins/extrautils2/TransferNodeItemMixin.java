@@ -10,6 +10,7 @@ import com.tttsaurus.fluidintetweaker.common.api.interaction.InteractionEvent;
 import com.tttsaurus.fluidintetweaker.common.api.interaction.InteractionEventType;
 import com.tttsaurus.fluidintetweaker.common.api.interaction.condition.IEventCondition;
 import com.tttsaurus.fluidintetweaker.common.api.util.BlockUtils;
+import com.tttsaurus.ometweaks.OMEConfig;
 import com.tttsaurus.ometweaks.OMETweaks;
 import com.tttsaurus.ometweaks.api.fluidintetweaker.InternalMethods;
 import net.minecraft.block.state.IBlockState;
@@ -48,15 +49,15 @@ public class TransferNodeItemMixin
     @Inject(method = "processBuffer(Lnet/minecraftforge/items/IItemHandler;)V", at = @At("HEAD"), remap = false)
     public void addFluidInteractionTweakerCompat(IItemHandler attached, CallbackInfo ci)
     {
+        if (!OMEConfig.ENABLE_XU2_NODE_MINING_FIT_COMPAT) return;
         if (!OMETweaks.IS_FLUIDINTETWEAKER_LOADED) return;
         if (InternalMethods.instance == null) return;
 
         TransferNodeItem this0 = (TransferNodeItem)(Object)this;
 
-        int upgradeLevel;
         if (attached == null)
         {
-            upgradeLevel = this0.getUpgradeLevel(Upgrade.MINING);
+            int upgradeLevel = this0.getUpgradeLevel(Upgrade.MINING);
             if (upgradeLevel > 0)
             {
                 if (stack.isFull()) return;

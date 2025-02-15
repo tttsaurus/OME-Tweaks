@@ -34,7 +34,7 @@ public class MixinConfig implements ILateMixinLoader
                 list.add("mixins.ometweaks.inworldcrafting.json");
             if (OMEConfig.ENABLE_TF_MODULE && Loader.isModLoaded("thermalfoundation"))
                 list.add("mixins.ometweaks.thermalfoundation.json");
-            if (/*OMEConfig.ENABLE_TF_MODULE &&*/ Loader.isModLoaded("extrautils2"))
+            if (OMEConfig.ENABLE_XU2_MODULE && Loader.isModLoaded("extrautils2"))
                 list.add("mixins.ometweaks.extrautils2.json");
         }
 
