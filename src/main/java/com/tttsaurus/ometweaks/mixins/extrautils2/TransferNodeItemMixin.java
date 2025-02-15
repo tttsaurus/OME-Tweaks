@@ -4,10 +4,16 @@ import com.rwtema.extrautils2.itemhandler.SingleStackHandler;
 import com.rwtema.extrautils2.transfernodes.TransferNodeItem;
 import com.rwtema.extrautils2.transfernodes.Upgrade;
 import com.tttsaurus.fluidintetweaker.common.api.WorldIngredient;
+import com.tttsaurus.fluidintetweaker.common.api.event.CustomFluidInteractionEvent;
+import com.tttsaurus.fluidintetweaker.common.api.interaction.ComplexOutput;
+import com.tttsaurus.fluidintetweaker.common.api.interaction.InteractionEvent;
+import com.tttsaurus.fluidintetweaker.common.api.interaction.InteractionEventType;
+import com.tttsaurus.fluidintetweaker.common.api.interaction.condition.IEventCondition;
+import com.tttsaurus.fluidintetweaker.common.api.util.BlockUtils;
 import com.tttsaurus.ometweaks.OMETweaks;
 import com.tttsaurus.ometweaks.api.fluidintetweaker.InternalMethods;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -18,7 +24,9 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 
 @Mixin(TransferNodeItem.class)
 public class TransferNodeItemMixin
@@ -28,6 +36,14 @@ public class TransferNodeItemMixin
 
     @Unique
     private static final EnumSet<EnumFacing> OME_Tweaks$surrounding = EnumSet.of(EnumFacing.NORTH, EnumFacing.SOUTH, EnumFacing.EAST, EnumFacing.WEST);
+
+    @Unique
+    private BlockPos OME_Tweaks$prevIngredientAPos = null;
+    @Unique
+    private BlockPos OME_Tweaks$prevIngredientBPos = null;
+
+    @Unique
+    private final List<ItemStack> OME_Tweaks$simulatedOutput = new ArrayList<>();
 
     @Inject(method = "processBuffer(Lnet/minecraftforge/items/IItemHandler;)V", at = @At("HEAD"), remap = false)
     public void addFluidInteractionTweakerCompat(IItemHandler attached, CallbackInfo ci)
@@ -45,6 +61,14 @@ public class TransferNodeItemMixin
             {
                 if (stack.isFull()) return;
 
+                if (!OME_Tweaks$simulatedOutput.isEmpty())
+                {
+                    stack.insertItem(0, OME_Tweaks$simulatedOutput.get(0), false);
+                    OME_Tweaks$simulatedOutput.remove(0);
+                    if (OME_Tweaks$simulatedOutput.size() > 10) OME_Tweaks$simulatedOutput.clear();
+                    return;
+                }
+
                 World world = this0.holder.getWorld();
                 BlockPos pos = this0.holder.getPos().offset(this0.side);
                 IBlockState blockState = world.getBlockState(pos);
@@ -53,41 +77,110 @@ public class TransferNodeItemMixin
                 WorldIngredient ingredientB = null;
 
                 boolean flag = true;
-                for (EnumFacing facing : OME_Tweaks$surrounding)
-                {
-                    WorldIngredient ingredient = WorldIngredient.getFrom(world, pos.add(facing.getDirectionVec()));
 
-                    if (InternalMethods.instance.FluidInteractionRecipeManager$ingredientAExists.invoke(ingredient))
+                if (OME_Tweaks$prevIngredientAPos != null && OME_Tweaks$prevIngredientBPos != null)
+                {
+                    ingredientA = WorldIngredient.getFrom(world, OME_Tweaks$prevIngredientAPos);
+                    ingredientB = WorldIngredient.getFrom(world, OME_Tweaks$prevIngredientBPos);
+                    if (InternalMethods.instance.FluidInteractionRecipeManager$recipeExists.invoke(ingredientA, ingredientB))
+                        flag = false;
+                }
+
+                if (flag)
+                {
+                    for (EnumFacing facing : OME_Tweaks$surrounding)
                     {
-                        ingredientA = ingredient;
-                        for (EnumFacing facing1 : OME_Tweaks$surrounding)
+                        WorldIngredient ingredient = WorldIngredient.getFrom(world, pos.add(facing.getDirectionVec()));
+
+                        if (InternalMethods.instance.FluidInteractionRecipeManager$ingredientAExists.invoke(ingredient))
                         {
-                            ingredientB = WorldIngredient.getFrom(world, pos.add(facing1.getDirectionVec()));
-                            if (InternalMethods.instance.FluidInteractionRecipeManager$recipeExists.invoke(ingredientA, ingredientB))
+                            ingredientA = ingredient;
+                            for (EnumFacing facing1 : OME_Tweaks$surrounding)
                             {
-                                flag = false;
-                                break;
+                                ingredientB = WorldIngredient.getFrom(world, pos.add(facing1.getDirectionVec()));
+                                if (InternalMethods.instance.FluidInteractionRecipeManager$recipeExists.invoke(ingredientA, ingredientB))
+                                {
+                                    OME_Tweaks$prevIngredientAPos = pos.add(facing.getDirectionVec());
+                                    OME_Tweaks$prevIngredientBPos = pos.add(facing1.getDirectionVec());
+                                    flag = false;
+                                    break;
+                                }
                             }
                         }
-                    }
-                    if (InternalMethods.instance.FluidInteractionRecipeManager$ingredientBExists.invoke(ingredient))
-                    {
-                        ingredientB = ingredient;
-                        for (EnumFacing facing1 : OME_Tweaks$surrounding)
+                        if (InternalMethods.instance.FluidInteractionRecipeManager$ingredientBExists.invoke(ingredient))
                         {
-                            ingredientA = WorldIngredient.getFrom(world, pos.add(facing1.getDirectionVec()));
-                            if (InternalMethods.instance.FluidInteractionRecipeManager$recipeExists.invoke(ingredientA, ingredientB))
+                            ingredientB = ingredient;
+                            for (EnumFacing facing1 : OME_Tweaks$surrounding)
                             {
-                                flag = false;
-                                break;
+                                ingredientA = WorldIngredient.getFrom(world, pos.add(facing1.getDirectionVec()));
+                                if (InternalMethods.instance.FluidInteractionRecipeManager$recipeExists.invoke(ingredientA, ingredientB))
+                                {
+                                    OME_Tweaks$prevIngredientBPos = pos.add(facing.getDirectionVec());
+                                    OME_Tweaks$prevIngredientAPos = pos.add(facing1.getDirectionVec());
+                                    flag = false;
+                                    break;
+                                }
                             }
                         }
                     }
                 }
                 if (flag) return;
 
-                if (Minecraft.getMinecraft().player != null)
-                    Minecraft.getMinecraft().player.sendChatMessage("debug");
+                // recipe matches
+
+                boolean isSourceA = ingredientA.getIsFluidSource();
+                boolean consumesA = isSourceA;
+                if (consumesA)
+                {
+                    ingredientA.setIsFluidSource(false);
+                    if (InternalMethods.instance.FluidInteractionRecipeManager$recipeExists.invoke(ingredientA, ingredientB))
+                        consumesA = false;
+                    ingredientA.setIsFluidSource(isSourceA);
+                }
+
+                if (consumesA) world.setBlockToAir(OME_Tweaks$prevIngredientAPos);
+
+                ComplexOutput output = InternalMethods.instance.FluidInteractionRecipeManager$getRecipeOutput.invoke(ingredientA, ingredientB);
+
+                CustomFluidInteractionEvent fluidInteractionEvent = new CustomFluidInteractionEvent(
+                        world,
+                        pos,
+                        false,
+                        false,
+                        blockState,
+                        ingredientA,
+                        ingredientB,
+                        output);
+
+                for (InteractionEvent event: output.getEvents())
+                {
+                    boolean simulate = false;
+
+                    if (event.getEventType() == InteractionEventType.SetBlock)
+                        simulate = true;
+                    else if (event.getEventType() == InteractionEventType.SpawnEntityItem)
+                        simulate = true;
+
+                    if (simulate)
+                    {
+                        boolean pass = true;
+                        List<IEventCondition> conditions = event.getConditions();
+                        for (IEventCondition condition: conditions)
+                        {
+                            if (!condition.judge(fluidInteractionEvent))
+                            {
+                                pass = false;
+                                break;
+                            }
+                        }
+                        if (!pass) continue;
+
+                        if (event.getEventType() == InteractionEventType.SetBlock)
+                            OME_Tweaks$simulatedOutput.add(BlockUtils.getItemStack(event.getBlockState()));
+                        else if (event.getEventType() == InteractionEventType.SpawnEntityItem)
+                            OME_Tweaks$simulatedOutput.add(event.getItemStack().copy());
+                    }
+                }
             }
         }
     }
