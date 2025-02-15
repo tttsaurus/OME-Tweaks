@@ -2,6 +2,7 @@ package com.tttsaurus.ometweaks;
 
 import com.tttsaurus.ometweaks.proxy.CommonProxy;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -26,6 +27,8 @@ public class OMETweaks
             clientSide = "com.tttsaurus.ometweaks.proxy.ClientProxy",
             serverSide = "com.tttsaurus.ometweaks.proxy.ServerProxy")
     private static CommonProxy proxy;
+
+    public final static boolean IS_FLUIDINTETWEAKER_LOADED = Loader.isModLoaded("fluidintetweaker");
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)

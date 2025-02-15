@@ -1,0 +1,12 @@
+{
+  "package": "com.tttsaurus.ometweaks.mixins.extrautils2",
+  "refmap": "mixins.ometweaks.refmap.json",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "TransferNodeItemMixin"
+  ],
+  "client": [],
+  "server": []
+}

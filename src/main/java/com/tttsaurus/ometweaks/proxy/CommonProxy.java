@@ -3,6 +3,7 @@ package com.tttsaurus.ometweaks.proxy;
 import com.tttsaurus.ometweaks.OMEConfig;
 import com.tttsaurus.ometweaks.OMETweaks;
 import com.tttsaurus.ometweaks.Tags;
+import com.tttsaurus.ometweaks.api.fluidintetweaker.InternalMethods;
 import com.tttsaurus.ometweaks.eventhandler.industrialforegoing.InfinityDrillBlacklist;
 import com.tttsaurus.ometweaks.eventhandler.industrialforegoing.InfinityDrillHarvestLevel;
 import net.minecraftforge.common.MinecraftForge;
@@ -30,6 +31,11 @@ public class CommonProxy
                 MinecraftForge.EVENT_BUS.register(InfinityDrillBlacklist.class);
             if (OMEConfig.ENABLE && OMEConfig.ENABLE_IF_MODULE && OMEConfig.ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
                 MinecraftForge.EVENT_BUS.register(InfinityDrillHarvestLevel.class);
+        }
+
+        if (OMETweaks.IS_FLUIDINTETWEAKER_LOADED)
+        {
+            InternalMethods.instance = new InternalMethods();
         }
     }
 
