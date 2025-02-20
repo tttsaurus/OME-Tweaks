@@ -40,16 +40,21 @@ public class AbstractFuelGeneratorMixin
 
                 if (OMEConfig.ENABLE_IF_PETRIFIED_FUEL_GENERATOR)
                 {
+                    boolean specified = false;
                     for (Map.Entry<ItemStack, FuelDef> entry: OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_FUELS.entrySet())
                         if (this0.getCurrent().isItemEqual(entry.getKey()))
                         {
                             burnTime = entry.getValue().duration;
+                            specified = true;
                             break;
                         }
+                    if (!specified && OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX != -1)
+                        burnTime = burnTime > OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX ?
+                                OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX : burnTime;
                 }
 
                 temp.setCount(temp.getCount() - 1);
-                return (long)((float)(burnTime * 100) * this0.getMultiplier());
+                return (long)((float)(burnTime * 100) * this0.getMultiplier() / 0.6f);
             }
         }
     }

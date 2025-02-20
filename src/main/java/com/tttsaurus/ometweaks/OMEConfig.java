@@ -29,6 +29,8 @@ public final class OMEConfig
     public static boolean ENABLE_IF_PETRIFIED_FUEL_GENERATOR;
     public final static Map<ItemStack, FuelDef> IF_PETRIFIED_FUEL_GENERATOR_FUELS = new HashMap<>();
     public static boolean IF_PETRIFIED_FUEL_GENERATOR_JEI_OVERHAUL;
+    public static int IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX;
+    public static int IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX;
     //</editor-fold>
 
     //<editor-fold desc="scp">
@@ -149,7 +151,7 @@ public final class OMEConfig
                 OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.put(args[0], level);
             }
 
-            ENABLE_IF_PETRIFIED_FUEL_GENERATOR = CONFIG.getBoolean("Enable", "general.if.petrified_fuel_generator", false, "Enable Industrial Foregoing Petrified Fuel Generator Fuel Def Override");
+            ENABLE_IF_PETRIFIED_FUEL_GENERATOR = CONFIG.getBoolean("Enable", "general.if.petrified_fuel_generator", false, "Enable Industrial Foregoing Petrified Fuel Generator Overhaul");
             String[] IF_PETRIFIED_FUEL_GENERATOR_FUELS = CONFIG.getStringList("Petrified Fuel Generator Fuel Def Override", "general.if.petrified_fuel_generator", new String[]{"minecraft:dirt,100,40"}, "A list of fuel definitions (Example: minecraft:dirt,100,40 so dirt generates 100 RF/tick for 40 ticks)");
 
             OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_FUELS.clear();
@@ -183,6 +185,9 @@ public final class OMEConfig
             }
 
             IF_PETRIFIED_FUEL_GENERATOR_JEI_OVERHAUL = CONFIG.getBoolean("Petrified Fuel Generator JEI Overhaul", "general.if.petrified_fuel_generator", false, "Whether to add burn time and i18n to the existing petrified fuel generator jei page");
+
+            IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX = CONFIG.getInt("Petrified Fuel Generator Max Power", "general.if.petrified_fuel_generator", -1, -1, 0x7fffffff, "-1 for no max limit to all auto-added default fuels");
+            IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX = CONFIG.getInt("Petrified Fuel Generator Max Burn Time", "general.if.petrified_fuel_generator", -1, -1, 0x7fffffff, "-1 for no max limit to all auto-added default fuels");
             //</editor-fold>
 
             //<editor-fold desc="scp config">

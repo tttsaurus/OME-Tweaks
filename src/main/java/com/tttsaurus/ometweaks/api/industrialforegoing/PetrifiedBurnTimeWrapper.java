@@ -17,12 +17,6 @@ public class PetrifiedBurnTimeWrapper implements IRecipeWrapper
     public int duration;
     public int rate;
 
-    public PetrifiedBurnTimeWrapper(ItemStack itemStack, int duration)
-    {
-        this.itemStack = itemStack;
-        this.duration = duration;
-        this.rate = (int)PetrifiedFuelGeneratorTile.getEnergy(duration);
-    }
     public PetrifiedBurnTimeWrapper(ItemStack itemStack, int duration, int rate)
     {
         this.itemStack = itemStack;

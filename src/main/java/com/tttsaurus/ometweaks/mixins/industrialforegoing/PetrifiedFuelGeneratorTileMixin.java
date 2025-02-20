@@ -8,6 +8,7 @@ import com.tttsaurus.ometweaks.OMEConfig;
 import com.tttsaurus.ometweaks.api.industrialforegoing.FuelDef;
 import com.tttsaurus.ometweaks.api.industrialforegoing.IFuelGetter;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityFurnace;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -59,10 +60,16 @@ public class PetrifiedFuelGeneratorTileMixin
             ItemStack itemStack = OME_Tweaks$fuelGetter.get();
             if (itemStack == null) return PetrifiedFuelGeneratorTile.getEnergy(burnTime);
 
+            burnTime = TileEntityFurnace.getItemBurnTime(itemStack);
+            long power = PetrifiedFuelGeneratorTile.getEnergy(burnTime);
+            if (OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX != -1)
+                power = power > OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX ?
+                        OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX : power;
+
             for (Map.Entry<ItemStack, FuelDef> entry: OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_FUELS.entrySet())
                 if (itemStack.isItemEqual(entry.getKey()))
                     return entry.getValue().rate;
-            return PetrifiedFuelGeneratorTile.getEnergy(burnTime);
+            return power;
         }
         else
             return original.call(burnTime);

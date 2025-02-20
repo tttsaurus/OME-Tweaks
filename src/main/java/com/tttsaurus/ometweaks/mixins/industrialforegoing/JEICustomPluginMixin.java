@@ -1,6 +1,7 @@
 package com.tttsaurus.ometweaks.mixins.industrialforegoing;
 
 import com.buuz135.industrial.jei.JEICustomPlugin;
+import com.buuz135.industrial.proxy.BlockRegistry;
 import com.buuz135.industrial.tile.generator.PetrifiedFuelGeneratorTile;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -22,6 +23,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+@SuppressWarnings("all")
 @Mixin(JEICustomPlugin.class)
 public class JEICustomPluginMixin
 {
@@ -46,6 +48,8 @@ public class JEICustomPluginMixin
             List<PetrifiedBurnTimeWrapper> petrifiedBurnTimeWrappers = new ArrayList<>();
             List<ItemStack> modifiedItems = new CopyOnWriteArrayList<>(OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_FUELS.keySet());
 
+            float burnTimeMultiplier = BlockRegistry.petrifiedFuelGeneratorBlock.getBurnTimeMultiplier();
+
             instance.getIngredientRegistry().getFuels().stream().filter(PetrifiedFuelGeneratorTile::acceptsInputStack).forEach(itemStack ->
             {
                 boolean modified = false;
@@ -55,19 +59,29 @@ public class JEICustomPluginMixin
                     {
                         modifiedItems.remove(modifiedItem);
                         FuelDef fuelDef = OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_FUELS.get(modifiedItem);
-                        petrifiedBurnTimeWrappers.add(new PetrifiedBurnTimeWrapper(modifiedItem, fuelDef.duration, fuelDef.rate));
+                        petrifiedBurnTimeWrappers.add(new PetrifiedBurnTimeWrapper(modifiedItem, (int)(fuelDef.duration * burnTimeMultiplier), fuelDef.rate));
                         modified = true;
                         break;
                     }
                 }
                 if (!modified)
-                    petrifiedBurnTimeWrappers.add(new PetrifiedBurnTimeWrapper(itemStack, TileEntityFurnace.getItemBurnTime(itemStack)));
+                {
+                    int duration = TileEntityFurnace.getItemBurnTime(itemStack);
+                    int rate = (int)PetrifiedFuelGeneratorTile.getEnergy(duration);
+                    if (OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX != -1)
+                        duration = duration > OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX ?
+                                OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX : duration;
+                    if (OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX != -1)
+                        rate = rate > OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX ?
+                                OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX : rate;
+                    petrifiedBurnTimeWrappers.add(new PetrifiedBurnTimeWrapper(itemStack, (int)(duration * burnTimeMultiplier), rate));
+                }
             });
 
             for (ItemStack modifiedItem: modifiedItems)
             {
                 FuelDef fuelDef = OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_FUELS.get(modifiedItem);
-                petrifiedBurnTimeWrappers.add(new PetrifiedBurnTimeWrapper(modifiedItem, fuelDef.duration, fuelDef.rate));
+                petrifiedBurnTimeWrappers.add(new PetrifiedBurnTimeWrapper(modifiedItem, (int)(fuelDef.duration * burnTimeMultiplier), fuelDef.rate));
             }
 
             instance.addRecipes(petrifiedBurnTimeWrappers, OME_Tweaks$petrifiedBurnTimeCategory.getUid());
