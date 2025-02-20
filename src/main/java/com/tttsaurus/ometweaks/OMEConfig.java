@@ -152,7 +152,7 @@ public final class OMEConfig
             }
 
             ENABLE_IF_PETRIFIED_FUEL_GENERATOR = CONFIG.getBoolean("Enable", "general.if.petrified_fuel_generator", false, "Enable Industrial Foregoing Petrified Fuel Generator Overhaul");
-            String[] IF_PETRIFIED_FUEL_GENERATOR_FUELS = CONFIG.getStringList("Petrified Fuel Generator Fuel Def Override", "general.if.petrified_fuel_generator", new String[]{"minecraft:dirt,100,40"}, "A list of fuel definitions (Example: minecraft:dirt,100,40 so dirt generates 100 RF/tick for 40 ticks)");
+            String[] IF_PETRIFIED_FUEL_GENERATOR_FUELS = CONFIG.getStringList("Petrified Fuel Generator Fuel Def Override", "general.if.petrified_fuel_generator", new String[]{"minecraft:dirt,100,40"}, "A list of fuel definitions (Example: minecraft:dirt,100,40 so dirt generates 100 RF/tick for 40 ticks)\nConfig option \"burnTimeMultiplier\" from Industrial Foregoing still affect the duration you set\n");
 
             OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_FUELS.clear();
             for (String arg: IF_PETRIFIED_FUEL_GENERATOR_FUELS)
