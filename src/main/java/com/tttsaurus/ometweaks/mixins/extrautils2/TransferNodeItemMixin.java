@@ -129,6 +129,15 @@ public class TransferNodeItemMixin
 
                 // recipe matches
 
+                ComplexOutput output = InternalMethods.instance.FluidInteractionRecipeManager$getRecipeOutput.invoke(ingredientA, ingredientB);
+
+                if (output == null)
+                {
+                    OME_Tweaks$prevIngredientAPos = null;
+                    OME_Tweaks$prevIngredientBPos = null;
+                    return;
+                }
+
                 boolean isSourceA = ingredientA.getIsFluidSource();
                 boolean consumesA = isSourceA || ingredientA.getIngredientType() == WorldIngredientType.BLOCK;
                 if (consumesA && ingredientA.getIngredientType() == WorldIngredientType.FLUID)
@@ -140,8 +149,6 @@ public class TransferNodeItemMixin
                 }
 
                 if (consumesA) world.setBlockToAir(OME_Tweaks$prevIngredientAPos);
-
-                ComplexOutput output = InternalMethods.instance.FluidInteractionRecipeManager$getRecipeOutput.invoke(ingredientA, ingredientB);
 
                 CustomFluidInteractionEvent fluidInteractionEvent = new CustomFluidInteractionEvent(
                         world,
