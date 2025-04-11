@@ -6,9 +6,11 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "AbstractFuelGeneratorMixin",
+    "IFCustomFluidBlockMixin",
     "ItemInfinityDrillMixin",
     "JEICustomPluginMixin",
-    "PetrifiedFuelGeneratorTileMixin"
+    "PetrifiedFuelGeneratorTileMixin",
+    "PotionStrawHandlerMixin"
   ],
   "client": [],
   "server": []

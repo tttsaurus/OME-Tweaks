@@ -31,6 +31,18 @@ public final class OMEConfig
     public static boolean IF_PETRIFIED_FUEL_GENERATOR_JEI_OVERHAUL;
     public static int IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX;
     public static int IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX;
+    public static boolean DISABLE_IF_FLUID_EFFECT_DRINKING_BIOFUEL;
+    public static boolean DISABLE_IF_FLUID_EFFECT_DRINKING_SLUDGE;
+    public static boolean DISABLE_IF_FLUID_EFFECT_DRINKING_SEWAGE;
+    public static boolean DISABLE_IF_FLUID_EFFECT_DRINKING_MEAT;
+    public static boolean DISABLE_IF_FLUID_EFFECT_DRINKING_PROTEIN;
+    public static boolean DISABLE_IF_FLUID_EFFECT_DRINKING_LATEX;
+    public static boolean DISABLE_IF_FLUID_EFFECT_BIOFUEL;
+    public static boolean DISABLE_IF_FLUID_EFFECT_SLUDGE;
+    public static boolean DISABLE_IF_FLUID_EFFECT_SEWAGE;
+    public static boolean DISABLE_IF_FLUID_EFFECT_MEAT;
+    public static boolean DISABLE_IF_FLUID_EFFECT_PROTEIN;
+    public static boolean DISABLE_IF_FLUID_EFFECT_LATEX;
     //</editor-fold>
 
     //<editor-fold desc="scp">
@@ -188,6 +200,19 @@ public final class OMEConfig
 
             IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX = CONFIG.getInt("Petrified Fuel Generator Max Power", "general.if.petrified_fuel_generator", -1, -1, 0x7fffffff, "-1 for no max limit to all auto-added default fuels");
             IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX = CONFIG.getInt("Petrified Fuel Generator Max Burn Time", "general.if.petrified_fuel_generator", -1, -1, 0x7fffffff, "-1 for no max limit to all auto-added default fuels");
+
+            DISABLE_IF_FLUID_EFFECT_DRINKING_BIOFUEL = CONFIG.getBoolean("Disable Effect On Drink", "general.if.fluid_effect.biofuel", false, "Disable Biofuel Potion Effect");
+            DISABLE_IF_FLUID_EFFECT_BIOFUEL = CONFIG.getBoolean("Disable Fluid Tile Effect", "general.if.fluid_effect.biofuel", false, "Disable Biofuel Potion Effect");
+            DISABLE_IF_FLUID_EFFECT_DRINKING_SLUDGE = CONFIG.getBoolean("Disable Effect On Drink", "general.if.fluid_effect.sludge", false, "Disable Sludge Potion Effect");
+            DISABLE_IF_FLUID_EFFECT_SLUDGE = CONFIG.getBoolean("Disable Fluid Tile Effect", "general.if.fluid_effect.sludge", false, "Disable Sludge Potion Effect");
+            DISABLE_IF_FLUID_EFFECT_DRINKING_SEWAGE = CONFIG.getBoolean("Disable Effect On Drink", "general.if.fluid_effect.sewage", false, "Disable Sewage Potion Effect");
+            DISABLE_IF_FLUID_EFFECT_SEWAGE = CONFIG.getBoolean("Disable Fluid Tile Effect", "general.if.fluid_effect.sewage", false, "Disable Sewage Potion Effect");
+            DISABLE_IF_FLUID_EFFECT_DRINKING_MEAT = CONFIG.getBoolean("Disable Effect On Drink", "general.if.fluid_effect.meat", false, "Disable Meat Potion Effect");
+            DISABLE_IF_FLUID_EFFECT_MEAT = CONFIG.getBoolean("Disable Fluid Tile Effect", "general.if.fluid_effect.meat", false, "Disable Meat Potion Effect");
+            DISABLE_IF_FLUID_EFFECT_DRINKING_PROTEIN = CONFIG.getBoolean("Disable Effect On Drink", "general.if.fluid_effect.protein", false, "Disable Protein Potion Effect");
+            DISABLE_IF_FLUID_EFFECT_PROTEIN = CONFIG.getBoolean("Disable Fluid Tile Effect", "general.if.fluid_effect.protein", false, "Disable Protein Potion Effect");
+            DISABLE_IF_FLUID_EFFECT_DRINKING_LATEX = CONFIG.getBoolean("Disable Effect On Drink", "general.if.fluid_effect.latex", false, "Disable Latex Potion Effect");
+            DISABLE_IF_FLUID_EFFECT_LATEX = CONFIG.getBoolean("Disable Fluid Tile Effect", "general.if.fluid_effect.latex", false, "Disable Latex Potion Effect");
             //</editor-fold>
 
             //<editor-fold desc="scp config">
