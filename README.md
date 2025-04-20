@@ -1,3 +1,7 @@
+[![Versions](https://img.shields.io/curseforge/game-versions/1159298?logo=curseforge&label=Game%20Version)](https://www.curseforge.com/minecraft/mc-mods/ome-tweaks)
+[![Downloads](https://img.shields.io/curseforge/dt/1159298?logo=curseforge&label=Downloads)](https://www.curseforge.com/minecraft/mc-mods/ome-tweaks)
+[![Downloads](https://img.shields.io/modrinth/dt/ome-tweaks?logo=modrinth&label=Downloads)](https://modrinth.com/mod/ome-tweaks)
+
 This mod aims to add a bunch of configurable QoL tweaks to other mods.
 
 ## Latest Features
@@ -21,39 +25,6 @@ This mod aims to add a bunch of configurable QoL tweaks to other mods.
 
 ## Dependency
 - Mixinbooter 10.0+
-
-## Config
-Here's an example/snapshot of the config file.
-Everything is set to `false` by default.
-```
-# Configuration file
-
-general {
-    # Enable OME Tweaks [default: false]
-    B:Enable=true
-
-    jei {
-        # Enable JEI Module / Whether mixins will be loaded [default: false]
-        B:Enable=true
-
-        category_order {
-            # Enable JEI Category Order [default: false]
-            B:Enable=true
-
-            # A list of jei category uids that determines the in-game jei displaying order [default: ]
-            S:"JEI Category Order" <
-                ORE_WASHER
-                ORE_FERMENTER
-                ORE_SIEVE
-                tconstruct.alloy
-                tconstruct.smeltery
-                tconstruct.casting_table
-                tconstruct.dryingrack
-                mctsmelteryio:casting_machine
-             >
-        }
-...
-```
 
 ## Credits
 This mod is created using [GregTechCEu's Buildscripts](https://github.com/GregTechCEu/Buildscripts)
