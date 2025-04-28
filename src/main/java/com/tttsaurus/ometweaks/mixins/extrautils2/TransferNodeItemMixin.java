@@ -13,7 +13,7 @@ import com.tttsaurus.fluidintetweaker.common.api.interaction.condition.IEventCon
 import com.tttsaurus.fluidintetweaker.common.api.util.BlockUtils;
 import com.tttsaurus.ometweaks.OMEConfig;
 import com.tttsaurus.ometweaks.OMETweaks;
-import com.tttsaurus.ometweaks.api.fluidintetweaker.InternalMethods;
+import com.tttsaurus.ometweaks.misc.fluidintetweaker.FITInternalMethods;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -52,7 +52,7 @@ public class TransferNodeItemMixin
     {
         if (!OMEConfig.ENABLE_XU2_NODE_MINING_FIT_COMPAT) return;
         if (!OMETweaks.IS_FLUIDINTETWEAKER_LOADED) return;
-        if (InternalMethods.instance == null) return;
+        if (FITInternalMethods.instance == null) return;
 
         TransferNodeItem this0 = (TransferNodeItem)(Object)this;
 
@@ -83,7 +83,7 @@ public class TransferNodeItemMixin
                 {
                     ingredientA = WorldIngredient.getFrom(world, OME_Tweaks$prevIngredientAPos);
                     ingredientB = WorldIngredient.getFrom(world, OME_Tweaks$prevIngredientBPos);
-                    if (InternalMethods.instance.FluidInteractionRecipeManager$recipeExists.invoke(ingredientA, ingredientB))
+                    if (FITInternalMethods.instance.FluidInteractionRecipeManager$recipeExists.invoke(ingredientA, ingredientB))
                         flag = false;
                 }
 
@@ -93,13 +93,13 @@ public class TransferNodeItemMixin
                     {
                         WorldIngredient ingredient = WorldIngredient.getFrom(world, pos.add(facing.getDirectionVec()));
 
-                        if (InternalMethods.instance.FluidInteractionRecipeManager$ingredientAExists.invoke(ingredient))
+                        if (FITInternalMethods.instance.FluidInteractionRecipeManager$ingredientAExists.invoke(ingredient))
                         {
                             ingredientA = ingredient;
                             for (EnumFacing facing1 : OME_Tweaks$surrounding)
                             {
                                 ingredientB = WorldIngredient.getFrom(world, pos.add(facing1.getDirectionVec()));
-                                if (InternalMethods.instance.FluidInteractionRecipeManager$recipeExists.invoke(ingredientA, ingredientB))
+                                if (FITInternalMethods.instance.FluidInteractionRecipeManager$recipeExists.invoke(ingredientA, ingredientB))
                                 {
                                     OME_Tweaks$prevIngredientAPos = pos.add(facing.getDirectionVec());
                                     OME_Tweaks$prevIngredientBPos = pos.add(facing1.getDirectionVec());
@@ -108,13 +108,13 @@ public class TransferNodeItemMixin
                                 }
                             }
                         }
-                        if (InternalMethods.instance.FluidInteractionRecipeManager$ingredientBExists.invoke(ingredient))
+                        if (FITInternalMethods.instance.FluidInteractionRecipeManager$ingredientBExists.invoke(ingredient))
                         {
                             ingredientB = ingredient;
                             for (EnumFacing facing1 : OME_Tweaks$surrounding)
                             {
                                 ingredientA = WorldIngredient.getFrom(world, pos.add(facing1.getDirectionVec()));
-                                if (InternalMethods.instance.FluidInteractionRecipeManager$recipeExists.invoke(ingredientA, ingredientB))
+                                if (FITInternalMethods.instance.FluidInteractionRecipeManager$recipeExists.invoke(ingredientA, ingredientB))
                                 {
                                     OME_Tweaks$prevIngredientBPos = pos.add(facing.getDirectionVec());
                                     OME_Tweaks$prevIngredientAPos = pos.add(facing1.getDirectionVec());
@@ -129,7 +129,7 @@ public class TransferNodeItemMixin
 
                 // recipe matches
 
-                ComplexOutput output = InternalMethods.instance.FluidInteractionRecipeManager$getRecipeOutput.invoke(ingredientA, ingredientB);
+                ComplexOutput output = FITInternalMethods.instance.FluidInteractionRecipeManager$getRecipeOutput.invoke(ingredientA, ingredientB);
 
                 if (output == null)
                 {
@@ -143,7 +143,7 @@ public class TransferNodeItemMixin
                 if (consumesA && ingredientA.getIngredientType() == WorldIngredientType.FLUID)
                 {
                     ingredientA.setIsFluidSource(false);
-                    if (InternalMethods.instance.FluidInteractionRecipeManager$recipeExists.invoke(ingredientA, ingredientB))
+                    if (FITInternalMethods.instance.FluidInteractionRecipeManager$recipeExists.invoke(ingredientA, ingredientB))
                         consumesA = false;
                     ingredientA.setIsFluidSource(isSourceA);
                 }

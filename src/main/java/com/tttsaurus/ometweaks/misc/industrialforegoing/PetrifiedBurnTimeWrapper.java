@@ -1,6 +1,5 @@
-package com.tttsaurus.ometweaks.api.industrialforegoing;
+package com.tttsaurus.ometweaks.misc.industrialforegoing;
 
-import com.buuz135.industrial.tile.generator.PetrifiedFuelGeneratorTile;
 import com.tttsaurus.ometweaks.OMEConfig;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeWrapper;

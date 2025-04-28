@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.api.industrialforegoing;
+package com.tttsaurus.ometweaks.misc.industrialforegoing;
 
 public class FuelDef
 {

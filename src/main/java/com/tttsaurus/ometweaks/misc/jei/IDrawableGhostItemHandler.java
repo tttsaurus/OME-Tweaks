@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.api.jei;
+package com.tttsaurus.ometweaks.misc.jei;
 
 public interface IDrawableGhostItemHandler
 {

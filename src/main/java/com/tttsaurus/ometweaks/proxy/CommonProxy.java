@@ -3,7 +3,7 @@ package com.tttsaurus.ometweaks.proxy;
 import com.tttsaurus.ometweaks.OMEConfig;
 import com.tttsaurus.ometweaks.OMETweaks;
 import com.tttsaurus.ometweaks.Tags;
-import com.tttsaurus.ometweaks.api.fluidintetweaker.InternalMethods;
+import com.tttsaurus.ometweaks.misc.fluidintetweaker.FITInternalMethods;
 import com.tttsaurus.ometweaks.eventhandler.industrialforegoing.InfinityDrillBlacklist;
 import com.tttsaurus.ometweaks.eventhandler.industrialforegoing.InfinityDrillHarvestLevel;
 import net.minecraftforge.common.MinecraftForge;
@@ -35,7 +35,7 @@ public class CommonProxy
 
         if (OMEConfig.ENABLE && OMEConfig.ENABLE_XU2_MODULE && OMEConfig.ENABLE_XU2_NODE_MINING_FIT_COMPAT && OMETweaks.IS_FLUIDINTETWEAKER_LOADED)
         {
-            InternalMethods.instance = new InternalMethods();
+            FITInternalMethods.instance = new FITInternalMethods();
         }
     }
 

@@ -1,7 +1,7 @@
 package com.tttsaurus.ometweaks;
 
-import com.tttsaurus.ometweaks.api.industrialforegoing.FuelDef;
-import com.tttsaurus.ometweaks.api.jei.CategoryModification;
+import com.tttsaurus.ometweaks.misc.industrialforegoing.FuelDef;
+import com.tttsaurus.ometweaks.misc.jei.CategoryModification;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;

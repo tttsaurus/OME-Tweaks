@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.api.jei;
+package com.tttsaurus.ometweaks.misc.jei;
 
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;

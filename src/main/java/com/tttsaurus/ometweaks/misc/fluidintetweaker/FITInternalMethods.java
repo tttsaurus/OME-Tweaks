@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.api.fluidintetweaker;
+package com.tttsaurus.ometweaks.misc.fluidintetweaker;
 
 import com.tttsaurus.fluidintetweaker.common.api.WorldIngredient;
 import com.tttsaurus.fluidintetweaker.common.api.interaction.ComplexOutput;
@@ -7,16 +7,16 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
 
-public class InternalMethods
+public class FITInternalMethods
 {
-    public static InternalMethods instance;
+    public static FITInternalMethods instance;
 
     public IFunc_1Param<Boolean, WorldIngredient> FluidInteractionRecipeManager$ingredientAExists;
     public IFunc_1Param<Boolean, WorldIngredient> FluidInteractionRecipeManager$ingredientBExists;
     public IFunc_2Param<Boolean, WorldIngredient, WorldIngredient> FluidInteractionRecipeManager$recipeExists;
     public IFunc_2Param<ComplexOutput, WorldIngredient, WorldIngredient> FluidInteractionRecipeManager$getRecipeOutput;
 
-    public InternalMethods()
+    public FITInternalMethods()
     {
         MethodHandles.Lookup lookup = MethodHandles.lookup();
 

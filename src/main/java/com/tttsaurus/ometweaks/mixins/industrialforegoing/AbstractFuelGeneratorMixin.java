@@ -5,7 +5,7 @@ import com.buuz135.industrial.utils.WorkUtils;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.tttsaurus.ometweaks.OMEConfig;
-import com.tttsaurus.ometweaks.api.industrialforegoing.FuelDef;
+import com.tttsaurus.ometweaks.misc.industrialforegoing.FuelDef;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
 import org.spongepowered.asm.mixin.Mixin;
