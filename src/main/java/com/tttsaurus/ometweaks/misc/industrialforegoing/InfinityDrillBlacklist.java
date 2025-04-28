@@ -1,15 +1,16 @@
-package com.tttsaurus.ometweaks.eventhandler.industrialforegoing;
+package com.tttsaurus.ometweaks.misc.industrialforegoing;
 
 import com.tttsaurus.ometweaks.OMEConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public final class InfinityDrillHarvestLevel
+public final class InfinityDrillBlacklist
 {
     @SubscribeEvent
     public static void onHarvestDrops(BlockEvent.HarvestDropsEvent event)
@@ -26,17 +27,12 @@ public final class InfinityDrillHarvestLevel
         IBlockState blockState = event.getState();
         Block block = blockState.getBlock();
 
-        boolean canHarvest = blockState.getMaterial().isToolNotRequired();
-
-        String requiredToolClass = block.getHarvestTool(blockState);
-        if (requiredToolClass == null)
-            canHarvest = true;
-        else if (OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.containsKey(requiredToolClass))
-        {
-            int toolLevel = OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.get(requiredToolClass);
-            if (toolLevel >= block.getHarvestLevel(blockState)) canHarvest = true;
-        }
-
-        if (!canHarvest) event.getDrops().clear();
+        ItemStack itemStack = new ItemStack(block, 1, block.getMetaFromState(blockState));
+        for (ItemStack blacklistItemStack : OMEConfig.IF_INFINITY_DRILL_BLACKLIST)
+            if (itemStack.isItemEqual(blacklistItemStack))
+            {
+                event.getDrops().clear();
+                return;
+            }
     }
 }

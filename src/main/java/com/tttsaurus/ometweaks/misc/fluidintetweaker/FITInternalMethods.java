@@ -9,8 +9,6 @@ import java.lang.reflect.Method;
 
 public class FITInternalMethods
 {
-    public static FITInternalMethods instance;
-
     public IFunc_1Param<Boolean, WorldIngredient> FluidInteractionRecipeManager$ingredientAExists;
     public IFunc_1Param<Boolean, WorldIngredient> FluidInteractionRecipeManager$ingredientBExists;
     public IFunc_2Param<Boolean, WorldIngredient, WorldIngredient> FluidInteractionRecipeManager$recipeExists;

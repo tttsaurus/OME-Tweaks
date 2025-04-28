@@ -1,6 +1,6 @@
 package com.tttsaurus.ometweaks.misc.industrialforegoing;
 
-public class FuelDef
+public final class FuelDef
 {
     // energy/tick
     public int rate;
