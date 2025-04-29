@@ -1,8 +1,9 @@
 package com.tttsaurus.ometweaks;
 
-import com.tttsaurus.ometweaks.misc.IOMETweaksModule;
 import com.tttsaurus.ometweaks.misc.OMETweaksModule;
+import com.tttsaurus.ometweaks.misc.OMETweaksModuleSignature;
 import net.minecraft.item.Item;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
@@ -12,7 +13,6 @@ import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,7 +30,7 @@ public class OMETweaks
     public static final Logger LOGGER = LogManager.getLogger(Tags.MODID);
 
     private static ASMDataTable asmDataTable;
-    private static Map<IOMETweaksModule, OMETweaksModule> modules = new HashMap<>();
+    private static Map<OMETweaksModule, OMETweaksModuleSignature> modules = new HashMap<>();
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -41,19 +41,19 @@ public class OMETweaks
         OMEConfig.loadConfig();
 
         asmDataTable = event.getAsmData();
-        asmDataTable.getAll(OMETweaksModule.class.getCanonicalName()).forEach(data ->
+        asmDataTable.getAll(OMETweaksModuleSignature.class.getCanonicalName()).forEach(data ->
         {
             String className = data.getClassName();
             try
             {
                 Class<?> clazz = Class.forName(className);
-                if (IOMETweaksModule.class.isAssignableFrom(clazz))
+                if (OMETweaksModule.class.isAssignableFrom(clazz))
                 {
-                    Class<? extends IOMETweaksModule> moduleClass = clazz.asSubclass(IOMETweaksModule.class);
+                    Class<? extends OMETweaksModule> moduleClass = clazz.asSubclass(OMETweaksModule.class);
                     try
                     {
-                        IOMETweaksModule module = moduleClass.newInstance();
-                        modules.put(module, moduleClass.getAnnotation(OMETweaksModule.class));
+                        OMETweaksModule module = moduleClass.newInstance();
+                        modules.put(module, moduleClass.getAnnotation(OMETweaksModuleSignature.class));
                     }
                     catch (IllegalAccessException | InstantiationException e)
                     {
@@ -68,10 +68,13 @@ public class OMETweaks
         });
         LOGGER.info("OME-Tweaks modules instantiated.");
 
-        for (Map.Entry<IOMETweaksModule, OMETweaksModule> entry: modules.entrySet())
+        for (Map.Entry<OMETweaksModule, OMETweaksModuleSignature> entry: modules.entrySet())
         {
-            IOMETweaksModule module = entry.getKey();
-            OMETweaksModule annotation = entry.getValue();
+            OMETweaksModule module = entry.getKey();
+            OMETweaksModuleSignature annotation = entry.getValue();
+
+            try { module.getClass().getDeclaredMethod("preInit", FMLPreInitializationEvent.class); }
+            catch (NoSuchMethodException | SecurityException e) { continue; }
 
             LOGGER.info("Calling preInit() of OME-Tweaks module '" + annotation.value() + "'.");
             module.preInit(event);
@@ -82,10 +85,13 @@ public class OMETweaks
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-        for (Map.Entry<IOMETweaksModule, OMETweaksModule> entry: modules.entrySet())
+        for (Map.Entry<OMETweaksModule, OMETweaksModuleSignature> entry: modules.entrySet())
         {
-            IOMETweaksModule module = entry.getKey();
-            OMETweaksModule annotation = entry.getValue();
+            OMETweaksModule module = entry.getKey();
+            OMETweaksModuleSignature annotation = entry.getValue();
+
+            try { module.getClass().getDeclaredMethod("init", FMLInitializationEvent.class); }
+            catch (NoSuchMethodException | SecurityException e) { continue; }
 
             LOGGER.info("Calling init() of OME-Tweaks module '" + annotation.value() + "'.");
             module.init(event);
@@ -96,10 +102,13 @@ public class OMETweaks
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-        for (Map.Entry<IOMETweaksModule, OMETweaksModule> entry: modules.entrySet())
+        for (Map.Entry<OMETweaksModule, OMETweaksModuleSignature> entry: modules.entrySet())
         {
-            IOMETweaksModule module = entry.getKey();
-            OMETweaksModule annotation = entry.getValue();
+            OMETweaksModule module = entry.getKey();
+            OMETweaksModuleSignature annotation = entry.getValue();
+
+            try { module.getClass().getDeclaredMethod("postInit", FMLPostInitializationEvent.class); }
+            catch (NoSuchMethodException | SecurityException e) { continue; }
 
             LOGGER.info("Calling postInit() of OME-Tweaks module '" + annotation.value() + "'.");
             module.postInit(event);
@@ -107,23 +116,37 @@ public class OMETweaks
         }
     }
 
-    @EventHandler
-    public void serverStarting(FMLServerStartingEvent event)
-    {
-        
-    }
-
     @SubscribeEvent
     public void registerItems(RegistryEvent.Register<Item> event)
     {
-        for (Map.Entry<IOMETweaksModule, OMETweaksModule> entry: modules.entrySet())
+        for (Map.Entry<OMETweaksModule, OMETweaksModuleSignature> entry: modules.entrySet())
         {
-            IOMETweaksModule module = entry.getKey();
-            OMETweaksModule annotation = entry.getValue();
+            OMETweaksModule module = entry.getKey();
+            OMETweaksModuleSignature annotation = entry.getValue();
+
+            try { module.getClass().getDeclaredMethod("registerItems", RegistryEvent.Register.class); }
+            catch (NoSuchMethodException | SecurityException e) { continue; }
 
             LOGGER.info("Calling registerItems() of OME-Tweaks module '" + annotation.value() + "'.");
             module.registerItems(event);
             LOGGER.info("Finished registerItems() of OME-Tweaks module '" + annotation.value() + "'.");
+        }
+    }
+
+    @SubscribeEvent
+    public void registerModels(ModelRegistryEvent event)
+    {
+        for (Map.Entry<OMETweaksModule, OMETweaksModuleSignature> entry: modules.entrySet())
+        {
+            OMETweaksModule module = entry.getKey();
+            OMETweaksModuleSignature annotation = entry.getValue();
+
+            try { module.getClass().getDeclaredMethod("registerModels", ModelRegistryEvent.class); }
+            catch (NoSuchMethodException | SecurityException e) { continue; }
+
+            LOGGER.info("Calling registerModels() of OME-Tweaks module '" + annotation.value() + "'.");
+            module.registerModels(event);
+            LOGGER.info("Finished registerModels() of OME-Tweaks module '" + annotation.value() + "'.");
         }
     }
 }

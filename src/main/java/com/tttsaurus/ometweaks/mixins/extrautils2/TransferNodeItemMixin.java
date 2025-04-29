@@ -12,8 +12,6 @@ import com.tttsaurus.fluidintetweaker.common.api.interaction.InteractionEventTyp
 import com.tttsaurus.fluidintetweaker.common.api.interaction.condition.IEventCondition;
 import com.tttsaurus.fluidintetweaker.common.api.util.BlockUtils;
 import com.tttsaurus.ometweaks.OMEConfig;
-import com.tttsaurus.ometweaks.OMETweaks;
-import com.tttsaurus.ometweaks.misc.fluidintetweaker.FITInternalMethods;
 import com.tttsaurus.ometweaks.misc.fluidintetweaker.FITModule;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;

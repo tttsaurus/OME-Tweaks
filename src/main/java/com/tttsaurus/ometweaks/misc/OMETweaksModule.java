@@ -1,14 +1,17 @@
 package com.tttsaurus.ometweaks.misc;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import net.minecraft.item.Item;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface OMETweaksModule
+public abstract class OMETweaksModule
 {
-    // module name
-    String value() default "Unspecified Module Name";
+    public void preInit(FMLPreInitializationEvent event) {}
+    public void init(FMLInitializationEvent event) {}
+    public void postInit(FMLPostInitializationEvent event) {}
+    public void registerItems(RegistryEvent.Register<Item> event) {}
+    public void registerModels(ModelRegistryEvent event) {}
 }

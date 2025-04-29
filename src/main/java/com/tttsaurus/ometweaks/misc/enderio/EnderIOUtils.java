@@ -4,7 +4,7 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 
 public final class EnderIOUtils
 {
-    public static void sendGrindingBallIMC(String translatedName, String oreDict, float grinding, float chance, float power, int durability)
+    public static void sendGrindingBallIMC(String oreDict, float grinding, float chance, float power, int durability)
     {
         FMLInterModComms.sendMessage("enderio", "recipe:xml",
                 String.format("""
@@ -14,6 +14,6 @@ public final class EnderIOUtils
                                 <item name="oredict:%s"/>
                             </grindingball>
                         </recipes>
-                        """, translatedName, grinding, chance, power, durability, oreDict));
+                        """, oreDict, grinding, chance, power, durability, oreDict));
     }
 }

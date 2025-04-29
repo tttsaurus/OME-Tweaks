@@ -64,4 +64,10 @@ dependencies {
 
     // Fluid Interaction Tweaker
     compileOnly rfg.deobf('curse.maven:fluid-interaction-tweaker-1094214:6136015')
+
+    // Ender IO
+    compileOnly rfg.deobf('curse.maven:ender-io-64578:4674244')
+
+    // Ender Core
+    compileOnly rfg.deobf('curse.maven:endercore-231868:4671384')
 }
