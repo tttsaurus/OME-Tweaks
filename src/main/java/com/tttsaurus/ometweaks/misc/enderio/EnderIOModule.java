@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.oredict.OreDictionary;
@@ -18,12 +19,14 @@ import java.util.*;
 public final class EnderIOModule extends OMETweaksModule
 {
     private static final Map<String, Item> items = new HashMap<>();
+    public final static boolean isModLoaded = Loader.isModLoaded("enderio");
 
     @Override
     public void preInit(FMLPreInitializationEvent event)
     {
         if (!OMEConfig.ENABLE) return;
         if (!OMEConfig.ENABLE_ENDERIO_MODULE) return;
+        if (!isModLoaded) return;
 
         if (OMEConfig.ENABLE_ENDERIO_CUSTOM_GRINDING_BALLS)
         {
@@ -37,6 +40,7 @@ public final class EnderIOModule extends OMETweaksModule
     {
         if (!OMEConfig.ENABLE) return;
         if (!OMEConfig.ENABLE_ENDERIO_MODULE) return;
+        if (!isModLoaded) return;
 
         for (Map.Entry<String, Item> entry: items.entrySet())
         {
@@ -65,6 +69,7 @@ public final class EnderIOModule extends OMETweaksModule
     {
         if (!OMEConfig.ENABLE) return;
         if (!OMEConfig.ENABLE_ENDERIO_MODULE) return;
+        if (!isModLoaded) return;
 
         for (Item item: items.values())
             ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
@@ -75,6 +80,7 @@ public final class EnderIOModule extends OMETweaksModule
     {
         if (!OMEConfig.ENABLE) return;
         if (!OMEConfig.ENABLE_ENDERIO_MODULE) return;
+        if (!isModLoaded) return;
 
         IForgeRegistry<Item> registry = event.getRegistry();
 

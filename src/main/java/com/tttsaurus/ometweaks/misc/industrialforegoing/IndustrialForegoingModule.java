@@ -10,10 +10,12 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 @OMETweaksModuleSignature("Industrial Foregoing")
 public final class IndustrialForegoingModule extends OMETweaksModule
 {
+    public final static boolean isModLoaded = Loader.isModLoaded("industrialforegoing");
+
     @Override
     public void init(FMLInitializationEvent event)
     {
-        if (Loader.isModLoaded("industrialforegoing"))
+        if (isModLoaded)
         {
             if (OMEConfig.ENABLE && OMEConfig.ENABLE_IF_MODULE && OMEConfig.ENABLE_IF_INFINITY_DRILL_BLACKLIST)
                 MinecraftForge.EVENT_BUS.register(InfinityDrillBlacklist.class);
