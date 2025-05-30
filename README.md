@@ -14,6 +14,7 @@ This mod aims to add a bunch of configurable QoL tweaks to other mods.
     - Support tweaking existing fuels
     - Optional jei page overhaul
   - Add options to disable fluid potion effects
+  - Add options to add custom animal rancher recipes
 - **SCP Lockdown**
   - Add config to disable several scp capabilities
 - **In World Crafting**
