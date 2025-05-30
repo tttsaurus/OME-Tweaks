@@ -1,12 +1,18 @@
 package com.tttsaurus.ometweaks;
 
 import com.tttsaurus.ometweaks.misc.enderio.GrindingBallData;
+import com.tttsaurus.ometweaks.misc.industrialforegoing.AnimalRancherOutput;
 import com.tttsaurus.ometweaks.misc.industrialforegoing.FuelDef;
 import com.tttsaurus.ometweaks.misc.jei.CategoryModification;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import java.util.*;
 
@@ -44,6 +50,9 @@ public final class OMEConfig
     public static boolean DISABLE_IF_FLUID_EFFECT_MEAT;
     public static boolean DISABLE_IF_FLUID_EFFECT_PROTEIN;
     public static boolean DISABLE_IF_FLUID_EFFECT_LATEX;
+    public static boolean ENABLE_IF_CUSTOM_ANIMAL_RANCHER;
+    public static boolean IF_CUSTOM_ANIMAL_RANCHER_FORTUNE;
+    public final static Map<Class<? extends Entity>, AnimalRancherOutput> IF_CUSTOM_ANIMAL_RANCHER_RECIPES = new HashMap<>();
     //</editor-fold>
 
     //<editor-fold desc="scp">
@@ -222,6 +231,71 @@ public final class OMEConfig
             DISABLE_IF_FLUID_EFFECT_PROTEIN = CONFIG.getBoolean("Disable Fluid Tile Effect", "general.if.fluid_effect.protein", false, "Disable Protein Potion Effect");
             DISABLE_IF_FLUID_EFFECT_DRINKING_LATEX = CONFIG.getBoolean("Disable Effect On Drink", "general.if.fluid_effect.latex", false, "Disable Latex Potion Effect");
             DISABLE_IF_FLUID_EFFECT_LATEX = CONFIG.getBoolean("Disable Fluid Tile Effect", "general.if.fluid_effect.latex", false, "Disable Latex Potion Effect");
+
+            ENABLE_IF_CUSTOM_ANIMAL_RANCHER = CONFIG.getBoolean("Enable", "general.if.animal_rancher", false, "Enable Industrial Foregoing Custom Animal Rancher");
+            IF_CUSTOM_ANIMAL_RANCHER_FORTUNE = CONFIG.getBoolean("Affected By Fortune", "general.if.animal_rancher", true, "Whether fortune addons work on those recipes");
+            String[] IF_CUSTOM_ANIMAL_RANCHER_RECIPES = CONFIG.getStringList("Custom Animal Rancher Recipes", "general.if.animal_rancher", new String[]{"minecraft:zombie, water * 100, minecraft:apple * 2, 0.1"}, "A list of custom animal rancher recipes (entity registry name, fluid output, item output, chance)");
+
+            OMEConfig.IF_CUSTOM_ANIMAL_RANCHER_RECIPES.clear();
+            for (String arg: IF_CUSTOM_ANIMAL_RANCHER_RECIPES)
+            {
+                String[] args = arg.split(",");
+                if (args.length != 4) continue;
+
+                String entityRegistryName = args[0].trim();
+                String fluidPart = args[1].trim();
+                String itemPart = args[2].trim();
+                String chancePart = args[3].trim();
+
+                String[] fluidArgs = fluidPart.split("\\*");
+                String[] itemArgs = itemPart.split("\\*");
+
+                if (fluidArgs.length != 2) continue;
+                if (itemArgs.length == 0 || itemArgs.length > 2) continue;
+
+                int fluidAmount = 0;
+                String fluidName = fluidArgs[0].trim();
+                try { fluidAmount = Integer.parseInt(fluidArgs[1].trim()); }
+                catch (NumberFormatException ignored) { continue; }
+
+                int itemCount = 1;
+                if (itemArgs.length == 2)
+                {
+                    try { itemCount = Integer.parseInt(itemArgs[1].trim()); }
+                    catch (NumberFormatException ignored) { continue; }
+                }
+                String[] itemNames = itemArgs[0].trim().split("@");
+                if (itemNames.length == 0 || itemNames.length > 2) continue;
+                String itemName = itemNames[0];
+                int itemMeta = 0;
+                if (itemNames.length == 2)
+                    try { itemMeta = Integer.parseInt(itemNames[1]); }
+                    catch (NumberFormatException ignored) { continue; }
+
+                float chance = 0f;
+                try { chance = Float.parseFloat(chancePart); }
+                catch (NumberFormatException ignored) { continue; }
+
+                EntityEntry entry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(entityRegistryName));
+                if (entry == null) continue;
+
+                Class<? extends Entity> key = entry.getEntityClass();
+                AnimalRancherOutput value = new AnimalRancherOutput();
+
+                Fluid fluid = FluidRegistry.getFluid(fluidName);
+                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemName));
+
+                if (fluid == null && item == null) continue;
+
+                if (fluid != null)
+                    value.fluidStack = new FluidStack(fluid, fluidAmount);
+                if (item != null)
+                    value.itemStack = new ItemStack(item, itemCount, itemMeta);
+
+                value.chance = chance;
+
+                OMEConfig.IF_CUSTOM_ANIMAL_RANCHER_RECIPES.put(key, value);
+            }
             //</editor-fold>
 
             //<editor-fold desc="scp config">
