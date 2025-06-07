@@ -4,8 +4,8 @@ import com.buuz135.industrial.tile.generator.AbstractFuelGenerator;
 import com.buuz135.industrial.utils.WorkUtils;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.tttsaurus.ometweaks.OMEConfig;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.FuelDef;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.IndustrialForegoingModule;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
 import org.spongepowered.asm.mixin.Mixin;
@@ -38,19 +38,19 @@ public class AbstractFuelGeneratorMixin
             {
                 burnTime = TileEntityFurnace.getItemBurnTime(temp);
 
-                if (OMEConfig.ENABLE_IF_PETRIFIED_FUEL_GENERATOR)
+                if (IndustrialForegoingModule.ENABLE_IF_PETRIFIED_FUEL_GENERATOR)
                 {
                     boolean specified = false;
-                    for (Map.Entry<ItemStack, FuelDef> entry: OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_FUELS.entrySet())
+                    for (Map.Entry<ItemStack, FuelDef> entry: IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_FUELS.entrySet())
                         if (this0.getCurrent().isItemEqual(entry.getKey()))
                         {
                             burnTime = entry.getValue().duration;
                             specified = true;
                             break;
                         }
-                    if (!specified && OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX != -1)
-                        burnTime = burnTime > OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX ?
-                                OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX : burnTime;
+                    if (!specified && IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX != -1)
+                        burnTime = burnTime > IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX ?
+                                IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX : burnTime;
                 }
 
                 temp.setCount(temp.getCount() - 1);

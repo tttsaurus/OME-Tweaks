@@ -34,7 +34,7 @@ public class PetrifiedBurnTimeWrapper implements IRecipeWrapper
     {
         FontRenderer fontRenderer = minecraft.fontRenderer;
 
-        if (OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_JEI_OVERHAUL)
+        if (IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_JEI_OVERHAUL)
         {
             fontRenderer.drawString(I18n.format("ometweaks.industrialforegoing.jei.petrified_fuel_gen.power", rate), 24, 8, Color.gray.getRGB());
             fontRenderer.drawString(I18n.format("ometweaks.industrialforegoing.jei.petrified_fuel_gen.burn_time", duration), 24, 20, Color.gray.getRGB());

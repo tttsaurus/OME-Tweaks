@@ -5,7 +5,7 @@ import com.buuz135.industrial.item.infinity.ItemInfinityDrill.DrillTier;
 import com.buuz135.industrial.utils.RayTraceUtils;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.tttsaurus.ometweaks.OMEConfig;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.IndustrialForegoingModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -59,21 +59,21 @@ public abstract class ItemInfinityDrillMixin
         {
             {
                 Block block = state.getBlock();
-                if (OMEConfig.ENABLE_IF_INFINITY_DRILL_BLACKLIST)
+                if (IndustrialForegoingModule.ENABLE_IF_INFINITY_DRILL_BLACKLIST)
                 {
                     ItemStack itemStack = new ItemStack(block, 1, block.getMetaFromState(state));
-                    for (ItemStack blacklistItemStack : OMEConfig.IF_INFINITY_DRILL_BLACKLIST)
+                    for (ItemStack blacklistItemStack : IndustrialForegoingModule.IF_INFINITY_DRILL_BLACKLIST)
                         if (itemStack.isItemEqual(blacklistItemStack)) return false;
                 }
-                if (OMEConfig.ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
+                if (IndustrialForegoingModule.ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
                 {
                     boolean canHarvest = state.getMaterial().isToolNotRequired();
                     String requiredToolClass = block.getHarvestTool(state);
                     if (requiredToolClass == null)
                         canHarvest = true;
-                    else if (OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.containsKey(requiredToolClass))
+                    else if (IndustrialForegoingModule.IF_INFINITY_DRILL_HARVEST_LEVEL.containsKey(requiredToolClass))
                     {
-                        int toolLevel = OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.get(requiredToolClass);
+                        int toolLevel = IndustrialForegoingModule.IF_INFINITY_DRILL_HARVEST_LEVEL.get(requiredToolClass);
                         if (toolLevel >= block.getHarvestLevel(state)) canHarvest = true;
                     }
                     if (!canHarvest) return false;
@@ -91,21 +91,21 @@ public abstract class ItemInfinityDrillMixin
                     IBlockState tempState = worldIn.getBlockState(blockPos);
                     Block block = tempState.getBlock();
                     if (block == Blocks.AIR) return;
-                    if (OMEConfig.ENABLE_IF_INFINITY_DRILL_BLACKLIST)
+                    if (IndustrialForegoingModule.ENABLE_IF_INFINITY_DRILL_BLACKLIST)
                     {
                         ItemStack itemStack = new ItemStack(block, 1, block.getMetaFromState(tempState));
-                        for (ItemStack blacklistItemStack : OMEConfig.IF_INFINITY_DRILL_BLACKLIST)
+                        for (ItemStack blacklistItemStack : IndustrialForegoingModule.IF_INFINITY_DRILL_BLACKLIST)
                             if (itemStack.isItemEqual(blacklistItemStack)) return;
                     }
-                    if (OMEConfig.ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
+                    if (IndustrialForegoingModule.ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
                     {
                         boolean canHarvest = tempState.getMaterial().isToolNotRequired();
                         String requiredToolClass = block.getHarvestTool(tempState);
                         if (requiredToolClass == null)
                             canHarvest = true;
-                        else if (OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.containsKey(requiredToolClass))
+                        else if (IndustrialForegoingModule.IF_INFINITY_DRILL_HARVEST_LEVEL.containsKey(requiredToolClass))
                         {
-                            int toolLevel = OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.get(requiredToolClass);
+                            int toolLevel = IndustrialForegoingModule.IF_INFINITY_DRILL_HARVEST_LEVEL.get(requiredToolClass);
                             if (toolLevel >= block.getHarvestLevel(tempState)) canHarvest = true;
                         }
                         if (!canHarvest) return;
@@ -142,8 +142,8 @@ public abstract class ItemInfinityDrillMixin
     @WrapMethod(method = "getToolClasses", remap = false)
     public Set<String> getToolClasses(ItemStack stack, Operation<Set<String>> original)
     {
-        if (OMEConfig.ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
-            return OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.keySet();
+        if (IndustrialForegoingModule.ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
+            return IndustrialForegoingModule.IF_INFINITY_DRILL_HARVEST_LEVEL.keySet();
         else
             return original.call(stack);
     }
@@ -156,21 +156,21 @@ public abstract class ItemInfinityDrillMixin
     public boolean canHarvestBlock(IBlockState blockIn, Operation<Boolean> original)
     {
         Block block = blockIn.getBlock();
-        if (OMEConfig.ENABLE_IF_INFINITY_DRILL_BLACKLIST)
+        if (IndustrialForegoingModule.ENABLE_IF_INFINITY_DRILL_BLACKLIST)
         {
             ItemStack itemStack = new ItemStack(block, 1, block.getMetaFromState(blockIn));
-            for (ItemStack blacklistItemStack : OMEConfig.IF_INFINITY_DRILL_BLACKLIST)
+            for (ItemStack blacklistItemStack : IndustrialForegoingModule.IF_INFINITY_DRILL_BLACKLIST)
                 if (itemStack.isItemEqual(blacklistItemStack)) return false;
         }
-        if (OMEConfig.ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
+        if (IndustrialForegoingModule.ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
         {
             boolean canHarvest = blockIn.getMaterial().isToolNotRequired();
             String requiredToolClass = block.getHarvestTool(blockIn);
             if (requiredToolClass == null)
                 canHarvest = true;
-            else if (OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.containsKey(requiredToolClass))
+            else if (IndustrialForegoingModule.IF_INFINITY_DRILL_HARVEST_LEVEL.containsKey(requiredToolClass))
             {
-                int toolLevel = OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.get(requiredToolClass);
+                int toolLevel = IndustrialForegoingModule.IF_INFINITY_DRILL_HARVEST_LEVEL.get(requiredToolClass);
                 if (toolLevel >= block.getHarvestLevel(blockIn)) canHarvest = true;
             }
             return canHarvest;
@@ -181,12 +181,12 @@ public abstract class ItemInfinityDrillMixin
     @Inject(method = "<init>", at = @At("RETURN"), remap = false)
     public void onConstruct(CallbackInfo ci)
     {
-        if (OMEConfig.ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
+        if (IndustrialForegoingModule.ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
         {
             Item this0 = (Item)(Object)this;
             this0.setHarvestLevel("pickaxe", -1);
             this0.setHarvestLevel("shovel", -1);
-            for (Map.Entry<String, Integer> entry: OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.entrySet())
+            for (Map.Entry<String, Integer> entry: IndustrialForegoingModule.IF_INFINITY_DRILL_HARVEST_LEVEL.entrySet())
                 this0.setHarvestLevel(entry.getKey(), entry.getValue());
         }
     }

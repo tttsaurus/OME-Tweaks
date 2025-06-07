@@ -4,8 +4,8 @@ import com.buuz135.industrial.tile.agriculture.AnimalResourceHarvesterTile;
 import com.buuz135.industrial.utils.ItemStackUtils;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.tttsaurus.ometweaks.OMEConfig;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.AnimalRancherOutput;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.IndustrialForegoingModule;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -32,7 +32,7 @@ public class AnimalResourceHarvesterTileMixin
     @Inject(method = "work", at = @At("TAIL"), cancellable = true, remap = false)
     public void afterWork(CallbackInfoReturnable<Float> cir)
     {
-        if (!OMEConfig.ENABLE_IF_CUSTOM_ANIMAL_RANCHER) return;
+        if (!IndustrialForegoingModule.ENABLE_IF_CUSTOM_ANIMAL_RANCHER) return;
         if (OME_Tweaks$hasWorked)
         {
             OME_Tweaks$hasWorked = false;
@@ -49,13 +49,13 @@ public class AnimalResourceHarvesterTileMixin
             remap = false)
     public int extraWork(AnimalResourceHarvesterTile instance, Operation<Integer> original)
     {
-        if (!OMEConfig.ENABLE_IF_CUSTOM_ANIMAL_RANCHER)
+        if (!IndustrialForegoingModule.ENABLE_IF_CUSTOM_ANIMAL_RANCHER)
             return original.call(instance);
 
         OME_Tweaks$hasWorked = false;
         int fortune = instance.getFortuneLevel();
 
-        for (Map.Entry<Class<? extends Entity>, AnimalRancherOutput> entry: OMEConfig.IF_CUSTOM_ANIMAL_RANCHER_RECIPES.entrySet())
+        for (Map.Entry<Class<? extends Entity>, AnimalRancherOutput> entry: IndustrialForegoingModule.IF_CUSTOM_ANIMAL_RANCHER_RECIPES.entrySet())
         {
             AnimalRancherOutput output = entry.getValue();
             for (Entity entity: instance.getWorld().getEntitiesWithinAABB(entry.getKey(), instance.getWorkingArea()))
@@ -64,7 +64,7 @@ public class AnimalResourceHarvesterTileMixin
                 {
                     if (output.itemStack != null && !ItemStackUtils.isInventoryFull(outItems))
                     {
-                        if (!OMEConfig.IF_CUSTOM_ANIMAL_RANCHER_FORTUNE || fortune <= 0)
+                        if (!IndustrialForegoingModule.IF_CUSTOM_ANIMAL_RANCHER_FORTUNE || fortune <= 0)
                             ItemHandlerHelper.insertItem(outItems, output.itemStack.copy(), false);
                         else
                         {
@@ -76,7 +76,7 @@ public class AnimalResourceHarvesterTileMixin
                     }
                     if (output.fluidStack != null)
                     {
-                        if (!OMEConfig.IF_CUSTOM_ANIMAL_RANCHER_FORTUNE || fortune <= 0)
+                        if (!IndustrialForegoingModule.IF_CUSTOM_ANIMAL_RANCHER_FORTUNE || fortune <= 0)
                             tank.fill(output.fluidStack.copy(), true);
                         else
                         {

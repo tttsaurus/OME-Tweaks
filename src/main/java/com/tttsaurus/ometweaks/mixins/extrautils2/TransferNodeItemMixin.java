@@ -11,7 +11,7 @@ import com.tttsaurus.fluidintetweaker.common.api.interaction.InteractionEvent;
 import com.tttsaurus.fluidintetweaker.common.api.interaction.InteractionEventType;
 import com.tttsaurus.fluidintetweaker.common.api.interaction.condition.IEventCondition;
 import com.tttsaurus.fluidintetweaker.common.api.util.BlockUtils;
-import com.tttsaurus.ometweaks.OMEConfig;
+import com.tttsaurus.ometweaks.integration.extrautils2.ExtraUtils2Module;
 import com.tttsaurus.ometweaks.integration.fluidintetweaker.FITModule;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
@@ -49,7 +49,7 @@ public class TransferNodeItemMixin
     @Inject(method = "processBuffer(Lnet/minecraftforge/items/IItemHandler;)V", at = @At("HEAD"), remap = false)
     public void addFluidInteractionTweakerCompat(IItemHandler attached, CallbackInfo ci)
     {
-        if (!OMEConfig.ENABLE_XU2_NODE_MINING_FIT_COMPAT) return;
+        if (!ExtraUtils2Module.ENABLE_XU2_NODE_MINING_FIT_COMPAT) return;
         if (!FITModule.isModLoaded) return;
         if (FITModule.internalMethods == null) return;
 

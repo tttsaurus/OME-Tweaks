@@ -31,9 +31,9 @@ public final class InfinityDrillHarvestLevel
         String requiredToolClass = block.getHarvestTool(blockState);
         if (requiredToolClass == null)
             canHarvest = true;
-        else if (OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.containsKey(requiredToolClass))
+        else if (IndustrialForegoingModule.IF_INFINITY_DRILL_HARVEST_LEVEL.containsKey(requiredToolClass))
         {
-            int toolLevel = OMEConfig.IF_INFINITY_DRILL_HARVEST_LEVEL.get(requiredToolClass);
+            int toolLevel = IndustrialForegoingModule.IF_INFINITY_DRILL_HARVEST_LEVEL.get(requiredToolClass);
             if (toolLevel >= block.getHarvestLevel(blockState)) canHarvest = true;
         }
 

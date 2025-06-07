@@ -28,7 +28,7 @@ public final class InfinityDrillBlacklist
         Block block = blockState.getBlock();
 
         ItemStack itemStack = new ItemStack(block, 1, block.getMetaFromState(blockState));
-        for (ItemStack blacklistItemStack : OMEConfig.IF_INFINITY_DRILL_BLACKLIST)
+        for (ItemStack blacklistItemStack : IndustrialForegoingModule.IF_INFINITY_DRILL_BLACKLIST)
             if (itemStack.isItemEqual(blacklistItemStack))
             {
                 event.getDrops().clear();

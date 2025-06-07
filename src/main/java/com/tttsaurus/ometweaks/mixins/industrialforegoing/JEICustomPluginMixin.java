@@ -5,8 +5,8 @@ import com.buuz135.industrial.proxy.BlockRegistry;
 import com.buuz135.industrial.tile.generator.PetrifiedFuelGeneratorTile;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.tttsaurus.ometweaks.OMEConfig;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.FuelDef;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.IndustrialForegoingModule;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.PetrifiedBurnTimeCategory;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.PetrifiedBurnTimeWrapper;
 import mezz.jei.api.IModRegistry;
@@ -43,10 +43,10 @@ public class JEICustomPluginMixin
             remap = false)
     public void addMyPetrifiedFuelRecipes(IModRegistry instance, Collection<?> objects, String s, Operation<Void> original)
     {
-        if (OMEConfig.ENABLE_IF_PETRIFIED_FUEL_GENERATOR)
+        if (IndustrialForegoingModule.ENABLE_IF_PETRIFIED_FUEL_GENERATOR)
         {
             List<PetrifiedBurnTimeWrapper> petrifiedBurnTimeWrappers = new ArrayList<>();
-            List<ItemStack> modifiedItems = new CopyOnWriteArrayList<>(OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_FUELS.keySet());
+            List<ItemStack> modifiedItems = new CopyOnWriteArrayList<>(IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_FUELS.keySet());
 
             float burnTimeMultiplier = BlockRegistry.petrifiedFuelGeneratorBlock.getBurnTimeMultiplier();
 
@@ -58,7 +58,7 @@ public class JEICustomPluginMixin
                     if (itemStack.isItemEqual(modifiedItem))
                     {
                         modifiedItems.remove(modifiedItem);
-                        FuelDef fuelDef = OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_FUELS.get(modifiedItem);
+                        FuelDef fuelDef = IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_FUELS.get(modifiedItem);
                         petrifiedBurnTimeWrappers.add(new PetrifiedBurnTimeWrapper(modifiedItem, (int)(fuelDef.duration * burnTimeMultiplier), fuelDef.rate));
                         modified = true;
                         break;
@@ -68,19 +68,19 @@ public class JEICustomPluginMixin
                 {
                     int duration = TileEntityFurnace.getItemBurnTime(itemStack);
                     int rate = (int)PetrifiedFuelGeneratorTile.getEnergy(duration);
-                    if (OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX != -1)
-                        duration = duration > OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX ?
-                                OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX : duration;
-                    if (OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX != -1)
-                        rate = rate > OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX ?
-                                OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX : rate;
+                    if (IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX != -1)
+                        duration = duration > IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX ?
+                                IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX : duration;
+                    if (IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX != -1)
+                        rate = rate > IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX ?
+                                IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX : rate;
                     petrifiedBurnTimeWrappers.add(new PetrifiedBurnTimeWrapper(itemStack, (int)(duration * burnTimeMultiplier), rate));
                 }
             });
 
             for (ItemStack modifiedItem: modifiedItems)
             {
-                FuelDef fuelDef = OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_FUELS.get(modifiedItem);
+                FuelDef fuelDef = IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_FUELS.get(modifiedItem);
                 petrifiedBurnTimeWrappers.add(new PetrifiedBurnTimeWrapper(modifiedItem, (int)(fuelDef.duration * burnTimeMultiplier), fuelDef.rate));
             }
 
@@ -103,7 +103,7 @@ public class JEICustomPluginMixin
             remap = false)
     public void addMyPetrifiedBurnTimeCategory(IRecipeCategoryRegistration instance, IRecipeCategory[] iRecipeCategories, Operation<Void> original)
     {
-        if (OMEConfig.ENABLE_IF_PETRIFIED_FUEL_GENERATOR)
+        if (IndustrialForegoingModule.ENABLE_IF_PETRIFIED_FUEL_GENERATOR)
         {
             OME_Tweaks$petrifiedBurnTimeCategory = new PetrifiedBurnTimeCategory(instance.getJeiHelpers().getGuiHelper());
 

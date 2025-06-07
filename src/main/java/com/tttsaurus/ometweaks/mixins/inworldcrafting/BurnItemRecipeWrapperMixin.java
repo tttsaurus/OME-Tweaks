@@ -2,7 +2,7 @@ package com.tttsaurus.ometweaks.mixins.inworldcrafting;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.tttsaurus.ometweaks.OMEConfig;
+import com.tttsaurus.ometweaks.integration.inworldcrafting.InWorldCraftingModule;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.resources.I18n;
@@ -25,7 +25,7 @@ public class BurnItemRecipeWrapperMixin
     @WrapMethod(method = "drawInfo", remap = false)
     public void drawInfo(Minecraft minecraft, int recipeWidth, int recipeHeight, int mouseX, int mouseY, Operation<Void> original)
     {
-        if (OMEConfig.ENABLE_IWC_JEI_I18N)
+        if (InWorldCraftingModule.ENABLE_IWC_JEI_I18N)
         {
             FontRenderer renderer = minecraft.fontRenderer;
             renderer.drawStringWithShadow(I18n.format("ometweaks.inworldcrafting.jei.burn_item_recipe.str2", recipe.getTicks()), 1, 30, 0xFFFFFF);

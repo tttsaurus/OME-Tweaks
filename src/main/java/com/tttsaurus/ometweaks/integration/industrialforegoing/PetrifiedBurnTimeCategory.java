@@ -30,7 +30,7 @@ public class PetrifiedBurnTimeCategory implements IRecipeCategory<PetrifiedBurnT
     @Override
     public String getTitle()
     {
-        if (OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_JEI_OVERHAUL)
+        if (IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_JEI_OVERHAUL)
             return I18n.format("ometweaks.industrialforegoing.jei.petrified_fuel_gen.title");
         else
             return "Petrified Generator Burn Time";
@@ -45,7 +45,7 @@ public class PetrifiedBurnTimeCategory implements IRecipeCategory<PetrifiedBurnT
     @Override
     public IDrawable getBackground()
     {
-        if (OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_JEI_OVERHAUL)
+        if (IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_JEI_OVERHAUL)
             return guiHelper.createDrawable(new ResourceLocation("minecraft", "textures/gui/container/furnace.png"), 55, 38 + 14, 18, 28, 3, 3, 0, 120);
         else
             return guiHelper.createDrawable(new ResourceLocation("minecraft", "textures/gui/container/furnace.png"), 55, 38 + 14, 18, 18, 3, 3, 0, 120);

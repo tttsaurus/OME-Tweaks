@@ -1,7 +1,7 @@
 package com.tttsaurus.ometweaks;
 
-import com.tttsaurus.ometweaks.integration.OMETweaksModule;
-import com.tttsaurus.ometweaks.integration.OMETweaksModuleSignature;
+import com.tttsaurus.ometweaks.integration.*;
+import com.tttsaurus.ometweaks.utils.FileUtils;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -16,6 +16,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,100 +31,138 @@ public class OMETweaks
 {
     public static final Logger LOGGER = LogManager.getLogger(Tags.MODID);
 
-    private static ASMDataTable asmDataTable;
-    private static Map<OMETweaksModule, OMETweaksModuleSignature> modules = new HashMap<>();
+    public static final Map<OMETweaksModule, OMETweaksModuleSignature> MODULES = new HashMap<>();
+    public static final Map<OMETweaksModule, ConfigLoadingData> MODULE_CONFIGS = new HashMap<>();
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
         MinecraftForge.EVENT_BUS.register(this);
 
-        OMEConfig.CONFIG = new Configuration(event.getSuggestedConfigurationFile());
-        OMEConfig.loadConfig();
+        ASMDataTable asmDataTable = event.getAsmData();
 
-        asmDataTable = event.getAsmData();
-        asmDataTable.getAll(OMETweaksModuleSignature.class.getCanonicalName()).forEach(data ->
+        if (OMEConfig.CONFIG == null)
         {
-            String className = data.getClassName();
-            try
+            OMEConfig.CONFIG = new Configuration(FileUtils.makeFile("ometweaks.cfg"));
+            OMEConfig.init();
+        }
+
+        LOGGER.info("OME-Tweaks starts writing module classes to local.");
+        try
+        {
+            RandomAccessFile raf = new RandomAccessFile(FileUtils.getFile("modules.cfg"), "rw");
+            raf.setLength(0);
+            raf.seek(0);
+
+            asmDataTable.getAll(OMETweaksModuleSignature.class.getCanonicalName()).forEach(data ->
             {
-                Class<?> clazz = Class.forName(className);
-                if (OMETweaksModule.class.isAssignableFrom(clazz))
+                String className = data.getClassName();
+                try
                 {
-                    Class<? extends OMETweaksModule> moduleClass = clazz.asSubclass(OMETweaksModule.class);
-                    try
+                    Class<?> clazz = Class.forName(className);
+                    if (OMETweaksModule.class.isAssignableFrom(clazz))
                     {
-                        OMETweaksModule module = moduleClass.newInstance();
-                        modules.put(module, moduleClass.getAnnotation(OMETweaksModuleSignature.class));
-                    }
-                    catch (IllegalAccessException | InstantiationException e)
-                    {
-                        LOGGER.throwing(e);
+                        Class<? extends OMETweaksModule> moduleClass = clazz.asSubclass(OMETweaksModule.class);
+                        try
+                        {
+                            OMETweaksModule module = moduleClass.newInstance();
+                            try
+                            {
+                                raf.writeBytes(module.getClass().getName() + "\n");
+                            }
+                            catch (IOException ignored) { }
+                        }
+                        catch (IllegalAccessException | InstantiationException e)
+                        {
+                            LOGGER.throwing(e);
+                        }
                     }
                 }
-            }
-            catch (ClassNotFoundException e)
-            {
-                LOGGER.throwing(e);
-            }
-        });
-        LOGGER.info("OME-Tweaks modules instantiated.");
+                catch (ClassNotFoundException e)
+                {
+                    LOGGER.throwing(e);
+                }
+            });
 
-        for (Map.Entry<OMETweaksModule, OMETweaksModuleSignature> entry: modules.entrySet())
+            raf.close();
+        }
+        catch (IOException ignored) { }
+        LOGGER.info("OME-Tweaks finished writing module classes to local.");
+
+        LOGGER.info("Pre Init Stage");
+        for (Map.Entry<OMETweaksModule, OMETweaksModuleSignature> entry: MODULES.entrySet())
         {
             OMETweaksModule module = entry.getKey();
             OMETweaksModuleSignature annotation = entry.getValue();
 
+            ConfigLoadingData data = MODULE_CONFIGS.get(module);
+            if (data != null && data.stages.contains(LoadingStage.PRE_INIT))
+            {
+                LOGGER.info("Load configs for OME-Tweaks module [" + annotation.value() + "].");
+                OMEConfig.invokeLoadConfig(module, data.loadConfigMethod);
+            }
+
             try { module.getClass().getDeclaredMethod("preInit", FMLPreInitializationEvent.class); }
             catch (NoSuchMethodException | SecurityException e) { continue; }
 
-            LOGGER.info("Calling preInit() of OME-Tweaks module '" + annotation.value() + "'.");
+            LOGGER.info("Invoke preInit() of OME-Tweaks module [" + annotation.value() + "].");
             module.preInit(event);
-            LOGGER.info("Finished preInit() of OME-Tweaks module '" + annotation.value() + "'.");
         }
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-        for (Map.Entry<OMETweaksModule, OMETweaksModuleSignature> entry: modules.entrySet())
+        LOGGER.info("Init Stage");
+        for (Map.Entry<OMETweaksModule, OMETweaksModuleSignature> entry: MODULES.entrySet())
         {
             OMETweaksModule module = entry.getKey();
             OMETweaksModuleSignature annotation = entry.getValue();
 
+            ConfigLoadingData data = MODULE_CONFIGS.get(module);
+            if (data != null && data.stages.contains(LoadingStage.INIT))
+            {
+                LOGGER.info("Load configs for OME-Tweaks module [" + annotation.value() + "].");
+                OMEConfig.invokeLoadConfig(module, data.loadConfigMethod);
+            }
+
             try { module.getClass().getDeclaredMethod("init", FMLInitializationEvent.class); }
             catch (NoSuchMethodException | SecurityException e) { continue; }
 
-            LOGGER.info("Calling init() of OME-Tweaks module '" + annotation.value() + "'.");
+            LOGGER.info("Invoke init() of OME-Tweaks module [" + annotation.value() + "].");
             module.init(event);
-            LOGGER.info("Finished init() of OME-Tweaks module '" + annotation.value() + "'.");
         }
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-        // guarantee that items and entities are registered
-        OMEConfig.loadConfig();
-
-        for (Map.Entry<OMETweaksModule, OMETweaksModuleSignature> entry: modules.entrySet())
+        LOGGER.info("Post Init Stage");
+        for (Map.Entry<OMETweaksModule, OMETweaksModuleSignature> entry: MODULES.entrySet())
         {
             OMETweaksModule module = entry.getKey();
             OMETweaksModuleSignature annotation = entry.getValue();
 
+            ConfigLoadingData data = MODULE_CONFIGS.get(module);
+            if (data != null && data.stages.contains(LoadingStage.POST_INIT))
+            {
+                LOGGER.info("Load configs for OME-Tweaks module [" + annotation.value() + "].");
+                OMEConfig.invokeLoadConfig(module, data.loadConfigMethod);
+            }
+
             try { module.getClass().getDeclaredMethod("postInit", FMLPostInitializationEvent.class); }
             catch (NoSuchMethodException | SecurityException e) { continue; }
 
-            LOGGER.info("Calling postInit() of OME-Tweaks module '" + annotation.value() + "'.");
+            LOGGER.info("Invoke postInit() of OME-Tweaks module [" + annotation.value() + "].");
             module.postInit(event);
-            LOGGER.info("Finished postInit() of OME-Tweaks module '" + annotation.value() + "'.");
         }
     }
 
     @SubscribeEvent
     public void registerItems(RegistryEvent.Register<Item> event)
     {
-        for (Map.Entry<OMETweaksModule, OMETweaksModuleSignature> entry: modules.entrySet())
+        LOGGER.info("Register Items Stage");
+        for (Map.Entry<OMETweaksModule, OMETweaksModuleSignature> entry: MODULES.entrySet())
         {
             OMETweaksModule module = entry.getKey();
             OMETweaksModuleSignature annotation = entry.getValue();
@@ -130,16 +170,16 @@ public class OMETweaks
             try { module.getClass().getDeclaredMethod("registerItems", RegistryEvent.Register.class); }
             catch (NoSuchMethodException | SecurityException e) { continue; }
 
-            LOGGER.info("Calling registerItems() of OME-Tweaks module '" + annotation.value() + "'.");
+            LOGGER.info("Invoke registerItems() of OME-Tweaks module [" + annotation.value() + "].");
             module.registerItems(event);
-            LOGGER.info("Finished registerItems() of OME-Tweaks module '" + annotation.value() + "'.");
         }
     }
 
     @SubscribeEvent
     public void registerModels(ModelRegistryEvent event)
     {
-        for (Map.Entry<OMETweaksModule, OMETweaksModuleSignature> entry: modules.entrySet())
+        LOGGER.info("Register Models Stage");
+        for (Map.Entry<OMETweaksModule, OMETweaksModuleSignature> entry: MODULES.entrySet())
         {
             OMETweaksModule module = entry.getKey();
             OMETweaksModuleSignature annotation = entry.getValue();
@@ -147,9 +187,8 @@ public class OMETweaks
             try { module.getClass().getDeclaredMethod("registerModels", ModelRegistryEvent.class); }
             catch (NoSuchMethodException | SecurityException e) { continue; }
 
-            LOGGER.info("Calling registerModels() of OME-Tweaks module '" + annotation.value() + "'.");
+            LOGGER.info("Invoke registerModels() of OME-Tweaks module [" + annotation.value() + "].");
             module.registerModels(event);
-            LOGGER.info("Finished registerModels() of OME-Tweaks module '" + annotation.value() + "'.");
         }
     }
 }

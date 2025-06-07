@@ -4,9 +4,9 @@ import com.buuz135.industrial.tile.generator.AbstractFuelGenerator;
 import com.buuz135.industrial.tile.generator.PetrifiedFuelGeneratorTile;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.tttsaurus.ometweaks.OMEConfig;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.FuelDef;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.IFuelGetter;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.IndustrialForegoingModule;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
 import org.spongepowered.asm.mixin.Mixin;
@@ -55,18 +55,18 @@ public class PetrifiedFuelGeneratorTileMixin
     @WrapMethod(method = "getEnergyProduced", remap = false)
     public long getEnergyProduced(int burnTime, Operation<Long> original)
     {
-        if (OMEConfig.ENABLE_IF_PETRIFIED_FUEL_GENERATOR)
+        if (IndustrialForegoingModule.ENABLE_IF_PETRIFIED_FUEL_GENERATOR)
         {
             ItemStack itemStack = OME_Tweaks$fuelGetter.get();
             if (itemStack == null) return PetrifiedFuelGeneratorTile.getEnergy(burnTime);
 
             burnTime = TileEntityFurnace.getItemBurnTime(itemStack);
             long power = PetrifiedFuelGeneratorTile.getEnergy(burnTime);
-            if (OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX != -1)
-                power = power > OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX ?
-                        OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX : power;
+            if (IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX != -1)
+                power = power > IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX ?
+                        IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX : power;
 
-            for (Map.Entry<ItemStack, FuelDef> entry: OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_FUELS.entrySet())
+            for (Map.Entry<ItemStack, FuelDef> entry: IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_FUELS.entrySet())
                 if (itemStack.isItemEqual(entry.getKey()))
                     return entry.getValue().rate;
             return power;
@@ -82,11 +82,11 @@ public class PetrifiedFuelGeneratorTileMixin
     @WrapMethod(method = "acceptsInputStack", remap = false)
     private static boolean acceptsInputStack(ItemStack stack, Operation<Boolean> original)
     {
-        if (OMEConfig.ENABLE_IF_PETRIFIED_FUEL_GENERATOR)
+        if (IndustrialForegoingModule.ENABLE_IF_PETRIFIED_FUEL_GENERATOR)
         {
             boolean accept = original.call(stack);
 
-            for (ItemStack fuel: OMEConfig.IF_PETRIFIED_FUEL_GENERATOR_FUELS.keySet())
+            for (ItemStack fuel: IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_FUELS.keySet())
                 if (stack.isItemEqual(fuel) && !stack.isEmpty())
                     accept = true;
 

@@ -13,7 +13,7 @@ import alexiy.secure.contain.protect.capability.zombievirus.Infection;
 import alexiy.secure.contain.protect.events.CommonEvents;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.tttsaurus.ometweaks.OMEConfig;
+import com.tttsaurus.ometweaks.integration.scp.SCPModule;
 import com.tttsaurus.ometweaks.integration.scp.SCPNegativeCapabilities;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -60,38 +60,36 @@ public class CommonEventsMixin
             OME_Tweaks$negativeCapabilityCache.put(player, capabilities);
         }
 
-        if (OMEConfig.DISABLE_SCP_SLEEP_DEPRIVATION_CAP)
+        if (SCPModule.DISABLE_SCP_SLEEP_DEPRIVATION_CAP)
             capabilities.sleepDeprivation.cure(player);
 
-        if (OMEConfig.DISABLE_SCP_SHADOW_INFESTATION_CAP)
+        if (SCPModule.DISABLE_SCP_SHADOW_INFESTATION_CAP)
         {
             capabilities.shadowInfestation.setInfestationStage(0);
             capabilities.shadowInfestation.setInfestationTime(-1);
         }
 
-        if (OMEConfig.DISABLE_SCP_BLOODSTONE_CAP)
+        if (SCPModule.DISABLE_SCP_BLOODSTONE_CAP)
             capabilities.bloodstone.resetBloodstoneState();
 
-        if (OMEConfig.DISABLE_SCP_INFECTION_CAP)
+        if (SCPModule.DISABLE_SCP_INFECTION_CAP)
         {
             capabilities.infection.setActive(false);
             capabilities.infection.setDuration(0);
         }
 
-        if (OMEConfig.DISABLE_SCP_KILLED_ENTITIES_CAP)
+        if (SCPModule.DISABLE_SCP_KILLED_ENTITIES_CAP)
             capabilities.killedEntities.getStoredEntities().clear();
 
-        if (OMEConfig.DISABLE_SCP_COWBELL_CAP)
+        if (SCPModule.DISABLE_SCP_COWBELL_CAP)
             capabilities.cowbell.setHasRungCowbell(false);
 
-        if (OMEConfig.DISABLE_SCP_LOST_ITEMS_CAP)
+        if (SCPModule.DISABLE_SCP_LOST_ITEMS_CAP)
             capabilities.lostItems.getLostItems().clear();
 
-
-
-        if (!OMEConfig.DISABLE_SCP_SLEEP_DEPRIVATION_CAP)
+        if (!SCPModule.DISABLE_SCP_SLEEP_DEPRIVATION_CAP)
             capabilities.sleepDeprivation.applySleepDeprivation(player);
-        if (!OMEConfig.DISABLE_SCP_BLOODSTONE_CAP)
+        if (!SCPModule.DISABLE_SCP_BLOODSTONE_CAP)
             if (Utils.isPlayerInSurvivalMode(player))
                 capabilities.bloodstone.handleBloodstoneEffects(playerTickEvent.player);
 

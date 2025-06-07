@@ -1,7 +1,7 @@
 package com.tttsaurus.ometweaks.mixins.thermalfoundation;
 
 import cofh.thermalfoundation.fluid.BlockFluidPetrotheum;
-import com.tttsaurus.ometweaks.OMEConfig;
+import com.tttsaurus.ometweaks.integration.thermalfoundation.ThermalFoundationModule;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -13,7 +13,7 @@ public class BlockFluidPetrotheumMixin
     @Inject(method = "addInteractions", at = @At("HEAD"), remap = false, cancellable = true)
     public void addInteractions(CallbackInfo ci)
     {
-        if (OMEConfig.DISABLE_TF_PETROTHEUM_INTERACTIONS)
+        if (ThermalFoundationModule.DISABLE_TF_PETROTHEUM_INTERACTIONS)
             ci.cancel();
     }
 }
