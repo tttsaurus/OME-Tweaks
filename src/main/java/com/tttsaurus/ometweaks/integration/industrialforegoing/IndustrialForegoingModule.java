@@ -1,8 +1,8 @@
-package com.tttsaurus.ometweaks.misc.industrialforegoing;
+package com.tttsaurus.ometweaks.integration.industrialforegoing;
 
 import com.tttsaurus.ometweaks.OMEConfig;
-import com.tttsaurus.ometweaks.misc.OMETweaksModule;
-import com.tttsaurus.ometweaks.misc.OMETweaksModuleSignature;
+import com.tttsaurus.ometweaks.integration.OMETweaksModule;
+import com.tttsaurus.ometweaks.integration.OMETweaksModuleSignature;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;

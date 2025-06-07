@@ -5,7 +5,7 @@ import com.buuz135.industrial.utils.ItemStackUtils;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.tttsaurus.ometweaks.OMEConfig;
-import com.tttsaurus.ometweaks.misc.industrialforegoing.AnimalRancherOutput;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.AnimalRancherOutput;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.ItemHandlerHelper;

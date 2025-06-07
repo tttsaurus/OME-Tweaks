@@ -1,7 +1,7 @@
-package com.tttsaurus.ometweaks.misc.fluidintetweaker;
+package com.tttsaurus.ometweaks.integration.fluidintetweaker;
 
-import com.tttsaurus.ometweaks.misc.OMETweaksModule;
-import com.tttsaurus.ometweaks.misc.OMETweaksModuleSignature;
+import com.tttsaurus.ometweaks.integration.OMETweaksModule;
+import com.tttsaurus.ometweaks.integration.OMETweaksModuleSignature;
 import net.minecraftforge.fml.common.Loader;
 
 @OMETweaksModuleSignature("Fluid Interaction Tweaker")

@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.misc;
+package com.tttsaurus.ometweaks.integration;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

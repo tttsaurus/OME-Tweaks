@@ -1,10 +1,10 @@
-package com.tttsaurus.ometweaks.misc.extrautils2;
+package com.tttsaurus.ometweaks.integration.extrautils2;
 
 import com.tttsaurus.ometweaks.OMEConfig;
-import com.tttsaurus.ometweaks.misc.OMETweaksModule;
-import com.tttsaurus.ometweaks.misc.OMETweaksModuleSignature;
-import com.tttsaurus.ometweaks.misc.fluidintetweaker.FITInternalMethods;
-import com.tttsaurus.ometweaks.misc.fluidintetweaker.FITModule;
+import com.tttsaurus.ometweaks.integration.OMETweaksModule;
+import com.tttsaurus.ometweaks.integration.OMETweaksModuleSignature;
+import com.tttsaurus.ometweaks.integration.fluidintetweaker.FITInternalMethods;
+import com.tttsaurus.ometweaks.integration.fluidintetweaker.FITModule;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 

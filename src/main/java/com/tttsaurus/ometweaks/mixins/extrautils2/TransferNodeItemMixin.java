@@ -12,7 +12,7 @@ import com.tttsaurus.fluidintetweaker.common.api.interaction.InteractionEventTyp
 import com.tttsaurus.fluidintetweaker.common.api.interaction.condition.IEventCondition;
 import com.tttsaurus.fluidintetweaker.common.api.util.BlockUtils;
 import com.tttsaurus.ometweaks.OMEConfig;
-import com.tttsaurus.ometweaks.misc.fluidintetweaker.FITModule;
+import com.tttsaurus.ometweaks.integration.fluidintetweaker.FITModule;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;

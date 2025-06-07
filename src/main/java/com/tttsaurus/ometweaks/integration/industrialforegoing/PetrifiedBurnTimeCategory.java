@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.misc.industrialforegoing;
+package com.tttsaurus.ometweaks.integration.industrialforegoing;
 
 import com.buuz135.industrial.utils.Reference;
 import com.tttsaurus.ometweaks.OMEConfig;

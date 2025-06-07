@@ -1,7 +1,7 @@
 package com.tttsaurus.ometweaks;
 
-import com.tttsaurus.ometweaks.misc.OMETweaksModule;
-import com.tttsaurus.ometweaks.misc.OMETweaksModuleSignature;
+import com.tttsaurus.ometweaks.integration.OMETweaksModule;
+import com.tttsaurus.ometweaks.integration.OMETweaksModuleSignature;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -102,6 +102,9 @@ public class OMETweaks
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
+        // guarantee that items and entities are registered
+        OMEConfig.loadConfig();
+
         for (Map.Entry<OMETweaksModule, OMETweaksModuleSignature> entry: modules.entrySet())
         {
             OMETweaksModule module = entry.getKey();

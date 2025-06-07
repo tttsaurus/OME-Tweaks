@@ -1,8 +1,8 @@
-package com.tttsaurus.ometweaks.misc.enderio;
+package com.tttsaurus.ometweaks.integration.enderio;
 
 import com.tttsaurus.ometweaks.OMEConfig;
-import com.tttsaurus.ometweaks.misc.OMETweaksModule;
-import com.tttsaurus.ometweaks.misc.OMETweaksModuleSignature;
+import com.tttsaurus.ometweaks.integration.OMETweaksModule;
+import com.tttsaurus.ometweaks.integration.OMETweaksModuleSignature;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;

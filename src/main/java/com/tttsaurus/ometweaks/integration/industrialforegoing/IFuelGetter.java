@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.misc.industrialforegoing;
+package com.tttsaurus.ometweaks.integration.industrialforegoing;
 
 import net.minecraft.item.ItemStack;
 

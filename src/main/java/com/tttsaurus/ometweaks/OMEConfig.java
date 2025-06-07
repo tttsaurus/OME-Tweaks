@@ -1,9 +1,9 @@
 package com.tttsaurus.ometweaks;
 
-import com.tttsaurus.ometweaks.misc.enderio.GrindingBallData;
-import com.tttsaurus.ometweaks.misc.industrialforegoing.AnimalRancherOutput;
-import com.tttsaurus.ometweaks.misc.industrialforegoing.FuelDef;
-import com.tttsaurus.ometweaks.misc.jei.CategoryModification;
+import com.tttsaurus.ometweaks.integration.enderio.GrindingBallData;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.AnimalRancherOutput;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.FuelDef;
+import com.tttsaurus.ometweaks.integration.jei.CategoryModification;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -250,13 +250,16 @@ public final class OMEConfig
                 String[] fluidArgs = fluidPart.split("\\*");
                 String[] itemArgs = itemPart.split("\\*");
 
-                if (fluidArgs.length != 2) continue;
+                if (fluidArgs.length == 0 || fluidArgs.length > 2) continue;
                 if (itemArgs.length == 0 || itemArgs.length > 2) continue;
 
-                int fluidAmount = 0;
+                int fluidAmount = 1;
+                if (fluidArgs.length == 2)
+                {
+                    try { fluidAmount = Integer.parseInt(fluidArgs[1].trim()); }
+                    catch (NumberFormatException ignored) { continue; }
+                }
                 String fluidName = fluidArgs[0].trim();
-                try { fluidAmount = Integer.parseInt(fluidArgs[1].trim()); }
-                catch (NumberFormatException ignored) { continue; }
 
                 int itemCount = 1;
                 if (itemArgs.length == 2)

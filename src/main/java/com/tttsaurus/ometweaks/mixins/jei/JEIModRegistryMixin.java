@@ -1,8 +1,8 @@
 package com.tttsaurus.ometweaks.mixins.jei;
 
 import com.tttsaurus.ometweaks.OMEConfig;
-import com.tttsaurus.ometweaks.misc.jei.CategoryModification;
-import com.tttsaurus.ometweaks.misc.jei.DynamicCategoryWrapper;
+import com.tttsaurus.ometweaks.integration.jei.CategoryModification;
+import com.tttsaurus.ometweaks.integration.jei.DynamicCategoryWrapper;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.ingredients.IngredientRegistry;
 import mezz.jei.recipes.RecipeRegistry;

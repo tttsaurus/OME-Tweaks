@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.misc.fluidintetweaker;
+package com.tttsaurus.ometweaks.integration.fluidintetweaker;
 
 import com.tttsaurus.fluidintetweaker.common.api.WorldIngredient;
 import com.tttsaurus.fluidintetweaker.common.api.interaction.ComplexOutput;

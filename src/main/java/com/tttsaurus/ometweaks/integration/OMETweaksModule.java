@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.misc;
+package com.tttsaurus.ometweaks.integration;
 
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
