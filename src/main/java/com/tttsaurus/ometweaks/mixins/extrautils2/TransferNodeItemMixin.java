@@ -50,7 +50,7 @@ public class TransferNodeItemMixin
     public void addFluidInteractionTweakerCompat(IItemHandler attached, CallbackInfo ci)
     {
         if (!ExtraUtils2Module.ENABLE_XU2_NODE_MINING_FIT_COMPAT) return;
-        if (!FITModule.isModLoaded) return;
+        if (!FITModule.IS_MOD_LOADED) return;
         if (FITModule.internalMethods == null) return;
 
         TransferNodeItem this0 = (TransferNodeItem)(Object)this;

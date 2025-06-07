@@ -21,8 +21,8 @@ import java.util.*;
 @OMETweaksModuleSignature("Ender IO")
 public final class EnderIOModule extends OMETweaksModule
 {
-    private static final Map<String, Item> items = new HashMap<>();
-    public final static boolean isModLoaded = Loader.isModLoaded("enderio");
+    private static final Map<String, Item> ITEMS = new HashMap<>();
+    public static final boolean IS_MOD_LOADED = Loader.isModLoaded("enderio");
 
     public static boolean ENABLE_ENDERIO_MODULE;
     public static boolean ENABLE_ENDERIO_CUSTOM_CAPACITORS;
@@ -89,7 +89,7 @@ public final class EnderIOModule extends OMETweaksModule
     {
         if (!OMEConfig.ENABLE) return;
         if (!EnderIOModule.ENABLE_ENDERIO_MODULE) return;
-        if (!isModLoaded) return;
+        if (!IS_MOD_LOADED) return;
 
         if (EnderIOModule.ENABLE_ENDERIO_CUSTOM_GRINDING_BALLS)
         {
@@ -103,9 +103,9 @@ public final class EnderIOModule extends OMETweaksModule
     {
         if (!OMEConfig.ENABLE) return;
         if (!EnderIOModule.ENABLE_ENDERIO_MODULE) return;
-        if (!isModLoaded) return;
+        if (!IS_MOD_LOADED) return;
 
-        for (Map.Entry<String, Item> entry: items.entrySet())
+        for (Map.Entry<String, Item> entry: ITEMS.entrySet())
         {
             String[] args = entry.getKey().split("_");
 
@@ -132,9 +132,9 @@ public final class EnderIOModule extends OMETweaksModule
     {
         if (!OMEConfig.ENABLE) return;
         if (!EnderIOModule.ENABLE_ENDERIO_MODULE) return;
-        if (!isModLoaded) return;
+        if (!IS_MOD_LOADED) return;
 
-        for (Item item: items.values())
+        for (Item item: ITEMS.values())
             ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
     }
 
@@ -143,7 +143,7 @@ public final class EnderIOModule extends OMETweaksModule
     {
         if (!OMEConfig.ENABLE) return;
         if (!EnderIOModule.ENABLE_ENDERIO_MODULE) return;
-        if (!isModLoaded) return;
+        if (!IS_MOD_LOADED) return;
 
         IForgeRegistry<Item> registry = event.getRegistry();
 
@@ -163,6 +163,6 @@ public final class EnderIOModule extends OMETweaksModule
     private void registerItem(IForgeRegistry<Item> registry, Item item, String name)
     {
         registry.register(item.setRegistryName(name).setTranslationKey(item.getRegistryName().toString().replace(':', '.')));
-        items.put(name, item);
+        ITEMS.put(name, item);
     }
 }

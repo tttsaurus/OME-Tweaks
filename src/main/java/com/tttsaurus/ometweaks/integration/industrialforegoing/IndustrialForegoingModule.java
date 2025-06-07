@@ -23,7 +23,7 @@ import java.util.*;
 @OMETweaksModuleSignature("Industrial Foregoing")
 public final class IndustrialForegoingModule extends OMETweaksModule
 {
-    public final static boolean isModLoaded = Loader.isModLoaded("industrialforegoing");
+    public final static boolean IS_MOD_LOADED = Loader.isModLoaded("industrialforegoing");
 
     public static boolean ENABLE_IF_MODULE;
     public static boolean ENABLE_IF_INFINITY_DRILL_BLACKLIST;
@@ -142,7 +142,7 @@ public final class IndustrialForegoingModule extends OMETweaksModule
 
         ENABLE_IF_CUSTOM_ANIMAL_RANCHER = config.getBoolean("Enable", "general.if.animal_rancher", false, "Enable Industrial Foregoing Custom Animal Rancher");
         IF_CUSTOM_ANIMAL_RANCHER_FORTUNE = config.getBoolean("Affected By Fortune", "general.if.animal_rancher", true, "Whether fortune addons work on those recipes");
-        String[] IF_CUSTOM_ANIMAL_RANCHER_RECIPES = config.getStringList("Custom Animal Rancher Recipes", "general.if.animal_rancher", new String[]{"minecraft:zombie, water * 100, minecraft:apple * 2, 0.1"}, "A list of custom animal rancher recipes (entity registry name, fluid output, item output, chance)");
+        String[] IF_CUSTOM_ANIMAL_RANCHER_RECIPES = config.getStringList("Custom Animal Rancher Recipes", "general.if.animal_rancher", new String[]{"minecraft:zombie, water * 100, minecraft:apple * 2, 0.1"}, "A list of custom animal rancher recipes (Example: minecraft:zombie, water * 100, minecraft:apple * 2, 0.1)\nFormat: <entity_registry_name>,<fluid_output>,<item_output>,<chance>\n- <entity_registry_name> is a resource location\n- <fluid_output> is a fluid registry name (Optional: * amount) (Put a null is fine)\n- <item_output> is in the form of owner:item_name@optional_meta (Optional: * amount) (Put a null is fine)\n- <chance> is a percentage (e.g. 0.3 = 30%)\n\n");
 
         IndustrialForegoingModule.IF_CUSTOM_ANIMAL_RANCHER_RECIPES.clear();
         for (String arg: IF_CUSTOM_ANIMAL_RANCHER_RECIPES)
@@ -212,7 +212,7 @@ public final class IndustrialForegoingModule extends OMETweaksModule
     @Override
     public void init(FMLInitializationEvent event)
     {
-        if (isModLoaded)
+        if (IS_MOD_LOADED)
         {
             if (OMEConfig.ENABLE && IndustrialForegoingModule.ENABLE_IF_MODULE && IndustrialForegoingModule.ENABLE_IF_INFINITY_DRILL_BLACKLIST)
                 MinecraftForge.EVENT_BUS.register(InfinityDrillBlacklist.class);

@@ -16,8 +16,10 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +36,49 @@ public class OMETweaks
     public static final Map<OMETweaksModule, OMETweaksModuleSignature> MODULES = new HashMap<>();
     public static final Map<OMETweaksModule, ConfigLoadingData> MODULE_CONFIGS = new HashMap<>();
 
+    public static void loadModules(File modulesFile)
+    {
+        MODULES.clear();
+        MODULE_CONFIGS.clear();
+        try
+        {
+            RandomAccessFile raf = new RandomAccessFile(modulesFile, "rw");
+
+            String line = raf.readLine();
+            while (line != null)
+            {
+                if (!line.isEmpty())
+                {
+                    try
+                    {
+                        Class<?> clazz = Class.forName(line);
+                        if (OMETweaksModule.class.isAssignableFrom(clazz))
+                        {
+                            Class<? extends OMETweaksModule> moduleClass = clazz.asSubclass(OMETweaksModule.class);
+
+                            OMETweaksModule module = moduleClass.newInstance();
+                            OMETweaksModuleSignature annotation = moduleClass.getAnnotation(OMETweaksModuleSignature.class);
+
+                            MODULES.put(module, annotation);
+                            Method method = module.getClass().getDeclaredMethod("loadConfig", Configuration.class);
+                            if (method.isAnnotationPresent(ConfigLoadingStage.class))
+                            {
+                                ConfigLoadingStage stage = method.getAnnotation(ConfigLoadingStage.class);
+                                MODULE_CONFIGS.put(module, new ConfigLoadingData(method, stage.value()));
+                            }
+                            LOGGER.info("OME-Tweaks module [" + annotation.value() + "] instantiated.");
+                        }
+                    }
+                    catch (Exception ignored) { }
+                }
+                line = raf.readLine();
+            }
+
+            raf.close();
+        }
+        catch (IOException ignored) { }
+    }
+
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
@@ -47,10 +92,22 @@ public class OMETweaks
             OMEConfig.init();
         }
 
+        File modulesFile = FileUtils.getFile("modules.cfg");
+        if (!modulesFile.exists())
+        {
+            FileUtils.makeFile("[NOTICE] ometweaks config will be complete after the next run");
+            LOGGER.info("First time of loading OME-Tweaks modules. Config file (/config/ometweaks/ometweaks.cfg) will be complete after the next run.");
+        }
+        else
+        {
+            File logFile = FileUtils.getFile("[NOTICE] ometweaks config will be complete after the next run");
+            if (logFile.exists()) logFile.delete();
+        }
+
         LOGGER.info("OME-Tweaks starts writing module classes to local.");
         try
         {
-            RandomAccessFile raf = new RandomAccessFile(FileUtils.getFile("modules.cfg"), "rw");
+            RandomAccessFile raf = new RandomAccessFile(modulesFile, "rw");
             raf.setLength(0);
             raf.seek(0);
 

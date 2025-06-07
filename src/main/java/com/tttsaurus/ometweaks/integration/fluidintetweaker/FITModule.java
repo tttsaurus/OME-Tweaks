@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.Loader;
 public final class FITModule extends OMETweaksModule
 {
     public static FITInternalMethods internalMethods;
-    public final static boolean isModLoaded = Loader.isModLoaded("fluidintetweaker");
+    public final static boolean IS_MOD_LOADED = Loader.isModLoaded("fluidintetweaker");
 
     @Override
     public void loadConfig(Configuration config)

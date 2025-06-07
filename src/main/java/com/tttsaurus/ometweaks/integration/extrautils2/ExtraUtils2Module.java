@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 @OMETweaksModuleSignature("Extra Utils 2")
 public final class ExtraUtils2Module extends OMETweaksModule
 {
-    public final static boolean isModLoaded = Loader.isModLoaded("extrautils2");
+    public final static boolean IS_MOD_LOADED = Loader.isModLoaded("extrautils2");
 
     public static boolean ENABLE_XU2_MODULE;
     public static boolean ENABLE_XU2_NODE_MINING_FIT_COMPAT;
@@ -30,7 +30,7 @@ public final class ExtraUtils2Module extends OMETweaksModule
     @Override
     public void init(FMLInitializationEvent event)
     {
-        if (isModLoaded && OMEConfig.ENABLE && ExtraUtils2Module.ENABLE_XU2_MODULE && ExtraUtils2Module.ENABLE_XU2_NODE_MINING_FIT_COMPAT && FITModule.isModLoaded)
+        if (IS_MOD_LOADED && OMEConfig.ENABLE && ExtraUtils2Module.ENABLE_XU2_MODULE && ExtraUtils2Module.ENABLE_XU2_NODE_MINING_FIT_COMPAT && FITModule.IS_MOD_LOADED)
             FITModule.internalMethods = new FITInternalMethods();
     }
 }

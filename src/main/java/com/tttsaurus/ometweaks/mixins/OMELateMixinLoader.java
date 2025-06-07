@@ -13,9 +13,7 @@ import com.tttsaurus.ometweaks.utils.FileUtils;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Loader;
 import zone.rong.mixinbooter.ILateMixinLoader;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.lang.reflect.Method;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,40 +26,9 @@ public class OMELateMixinLoader implements ILateMixinLoader
         OMEConfig.CONFIG = new Configuration(FileUtils.makeFile("ometweaks.cfg"));
         OMEConfig.init();
 
-        try
-        {
-            RandomAccessFile raf = new RandomAccessFile(FileUtils.getFile("modules.cfg"), "rw");
-
-            String line = raf.readLine();
-            while (line != null)
-            {
-                try
-                {
-                    Class<?> clazz = Class.forName(line);
-                    if (OMETweaksModule.class.isAssignableFrom(clazz))
-                    {
-                        Class<? extends OMETweaksModule> moduleClass = clazz.asSubclass(OMETweaksModule.class);
-
-                        OMETweaksModule module = moduleClass.newInstance();
-                        OMETweaksModuleSignature annotation = moduleClass.getAnnotation(OMETweaksModuleSignature.class);
-
-                        OMETweaks.MODULES.put(module, annotation);
-                        Method method = module.getClass().getDeclaredMethod("loadConfig", Configuration.class);
-                        if (method.isAnnotationPresent(ConfigLoadingStage.class))
-                        {
-                            ConfigLoadingStage stage = method.getAnnotation(ConfigLoadingStage.class);
-                            OMETweaks.MODULE_CONFIGS.put(module, new ConfigLoadingData(method, stage.value()));
-                        }
-                        OMETweaks.LOGGER.info("OME-Tweaks module [" + annotation.value() + "] instantiated.");
-                    }
-                }
-                catch (Exception ignored) { }
-                line = raf.readLine();
-            }
-
-            raf.close();
-        }
-        catch (IOException ignored) { }
+        File modulesFile = FileUtils.getFile("modules.cfg");
+        if (modulesFile.exists())
+            OMETweaks.loadModules(modulesFile);
 
         OMETweaks.LOGGER.info("Mixin Stage");
         for (Map.Entry<OMETweaksModule, OMETweaksModuleSignature> entry: OMETweaks.MODULES.entrySet())
