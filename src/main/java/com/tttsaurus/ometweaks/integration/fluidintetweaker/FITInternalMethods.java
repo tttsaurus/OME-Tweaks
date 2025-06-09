@@ -1,7 +1,7 @@
 package com.tttsaurus.ometweaks.integration.fluidintetweaker;
 
-import com.tttsaurus.fluidintetweaker.common.api.WorldIngredient;
-import com.tttsaurus.fluidintetweaker.common.api.interaction.ComplexOutput;
+import com.tttsaurus.fluidintetweaker.common.core.WorldIngredient;
+import com.tttsaurus.fluidintetweaker.common.core.interaction.ComplexOutput;
 import com.tttsaurus.fluidintetweaker.common.impl.interaction.FluidInteractionRecipeManager;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
