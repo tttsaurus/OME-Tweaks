@@ -7,6 +7,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.AnimalRancherOutput;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.IndustrialForegoingModule;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.DamageSource;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
@@ -64,7 +65,7 @@ public class AnimalResourceHarvesterTileMixin
                 {
                     if (output.itemStack != null && !ItemStackUtils.isInventoryFull(outItems))
                     {
-                        if (!IndustrialForegoingModule.IF_CUSTOM_ANIMAL_RANCHER_FORTUNE || fortune <= 0)
+                        if (!IndustrialForegoingModule.ENABLE_IF_CUSTOM_ANIMAL_RANCHER_FORTUNE || fortune <= 0)
                             ItemHandlerHelper.insertItem(outItems, output.itemStack.copy(), false);
                         else
                         {
@@ -76,7 +77,7 @@ public class AnimalResourceHarvesterTileMixin
                     }
                     if (output.fluidStack != null)
                     {
-                        if (!IndustrialForegoingModule.IF_CUSTOM_ANIMAL_RANCHER_FORTUNE || fortune <= 0)
+                        if (!IndustrialForegoingModule.ENABLE_IF_CUSTOM_ANIMAL_RANCHER_FORTUNE || fortune <= 0)
                             tank.fill(output.fluidStack.copy(), true);
                         else
                         {
@@ -86,6 +87,8 @@ public class AnimalResourceHarvesterTileMixin
 
                         OME_Tweaks$hasWorked = true;
                     }
+                    if (output.damage != 0 && OME_Tweaks$hasWorked)
+                        entity.attackEntityFrom(DamageSource.GENERIC, output.damage);
                 }
             }
         }

@@ -5,22 +5,23 @@ import com.buuz135.industrial.proxy.BlockRegistry;
 import com.buuz135.industrial.tile.generator.PetrifiedFuelGeneratorTile;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.tttsaurus.ometweaks.integration.industrialforegoing.FuelDef;
-import com.tttsaurus.ometweaks.integration.industrialforegoing.IndustrialForegoingModule;
-import com.tttsaurus.ometweaks.integration.industrialforegoing.PetrifiedBurnTimeCategory;
-import com.tttsaurus.ometweaks.integration.industrialforegoing.PetrifiedBurnTimeWrapper;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.*;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Slice;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @SuppressWarnings("all")
@@ -69,11 +70,9 @@ public class JEICustomPluginMixin
                     int duration = TileEntityFurnace.getItemBurnTime(itemStack);
                     int rate = (int)PetrifiedFuelGeneratorTile.getEnergy(duration);
                     if (IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX != -1)
-                        duration = duration > IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX ?
-                                IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX : duration;
+                        duration = Math.min(duration, IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX);
                     if (IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX != -1)
-                        rate = rate > IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX ?
-                                IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX : rate;
+                        rate = Math.min(rate, IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX);
                     petrifiedBurnTimeWrappers.add(new PetrifiedBurnTimeWrapper(itemStack, (int)(duration * burnTimeMultiplier), rate));
                 }
             });
@@ -106,10 +105,38 @@ public class JEICustomPluginMixin
         if (IndustrialForegoingModule.ENABLE_IF_PETRIFIED_FUEL_GENERATOR)
         {
             OME_Tweaks$petrifiedBurnTimeCategory = new PetrifiedBurnTimeCategory(instance.getJeiHelpers().getGuiHelper());
-
             instance.addRecipeCategories(new IRecipeCategory[]{OME_Tweaks$petrifiedBurnTimeCategory});
         }
         else
             original.call(instance, iRecipeCategories);
+    }
+
+    @Unique
+    private AnimalRancherRecipeCategory OME_Tweaks$animalRancherCategory;
+
+    @Inject(method = "register", at = @At("HEAD"), remap = false)
+    public void addAnimalRancherRecipes(IModRegistry registry, CallbackInfo ci)
+    {
+        if (IndustrialForegoingModule.ENABLE_IF_CUSTOM_ANIMAL_RANCHER &&
+                IndustrialForegoingModule.ENABLE_IF_CUSTOM_ANIMAL_RANCHER_JEI &&
+                BlockRegistry.animalResourceHarvesterBlock.isEnabled())
+        {
+            List<AnimalRancherRecipeWrapper> animalRancherRecipeWrappers = new ArrayList<>();
+            for (Map.Entry<Class<? extends Entity>, AnimalRancherOutput> entry: IndustrialForegoingModule.IF_CUSTOM_ANIMAL_RANCHER_RECIPES.entrySet())
+                animalRancherRecipeWrappers.add(new AnimalRancherRecipeWrapper(entry.getKey(), entry.getValue()));
+            registry.addRecipes(animalRancherRecipeWrappers, OME_Tweaks$animalRancherCategory.getUid());
+        }
+    }
+
+    @Inject(method = "registerCategories", at = @At("HEAD"), remap = false)
+    public void addAnimalRancherCategory(IRecipeCategoryRegistration registry, CallbackInfo ci)
+    {
+        if (IndustrialForegoingModule.ENABLE_IF_CUSTOM_ANIMAL_RANCHER &&
+                IndustrialForegoingModule.ENABLE_IF_CUSTOM_ANIMAL_RANCHER_JEI &&
+                BlockRegistry.animalResourceHarvesterBlock.isEnabled())
+        {
+            OME_Tweaks$animalRancherCategory = new AnimalRancherRecipeCategory(registry.getJeiHelpers().getGuiHelper());
+            registry.addRecipeCategories(new IRecipeCategory[]{OME_Tweaks$animalRancherCategory});
+        }
     }
 }

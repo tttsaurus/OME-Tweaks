@@ -1,6 +1,5 @@
 package com.tttsaurus.ometweaks.integration.industrialforegoing;
 
-import com.tttsaurus.ometweaks.OMEConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;

@@ -48,7 +48,8 @@ public final class IndustrialForegoingModule extends OMETweaksModule
     public static boolean DISABLE_IF_FLUID_EFFECT_PROTEIN;
     public static boolean DISABLE_IF_FLUID_EFFECT_LATEX;
     public static boolean ENABLE_IF_CUSTOM_ANIMAL_RANCHER;
-    public static boolean IF_CUSTOM_ANIMAL_RANCHER_FORTUNE;
+    public static boolean ENABLE_IF_CUSTOM_ANIMAL_RANCHER_FORTUNE;
+    public static boolean ENABLE_IF_CUSTOM_ANIMAL_RANCHER_JEI;
     public final static Map<Class<? extends Entity>, AnimalRancherOutput> IF_CUSTOM_ANIMAL_RANCHER_RECIPES = new HashMap<>();
 
     @ConfigLoadingStage({LoadingStage.MIXIN, LoadingStage.POST_INIT})
@@ -141,19 +142,21 @@ public final class IndustrialForegoingModule extends OMETweaksModule
         DISABLE_IF_FLUID_EFFECT_LATEX = config.getBoolean("Disable Fluid Tile Effect", "general.if.fluid_effect.latex", false, "Disable Latex Potion Effect");
 
         ENABLE_IF_CUSTOM_ANIMAL_RANCHER = config.getBoolean("Enable", "general.if.animal_rancher", false, "Enable Industrial Foregoing Custom Animal Rancher");
-        IF_CUSTOM_ANIMAL_RANCHER_FORTUNE = config.getBoolean("Affected By Fortune", "general.if.animal_rancher", true, "Whether fortune addons work on those recipes");
-        String[] IF_CUSTOM_ANIMAL_RANCHER_RECIPES = config.getStringList("Custom Animal Rancher Recipes", "general.if.animal_rancher", new String[]{"minecraft:zombie, water * 100, minecraft:apple * 2, 0.1"}, "A list of custom animal rancher recipes (Example: minecraft:zombie, water * 100, minecraft:apple * 2, 0.1)\nFormat: <entity_registry_name>,<fluid_output>,<item_output>,<chance>\n- <entity_registry_name> is a resource location\n- <fluid_output> is a fluid registry name (Optional: * amount) (Put a null is fine)\n- <item_output> is in the form of owner:item_name@optional_meta (Optional: * amount) (Put a null is fine)\n- <chance> is a percentage (e.g. 0.3 = 30%)\n\n");
+        ENABLE_IF_CUSTOM_ANIMAL_RANCHER_FORTUNE = config.getBoolean("Affected By Fortune", "general.if.animal_rancher", true, "Whether fortune addons work on those recipes");
+        ENABLE_IF_CUSTOM_ANIMAL_RANCHER_JEI = config.getBoolean("Custom Animal Rancher JEI", "general.if.animal_rancher", true, "Whether to enable its own JEI category");
+        String[] IF_CUSTOM_ANIMAL_RANCHER_RECIPES = config.getStringList("Custom Animal Rancher Recipes", "general.if.animal_rancher", new String[]{"minecraft:zombie, water * 100, minecraft:apple * 2, 0.1, 2.0"}, "A list of custom animal rancher recipes (Example: minecraft:zombie, water * 100, minecraft:apple * 2, 0.1, 2.0)\nFormat: <entity_registry_name>,<fluid_output>,<item_output>,<chance>,<damage>\n- <entity_registry_name> is a resource location\n- <fluid_output> is a fluid registry name (Optional: * amount) (Put a null is fine)\n- <item_output> is in the form of owner:item_name@optional_meta (Optional: * amount) (Put a null is fine)\n- <chance> is a percentage (e.g. 0.3 = 30%)\n- <damage> is a float (e.g. 2.0)\n\n");
 
         IndustrialForegoingModule.IF_CUSTOM_ANIMAL_RANCHER_RECIPES.clear();
         for (String arg: IF_CUSTOM_ANIMAL_RANCHER_RECIPES)
         {
             String[] args = arg.split(",");
-            if (args.length != 4) continue;
+            if (args.length != 5) continue;
 
             String entityRegistryName = args[0].trim();
             String fluidPart = args[1].trim();
             String itemPart = args[2].trim();
             String chancePart = args[3].trim();
+            String damagePart = args[4].trim();
 
             String[] fluidArgs = fluidPart.split("\\*");
             String[] itemArgs = itemPart.split("\\*");
@@ -183,8 +186,12 @@ public final class IndustrialForegoingModule extends OMETweaksModule
                 try { itemMeta = Integer.parseInt(itemNames[1]); }
                 catch (NumberFormatException ignored) { continue; }
 
-            float chance = 0f;
+            float chance;
             try { chance = Float.parseFloat(chancePart); }
+            catch (NumberFormatException ignored) { continue; }
+
+            float damage;
+            try { damage = Float.parseFloat(damagePart); }
             catch (NumberFormatException ignored) { continue; }
 
             EntityEntry entry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(entityRegistryName));
@@ -204,6 +211,7 @@ public final class IndustrialForegoingModule extends OMETweaksModule
                 value.itemStack = new ItemStack(item, itemCount, itemMeta);
 
             value.chance = chance;
+            value.damage = damage;
 
             IndustrialForegoingModule.IF_CUSTOM_ANIMAL_RANCHER_RECIPES.put(key, value);
         }

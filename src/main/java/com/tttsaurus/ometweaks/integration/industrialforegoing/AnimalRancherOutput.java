@@ -8,4 +8,5 @@ public final class AnimalRancherOutput
     public FluidStack fluidStack = null;
     public ItemStack itemStack = null;
     public float chance = 0f;
+    public float damage = 0f;
 }

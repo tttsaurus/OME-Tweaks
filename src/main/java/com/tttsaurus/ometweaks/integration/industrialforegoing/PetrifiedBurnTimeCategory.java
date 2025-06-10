@@ -1,7 +1,6 @@
 package com.tttsaurus.ometweaks.integration.industrialforegoing;
 
 import com.buuz135.industrial.utils.Reference;
-import com.tttsaurus.ometweaks.OMEConfig;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;
@@ -14,7 +13,7 @@ import net.minecraft.util.ResourceLocation;
 @SuppressWarnings("all")
 public class PetrifiedBurnTimeCategory implements IRecipeCategory<PetrifiedBurnTimeWrapper>
 {
-    private IGuiHelper guiHelper;
+    private final IGuiHelper guiHelper;
 
     public PetrifiedBurnTimeCategory(IGuiHelper guiHelper)
     {

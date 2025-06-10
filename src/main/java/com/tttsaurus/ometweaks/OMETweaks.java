@@ -20,8 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @SuppressWarnings("all")
 @Mod(modid = Tags.MODID,
@@ -33,8 +32,8 @@ public class OMETweaks
 {
     public static final Logger LOGGER = LogManager.getLogger(Tags.MODID);
 
-    public static final Map<OMETweaksModule, OMETweaksModuleSignature> MODULES = new HashMap<>();
-    public static final Map<OMETweaksModule, ConfigLoadingData> MODULE_CONFIGS = new HashMap<>();
+    public static final Map<OMETweaksModule, OMETweaksModuleSignature> MODULES = new LinkedHashMap<>();
+    public static final Map<OMETweaksModule, ConfigLoadingData> MODULE_CONFIGS = new LinkedHashMap<>();
 
     public static void loadModules(File modulesFile)
     {
@@ -111,9 +110,15 @@ public class OMETweaks
             raf.setLength(0);
             raf.seek(0);
 
+            List<String> classes = new ArrayList<>();
             asmDataTable.getAll(OMETweaksModuleSignature.class.getCanonicalName()).forEach(data ->
             {
-                String className = data.getClassName();
+                classes.add(data.getClassName());
+            });
+
+            Collections.sort(classes);
+            for (String className: classes)
+            {
                 try
                 {
                     Class<?> clazz = Class.forName(className);
@@ -139,7 +144,7 @@ public class OMETweaks
                 {
                     LOGGER.throwing(e);
                 }
-            });
+            }
 
             raf.close();
         }
