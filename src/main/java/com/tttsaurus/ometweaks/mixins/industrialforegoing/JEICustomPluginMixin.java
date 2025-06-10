@@ -9,7 +9,6 @@ import com.tttsaurus.ometweaks.integration.industrialforegoing.*;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.fml.common.registry.EntityEntry;
@@ -126,6 +125,7 @@ public class JEICustomPluginMixin
             for (Map.Entry<EntityEntry, AnimalRancherOutput> entry: IndustrialForegoingModule.IF_CUSTOM_ANIMAL_RANCHER_RECIPES.entrySet())
                 animalRancherRecipeWrappers.add(new AnimalRancherRecipeWrapper(entry.getKey(), entry.getValue()));
             registry.addRecipes(animalRancherRecipeWrappers, OME_Tweaks$animalRancherCategory.getUid());
+            registry.addRecipeCatalyst(new ItemStack(BlockRegistry.animalResourceHarvesterBlock), OME_Tweaks$animalRancherCategory.getUid());
         }
     }
 
