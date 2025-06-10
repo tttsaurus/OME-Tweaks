@@ -50,7 +50,7 @@ public final class IndustrialForegoingModule extends OMETweaksModule
     public static boolean ENABLE_IF_CUSTOM_ANIMAL_RANCHER;
     public static boolean ENABLE_IF_CUSTOM_ANIMAL_RANCHER_FORTUNE;
     public static boolean ENABLE_IF_CUSTOM_ANIMAL_RANCHER_JEI;
-    public final static Map<Class<? extends Entity>, AnimalRancherOutput> IF_CUSTOM_ANIMAL_RANCHER_RECIPES = new HashMap<>();
+    public final static Map<EntityEntry, AnimalRancherOutput> IF_CUSTOM_ANIMAL_RANCHER_RECIPES = new HashMap<>();
 
     @ConfigLoadingStage({LoadingStage.MIXIN, LoadingStage.POST_INIT})
     @Override
@@ -197,7 +197,6 @@ public final class IndustrialForegoingModule extends OMETweaksModule
             EntityEntry entry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(entityRegistryName));
             if (entry == null) continue;
 
-            Class<? extends Entity> key = entry.getEntityClass();
             AnimalRancherOutput value = new AnimalRancherOutput();
 
             Fluid fluid = FluidRegistry.getFluid(fluidName);
@@ -213,7 +212,7 @@ public final class IndustrialForegoingModule extends OMETweaksModule
             value.chance = chance;
             value.damage = damage;
 
-            IndustrialForegoingModule.IF_CUSTOM_ANIMAL_RANCHER_RECIPES.put(key, value);
+            IndustrialForegoingModule.IF_CUSTOM_ANIMAL_RANCHER_RECIPES.put(entry, value);
         }
     }
 

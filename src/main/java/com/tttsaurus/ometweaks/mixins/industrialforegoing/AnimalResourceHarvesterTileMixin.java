@@ -9,6 +9,7 @@ import com.tttsaurus.ometweaks.integration.industrialforegoing.IndustrialForegoi
 import net.minecraft.entity.Entity;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import org.spongepowered.asm.mixin.Mixin;
@@ -56,10 +57,10 @@ public class AnimalResourceHarvesterTileMixin
         OME_Tweaks$hasWorked = false;
         int fortune = instance.getFortuneLevel();
 
-        for (Map.Entry<Class<? extends Entity>, AnimalRancherOutput> entry: IndustrialForegoingModule.IF_CUSTOM_ANIMAL_RANCHER_RECIPES.entrySet())
+        for (Map.Entry<EntityEntry, AnimalRancherOutput> entry: IndustrialForegoingModule.IF_CUSTOM_ANIMAL_RANCHER_RECIPES.entrySet())
         {
             AnimalRancherOutput output = entry.getValue();
-            for (Entity entity: instance.getWorld().getEntitiesWithinAABB(entry.getKey(), instance.getWorkingArea()))
+            for (Entity entity: instance.getWorld().getEntitiesWithinAABB(entry.getKey().getEntityClass(), instance.getWorkingArea()))
             {
                 if (instance.getWorld().rand.nextFloat() < output.chance)
                 {

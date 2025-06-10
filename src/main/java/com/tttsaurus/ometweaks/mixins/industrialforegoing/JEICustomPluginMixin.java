@@ -12,6 +12,7 @@ import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
+import net.minecraftforge.fml.common.registry.EntityEntry;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -122,7 +123,7 @@ public class JEICustomPluginMixin
                 BlockRegistry.animalResourceHarvesterBlock.isEnabled())
         {
             List<AnimalRancherRecipeWrapper> animalRancherRecipeWrappers = new ArrayList<>();
-            for (Map.Entry<Class<? extends Entity>, AnimalRancherOutput> entry: IndustrialForegoingModule.IF_CUSTOM_ANIMAL_RANCHER_RECIPES.entrySet())
+            for (Map.Entry<EntityEntry, AnimalRancherOutput> entry: IndustrialForegoingModule.IF_CUSTOM_ANIMAL_RANCHER_RECIPES.entrySet())
                 animalRancherRecipeWrappers.add(new AnimalRancherRecipeWrapper(entry.getKey(), entry.getValue()));
             registry.addRecipes(animalRancherRecipeWrappers, OME_Tweaks$animalRancherCategory.getUid());
         }
