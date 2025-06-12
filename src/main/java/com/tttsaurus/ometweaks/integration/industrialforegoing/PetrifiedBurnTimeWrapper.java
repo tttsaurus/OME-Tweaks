@@ -15,6 +15,9 @@ public class PetrifiedBurnTimeWrapper implements IRecipeWrapper
     public final int duration;
     public final int rate;
 
+    public int getDuration() { return duration; }
+    public int getRate() { return rate; }
+
     public PetrifiedBurnTimeWrapper(ItemStack itemStack, int duration, int rate)
     {
         this.itemStack = itemStack;

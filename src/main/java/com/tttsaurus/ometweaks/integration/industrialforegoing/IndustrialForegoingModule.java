@@ -5,7 +5,6 @@ import com.tttsaurus.ometweaks.integration.ConfigLoadingStage;
 import com.tttsaurus.ometweaks.integration.LoadingStage;
 import com.tttsaurus.ometweaks.integration.OMETweaksModule;
 import com.tttsaurus.ometweaks.integration.OMETweaksModuleSignature;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -33,6 +32,7 @@ public final class IndustrialForegoingModule extends OMETweaksModule
     public static boolean ENABLE_IF_PETRIFIED_FUEL_GENERATOR;
     public final static Map<ItemStack, FuelDef> IF_PETRIFIED_FUEL_GENERATOR_FUELS = new HashMap<>();
     public static boolean IF_PETRIFIED_FUEL_GENERATOR_JEI_OVERHAUL;
+    public static String IF_PETRIFIED_FUEL_GENERATOR_JEI_ORDER;
     public static int IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX;
     public static int IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX;
     public static boolean DISABLE_IF_FLUID_EFFECT_DRINKING_BIOFUEL;
@@ -123,7 +123,8 @@ public final class IndustrialForegoingModule extends OMETweaksModule
             IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_FUELS.put(itemStack, new FuelDef(rate, duration));
         }
 
-        IF_PETRIFIED_FUEL_GENERATOR_JEI_OVERHAUL = config.getBoolean("Petrified Fuel Generator JEI Overhaul", "general.if.petrified_fuel_generator", false, "Whether to add burn time and i18n to the existing petrified fuel generator jei page");
+        IF_PETRIFIED_FUEL_GENERATOR_JEI_OVERHAUL = config.getBoolean("Petrified Fuel Generator JEI Overhaul", "general.if.petrified_fuel_generator", false, "Whether to add burn time and i18n to the existing petrified fuel generator JEI page");
+        IF_PETRIFIED_FUEL_GENERATOR_JEI_ORDER = config.getString("Petrified Fuel Generator JEI Fuel Order", "general.if.petrified_fuel_generator", "NONE", "Order JEI recipes by fuel burning power\nValid values: NONE, BIGGER_FIRST, SMALLER_FIRST");
 
         IF_PETRIFIED_FUEL_GENERATOR_POWER_MAX = config.getInt("Petrified Fuel Generator Max Power", "general.if.petrified_fuel_generator", -1, -1, 0x7fffffff, "-1 for no max limit to all auto-added default fuels");
         IF_PETRIFIED_FUEL_GENERATOR_BURN_TIME_MAX = config.getInt("Petrified Fuel Generator Max Burn Time", "general.if.petrified_fuel_generator", -1, -1, 0x7fffffff, "-1 for no max limit to all auto-added default fuels");

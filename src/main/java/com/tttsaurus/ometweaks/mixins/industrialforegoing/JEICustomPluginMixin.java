@@ -18,10 +18,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @SuppressWarnings("all")
@@ -81,6 +79,14 @@ public class JEICustomPluginMixin
             {
                 FuelDef fuelDef = IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_FUELS.get(modifiedItem);
                 petrifiedBurnTimeWrappers.add(new PetrifiedBurnTimeWrapper(modifiedItem, (int)(fuelDef.duration * burnTimeMultiplier), fuelDef.rate));
+            }
+
+            if (!IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_JEI_ORDER.equals("NONE"))
+            {
+                if (IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_JEI_ORDER.equals("BIGGER_FIRST"))
+                    Collections.sort(petrifiedBurnTimeWrappers, Comparator.comparing(PetrifiedBurnTimeWrapper::getRate).reversed());
+                else if (IndustrialForegoingModule.IF_PETRIFIED_FUEL_GENERATOR_JEI_ORDER.equals("SMALLER_FIRST"))
+                    Collections.sort(petrifiedBurnTimeWrappers, Comparator.comparing(PetrifiedBurnTimeWrapper::getRate));
             }
 
             instance.addRecipes(petrifiedBurnTimeWrappers, OME_Tweaks$petrifiedBurnTimeCategory.getUid());
