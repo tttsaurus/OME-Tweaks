@@ -110,7 +110,7 @@ public final class IndustrialForegoingModule extends OMETweaksModule
             ENABLE_IF_CUSTOM_ANIMAL_RANCHER = config.getBoolean("Enable", "general.if.animal_rancher", false, "Enable Industrial Foregoing Custom Animal Rancher");
             ENABLE_IF_CUSTOM_ANIMAL_RANCHER_FORTUNE = config.getBoolean("Affected By Fortune", "general.if.animal_rancher", true, "Whether fortune addons work on those recipes");
             ENABLE_IF_CUSTOM_ANIMAL_RANCHER_JEI = config.getBoolean("Custom Animal Rancher JEI", "general.if.animal_rancher", true, "Whether to enable its own JEI category");
-            RAW_IF_CUSTOM_ANIMAL_RANCHER_RECIPES = config.getStringList("Custom Animal Rancher Recipes", "general.if.animal_rancher", new String[]{"minecraft:zombie, water * 100, minecraft:apple * 2, 0.1, 2.0"}, "A list of custom animal rancher recipes (Example: minecraft:zombie, water * 100, minecraft:apple * 2, 0.1, 2.0)\nFormat: <entity_registry_name>,<fluid_output>,<item_output>,<chance>,<damage>\n- <entity_registry_name> is a resource location\n- <fluid_output> is a fluid registry name (Optional: * amount) (Put a null is fine)\n- <item_output> is in the form of owner:item_name@optional_meta (Optional: * amount) (Put a null is fine)\n- <chance> is a percentage (e.g. 0.3 = 30%)\n- <damage> is a float (e.g. 2.0)\n\n");
+            RAW_IF_CUSTOM_ANIMAL_RANCHER_RECIPES = config.getStringList("Custom Animal Rancher Recipes", "general.if.animal_rancher", new String[]{"minecraft:zombie, water * 100, minecraft:apple * 2, 0.1, 2.0"}, "A list of custom animal rancher recipes (Example: minecraft:zombie, water * 100, minecraft:apple * 2, 0.1, 2.0)\nFormat: <entity_registry_name>,<fluid_output>,<item_output>,<chance>,<damage>\n- <entity_registry_name> is a place to input resource location and optional args\n  - You can use optional args to define model transformation in JEI\n  - Example: rotate_z:180\n- <fluid_output> is a fluid registry name (Optional: * amount) (Put a null is fine)\n- <item_output> is in the form of owner:item_name@optional_meta (Optional: * amount) (Put a null is fine)\n- <chance> is a percentage (e.g. 0.3 = 30%)\n- <damage> is a float (e.g. 2.0)\n\n");
         }
 
         if (currentStage.equals(LoadingStage.POST_INIT))
@@ -171,11 +171,28 @@ public final class IndustrialForegoingModule extends OMETweaksModule
                 String[] args = arg.split(",");
                 if (args.length != 5) continue;
 
-                String entityRegistryName = args[0].trim();
+                String entityPart = args[0].trim();
                 String fluidPart = args[1].trim();
                 String itemPart = args[2].trim();
                 String chancePart = args[3].trim();
                 String damagePart = args[4].trim();
+
+                int index = 1;
+                char c = entityPart.charAt(index);
+                while (index < entityPart.length() && (c != ' '))
+                    c = entityPart.charAt(index++);
+                String entityRegistryName = entityPart.substring(0, index).trim();
+
+                List<String> entityArgs = new ArrayList<>();
+                while (index < entityPart.length())
+                {
+                    while (index < entityPart.length() && (c == ' '))
+                        c = entityPart.charAt(index++);
+                    int start = index - 1;
+                    while (index < entityPart.length() && (c != ' '))
+                        c = entityPart.charAt(index++);
+                    entityArgs.add(entityPart.substring(start, index));
+                }
 
                 String[] fluidArgs = fluidPart.split("\\*");
                 String[] itemArgs = itemPart.split("\\*");
@@ -217,6 +234,27 @@ public final class IndustrialForegoingModule extends OMETweaksModule
                 if (entry == null) continue;
 
                 AnimalRancherOutput value = new AnimalRancherOutput();
+
+                for (String entityArg: entityArgs)
+                {
+                    String[] keyValue = entityArg.split(":");
+                    if (keyValue.length != 2) continue;
+                    String keyArg = keyValue[0].trim();
+                    float valueFloat = 0f;
+                    try { valueFloat = Float.parseFloat(keyValue[1].trim()); }
+                    catch (NumberFormatException ignored) { continue; }
+                    switch (keyArg)
+                    {
+                        case "rotate_x": value.modelRotateX = valueFloat;
+                        case "rotate_y": value.modelRotateY = valueFloat;
+                        case "rotate_z": value.modelRotateZ = valueFloat;
+                        case "scale_x": value.modelScaleX = valueFloat;
+                        case "scale_y": value.modelScaleY = valueFloat;
+                        case "scale_z": value.modelScaleZ = valueFloat;
+                        case "pos_x": value.modelPosX = valueFloat;
+                        case "pos_y": value.modelPosY = valueFloat;
+                    }
+                }
 
                 Fluid fluid = FluidRegistry.getFluid(fluidName);
                 Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemName));

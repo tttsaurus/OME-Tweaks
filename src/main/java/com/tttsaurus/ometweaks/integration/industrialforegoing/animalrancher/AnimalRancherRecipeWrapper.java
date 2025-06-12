@@ -75,7 +75,16 @@ public class AnimalRancherRecipeWrapper implements IRecipeWrapper
 
         if (output.damage == 0)
         {
-            entityRenderer.render(JEI_PIVOT_X + 13, JEI_PIVOT_Y + 14, 0, (float)angle, 0, Color.WHITE.getRGB());
+            entityRenderer.render(
+                    JEI_PIVOT_X + 13 + output.modelPosX,
+                    JEI_PIVOT_Y + 14 + output.modelPosY,
+                    output.modelScaleX,
+                    output.modelScaleY,
+                    output.modelScaleZ,
+                    output.modelRotateX,
+                    (float)angle + output.modelRotateY,
+                    output.modelRotateZ,
+                    Color.WHITE.getRGB());
         }
         else
         {
@@ -97,7 +106,16 @@ public class AnimalRancherRecipeWrapper implements IRecipeWrapper
                 stopWatch.start();
             }
 
-            entityRenderer.render(JEI_PIVOT_X + 13, JEI_PIVOT_Y + 14, 0, (float)angle, 0, color);
+            entityRenderer.render(
+                    JEI_PIVOT_X + 13 + output.modelPosX,
+                    JEI_PIVOT_Y + 14 + output.modelPosY,
+                    output.modelScaleX,
+                    output.modelScaleY,
+                    output.modelScaleZ,
+                    output.modelRotateX,
+                    (float)angle + output.modelRotateY,
+                    output.modelRotateZ,
+                    color);
 
             if (time >= 1d && time <= 1.5d)
             {
