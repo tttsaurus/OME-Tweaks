@@ -12,7 +12,7 @@ public final class FITModule extends OMETweaksModule
     public final static boolean IS_MOD_LOADED = Loader.isModLoaded("fluidintetweaker");
 
     @Override
-    public void loadConfig(Configuration config)
+    public void loadConfig(Configuration config, String currentStage)
     {
 
     }

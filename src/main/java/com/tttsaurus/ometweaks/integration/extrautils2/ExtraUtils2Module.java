@@ -21,7 +21,7 @@ public final class ExtraUtils2Module extends OMETweaksModule
 
     @ConfigLoadingStage({LoadingStage.MIXIN})
     @Override
-    public void loadConfig(Configuration config)
+    public void loadConfig(Configuration config, String currentStage)
     {
         ENABLE_XU2_MODULE = config.getBoolean("Enable", "general.extrautils2", false, "Enable Extra Utilities Module / Whether mixins will be loaded");
         ENABLE_XU2_NODE_MINING_FIT_COMPAT = config.getBoolean("Enable", "general.extrautils2.node_mining_upgrade", false, "Enable Fluid Interaction Tweaker Compat with Mining Node");

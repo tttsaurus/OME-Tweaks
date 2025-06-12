@@ -15,5 +15,5 @@ public abstract class OMETweaksModule
     public void postInit(FMLPostInitializationEvent event) {}
     public void registerItems(RegistryEvent.Register<Item> event) {}
     public void registerModels(ModelRegistryEvent event) {}
-    public abstract void loadConfig(Configuration config);
+    public abstract void loadConfig(Configuration config, String currentStage);
 }

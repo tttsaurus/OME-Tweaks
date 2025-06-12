@@ -10,11 +10,11 @@ public final class OMEConfig
 
     public static Configuration CONFIG = null;
 
-    public static void invokeLoadConfig(OMETweaksModule module, Method loadConfig)
+    public static void invokeLoadConfig(OMETweaksModule module, Method loadConfig, String stage)
     {
         try
         {
-            loadConfig.invoke(module, CONFIG);
+            loadConfig.invoke(module, CONFIG, stage);
         }
         catch (Throwable ignored) { }
         finally

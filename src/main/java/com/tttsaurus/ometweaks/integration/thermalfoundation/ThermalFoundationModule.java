@@ -17,7 +17,7 @@ public final class ThermalFoundationModule extends OMETweaksModule
 
     @ConfigLoadingStage({LoadingStage.MIXIN})
     @Override
-    public void loadConfig(Configuration config)
+    public void loadConfig(Configuration config, String currentStage)
     {
         ENABLE_TF_MODULE = config.getBoolean("Enable", "general.thermalfoundation", false, "Enable Thermal Foundation Module / Whether mixins will be loaded");
         DISABLE_TF_CRYOTHEUM_INTERACTIONS = config.getBoolean("Disable", "general.thermalfoundation.cryotheum.interactions", false, "Disable Thermal Foundation Cryotheum Interactions");

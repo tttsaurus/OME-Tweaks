@@ -59,7 +59,7 @@ public class OMETweaks
                             OMETweaksModuleSignature annotation = moduleClass.getAnnotation(OMETweaksModuleSignature.class);
 
                             MODULES.put(module, annotation);
-                            Method method = module.getClass().getDeclaredMethod("loadConfig", Configuration.class);
+                            Method method = module.getClass().getDeclaredMethod("loadConfig", Configuration.class, String.class);
                             if (method.isAnnotationPresent(ConfigLoadingStage.class))
                             {
                                 ConfigLoadingStage stage = method.getAnnotation(ConfigLoadingStage.class);
@@ -161,7 +161,7 @@ public class OMETweaks
             if (data != null && data.stages.contains(LoadingStage.PRE_INIT))
             {
                 LOGGER.info("Load configs for OME-Tweaks module [" + annotation.value() + "].");
-                OMEConfig.invokeLoadConfig(module, data.loadConfigMethod);
+                OMEConfig.invokeLoadConfig(module, data.loadConfigMethod, LoadingStage.PRE_INIT);
             }
 
             try { module.getClass().getDeclaredMethod("preInit", FMLPreInitializationEvent.class); }
@@ -185,7 +185,7 @@ public class OMETweaks
             if (data != null && data.stages.contains(LoadingStage.INIT))
             {
                 LOGGER.info("Load configs for OME-Tweaks module [" + annotation.value() + "].");
-                OMEConfig.invokeLoadConfig(module, data.loadConfigMethod);
+                OMEConfig.invokeLoadConfig(module, data.loadConfigMethod, LoadingStage.INIT);
             }
 
             try { module.getClass().getDeclaredMethod("init", FMLInitializationEvent.class); }
@@ -209,7 +209,7 @@ public class OMETweaks
             if (data != null && data.stages.contains(LoadingStage.POST_INIT))
             {
                 LOGGER.info("Load configs for OME-Tweaks module [" + annotation.value() + "].");
-                OMEConfig.invokeLoadConfig(module, data.loadConfigMethod);
+                OMEConfig.invokeLoadConfig(module, data.loadConfigMethod, LoadingStage.POST_INIT);
             }
 
             try { module.getClass().getDeclaredMethod("postInit", FMLPostInitializationEvent.class); }

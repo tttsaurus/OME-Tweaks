@@ -32,7 +32,7 @@ public final class EnderIOModule extends OMETweaksModule
 
     @ConfigLoadingStage({LoadingStage.MIXIN})
     @Override
-    public void loadConfig(Configuration config)
+    public void loadConfig(Configuration config, String currentStage)
     {
         ENABLE_ENDERIO_MODULE = config.getBoolean("Enable", "general.enderio", false, "Enable Ender IO Module / Whether mixins will be loaded");
 

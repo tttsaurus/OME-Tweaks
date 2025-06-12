@@ -21,7 +21,7 @@ public final class JEIModule extends OMETweaksModule
 
     @ConfigLoadingStage({LoadingStage.MIXIN})
     @Override
-    public void loadConfig(Configuration config)
+    public void loadConfig(Configuration config, String currentStage)
     {
         ENABLE_JEI_MODULE = config.getBoolean("Enable", "general.jei", false, "Enable JEI Module / Whether mixins will be loaded");
 

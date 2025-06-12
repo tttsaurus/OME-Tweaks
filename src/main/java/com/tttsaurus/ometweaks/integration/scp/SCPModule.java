@@ -20,7 +20,7 @@ public final class SCPModule extends OMETweaksModule
 
     @ConfigLoadingStage({LoadingStage.MIXIN})
     @Override
-    public void loadConfig(Configuration config)
+    public void loadConfig(Configuration config, String currentStage)
     {
         ENABLE_SCP_MODULE = config.getBoolean("Enable", "general.scp", false, "Enable SCP Lockdown Module / Whether mixins will be loaded");
 

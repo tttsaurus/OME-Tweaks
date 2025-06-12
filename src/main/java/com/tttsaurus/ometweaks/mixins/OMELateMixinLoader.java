@@ -40,7 +40,7 @@ public class OMELateMixinLoader implements ILateMixinLoader
             if (data != null && data.stages.contains(LoadingStage.MIXIN))
             {
                 OMETweaks.LOGGER.info("Load configs for OME-Tweaks module [" + annotation.value() + "].");
-                OMEConfig.invokeLoadConfig(module, data.loadConfigMethod);
+                OMEConfig.invokeLoadConfig(module, data.loadConfigMethod, LoadingStage.MIXIN);
             }
         }
 
