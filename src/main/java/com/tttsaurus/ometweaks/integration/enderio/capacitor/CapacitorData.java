@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.integration.enderio;
+package com.tttsaurus.ometweaks.integration.enderio.capacitor;
 
 import crazypants.enderio.api.capacitor.ICapacitorData;
 import crazypants.enderio.api.capacitor.ICapacitorKey;

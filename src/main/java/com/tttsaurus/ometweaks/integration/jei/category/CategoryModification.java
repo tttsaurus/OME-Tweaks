@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.integration.jei;
+package com.tttsaurus.ometweaks.integration.jei.category;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;

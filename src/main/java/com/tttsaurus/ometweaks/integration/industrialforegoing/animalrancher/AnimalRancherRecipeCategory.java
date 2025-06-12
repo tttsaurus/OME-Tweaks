@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.integration.industrialforegoing;
+package com.tttsaurus.ometweaks.integration.industrialforegoing.animalrancher;
 
 import com.buuz135.industrial.proxy.BlockRegistry;
 import com.buuz135.industrial.utils.Reference;

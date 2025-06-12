@@ -1,5 +1,6 @@
-package com.tttsaurus.ometweaks.integration.industrialforegoing;
+package com.tttsaurus.ometweaks.integration.industrialforegoing.infdrill;
 
+import com.tttsaurus.ometweaks.integration.industrialforegoing.IndustrialForegoingModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;

@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.integration.fluidintetweaker;
+package com.tttsaurus.ometweaks.integration.fluidintetweaker.method;
 
 public interface IFunc_1Param<TReturn, T0>
 {

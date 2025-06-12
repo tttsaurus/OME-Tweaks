@@ -1,5 +1,6 @@
-package com.tttsaurus.ometweaks.integration.industrialforegoing;
+package com.tttsaurus.ometweaks.integration.industrialforegoing.generator.petrified;
 
+import com.tttsaurus.ometweaks.integration.industrialforegoing.IndustrialForegoingModule;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapper;

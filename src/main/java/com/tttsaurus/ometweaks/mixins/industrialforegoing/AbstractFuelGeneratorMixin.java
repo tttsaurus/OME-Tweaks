@@ -4,7 +4,7 @@ import com.buuz135.industrial.tile.generator.AbstractFuelGenerator;
 import com.buuz135.industrial.utils.WorkUtils;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.tttsaurus.ometweaks.integration.industrialforegoing.FuelDef;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.generator.petrified.FuelDef;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.IndustrialForegoingModule;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;

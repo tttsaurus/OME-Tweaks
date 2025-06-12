@@ -14,7 +14,7 @@ import alexiy.secure.contain.protect.events.CommonEvents;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.tttsaurus.ometweaks.integration.scp.SCPModule;
-import com.tttsaurus.ometweaks.integration.scp.SCPNegativeCapabilities;
+import com.tttsaurus.ometweaks.integration.scp.capability.SCPNegativeCapabilities;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;

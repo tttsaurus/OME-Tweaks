@@ -5,7 +5,7 @@ import com.tttsaurus.ometweaks.integration.ConfigLoadingStage;
 import com.tttsaurus.ometweaks.integration.LoadingStage;
 import com.tttsaurus.ometweaks.integration.OMETweaksModule;
 import com.tttsaurus.ometweaks.integration.OMETweaksModuleSignature;
-import com.tttsaurus.ometweaks.integration.fluidintetweaker.FITInternalMethods;
+import com.tttsaurus.ometweaks.integration.fluidintetweaker.method.FITInternalMethods;
 import com.tttsaurus.ometweaks.integration.fluidintetweaker.FITModule;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Loader;

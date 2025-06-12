@@ -4,6 +4,7 @@ import com.tttsaurus.ometweaks.integration.ConfigLoadingStage;
 import com.tttsaurus.ometweaks.integration.LoadingStage;
 import com.tttsaurus.ometweaks.integration.OMETweaksModule;
 import com.tttsaurus.ometweaks.integration.OMETweaksModuleSignature;
+import com.tttsaurus.ometweaks.integration.jei.category.CategoryModification;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;

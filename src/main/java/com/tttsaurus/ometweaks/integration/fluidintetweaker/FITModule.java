@@ -2,6 +2,7 @@ package com.tttsaurus.ometweaks.integration.fluidintetweaker;
 
 import com.tttsaurus.ometweaks.integration.OMETweaksModule;
 import com.tttsaurus.ometweaks.integration.OMETweaksModuleSignature;
+import com.tttsaurus.ometweaks.integration.fluidintetweaker.method.FITInternalMethods;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Loader;
 

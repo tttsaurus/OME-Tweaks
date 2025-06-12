@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.integration.enderio;
+package com.tttsaurus.ometweaks.integration.enderio.grindingball;
 
 public class GrindingBallData
 {

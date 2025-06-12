@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.integration.industrialforegoing;
+package com.tttsaurus.ometweaks.integration.industrialforegoing.animalrancher;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
