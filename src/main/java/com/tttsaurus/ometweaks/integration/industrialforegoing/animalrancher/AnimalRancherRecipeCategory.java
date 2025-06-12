@@ -67,10 +67,10 @@ public class AnimalRancherRecipeCategory implements IRecipeCategory<AnimalRanche
         IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
 
         if (recipeWrapper.output.itemStack != null)
-            guiItemStacks.init(0, false, 108, 14);
+            guiItemStacks.init(0, false, recipeWrapper.output.fluidStack != null ? 108 : 100, 14);
 
         if (recipeWrapper.output.fluidStack != null)
-            guiFluidStacks.init(0, false, 92, 15, 16, 16, recipeWrapper.output.fluidStack.amount, true, null);
+            guiFluidStacks.init(0, false, recipeWrapper.output.itemStack != null ? 92 : 100, 15, 16, 16, recipeWrapper.output.fluidStack.amount, true, null);
 
         guiItemStacks.set(ingredients);
         guiFluidStacks.set(ingredients);
