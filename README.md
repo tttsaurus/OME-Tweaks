@@ -6,21 +6,21 @@ This mod aims to add a bunch of configurable QoL tweaks to other mods.
 
 ## Latest Features
 - **JEI**
-  - Support modifications to jei category icons
+  - Support modifications to JEI category icons
 - **Industrial Foregoing**
   - Add the harvest level and blacklist to Industrial Foregoing's infinity drill
   - Make petrified fuel generator more configurable
     - Support custom fuels
     - Support tweaking existing fuels
-    - Optional jei page overhaul
+    - Optional JEI page overhaul
   - Add options to disable fluid potion effects
-  - Add options to add custom animal rancher recipes
+  - Add options to add custom animal rancher recipes and a new JEI category
 - **SCP Lockdown**
-  - Add config to disable several scp capabilities
+  - Add config to disable several SCP capabilities
 - **In World Crafting**
-  - Add support of i18n to jei pages
+  - Add support of i18n to JEI pages
 - **Thermal Foundation**
-  - Add config to disable default fluid interactions (works with [Fluid-Interaction-Tweaker](https://github.com/tttsaurus/Fluid-Interaction-Tweaker)'s jei compat)
+  - Add config to disable default fluid interactions (works with [Fluid-Interaction-Tweaker](https://github.com/tttsaurus/Fluid-Interaction-Tweaker)'s JEI compat)
 - **Extra Utilities**
   - Add compat to mining node so it can detect fluid interactions from [Fluid-Interaction-Tweaker](https://github.com/tttsaurus/Fluid-Interaction-Tweaker)
 - **Ender IO**
