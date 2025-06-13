@@ -280,9 +280,9 @@ public final class IndustrialForegoingModule extends OMETweaksModule
     {
         if (IS_MOD_LOADED)
         {
-            if (OMEConfig.ENABLE && IndustrialForegoingModule.ENABLE_IF_MODULE && IndustrialForegoingModule.ENABLE_IF_INFINITY_DRILL_BLACKLIST)
+            if (OMEConfig.ENABLE && ENABLE_IF_MODULE && ENABLE_IF_INFINITY_DRILL_BLACKLIST)
                 MinecraftForge.EVENT_BUS.register(InfinityDrillBlacklist.class);
-            if (OMEConfig.ENABLE && IndustrialForegoingModule.ENABLE_IF_MODULE && IndustrialForegoingModule.ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
+            if (OMEConfig.ENABLE && ENABLE_IF_MODULE && ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL)
                 MinecraftForge.EVENT_BUS.register(InfinityDrillHarvestLevel.class);
         }
     }

@@ -30,7 +30,7 @@ public final class ExtraUtils2Module extends OMETweaksModule
     @Override
     public void init(FMLInitializationEvent event)
     {
-        if (IS_MOD_LOADED && OMEConfig.ENABLE && ExtraUtils2Module.ENABLE_XU2_MODULE && ExtraUtils2Module.ENABLE_XU2_NODE_MINING_FIT_COMPAT && FITModule.IS_MOD_LOADED)
+        if (IS_MOD_LOADED && OMEConfig.ENABLE && ENABLE_XU2_MODULE && ENABLE_XU2_NODE_MINING_FIT_COMPAT && FITModule.IS_MOD_LOADED)
             FITModule.internalMethods = new FITInternalMethods();
     }
 }
