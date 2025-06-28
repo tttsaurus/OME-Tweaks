@@ -4,6 +4,7 @@ import com.buuz135.industrial.tile.WorkingAreaElectricMachine;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.gui.CapacitorIndicatorGuiPiece;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.gui.SideBarGuiPiece;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.EnumDyeColor;
@@ -49,12 +50,14 @@ public class WorkingAreaElectricMachineMixin
         try
         {
             addInventory = SidedTileEntity.class.getDeclaredMethod("addInventory", IItemHandler.class);
+            addInventory.setAccessible(true);
         }
         catch (NoSuchMethodException ignored) { }
         Method addInventoryToStorage = null;
         try
         {
             addInventoryToStorage = SidedTileEntity.class.getDeclaredMethod("addInventoryToStorage", ItemStackHandler.class, String.class);
+            addInventoryToStorage.setAccessible(true);
         }
         catch (NoSuchMethodException ignored) { }
 
@@ -129,6 +132,6 @@ public class WorkingAreaElectricMachineMixin
     @Inject(method = "getGuiContainerPieces", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", shift = At.Shift.AFTER), remap = false)
     public void extraGuiPieces(BasicTeslaGuiContainer container, CallbackInfoReturnable<List<IGuiContainerPiece>> cir)
     {
-        OME_Tweaks$tempGuiList.add(new SideBarGuiPiece(-15, 80, 18, 6));
+        OME_Tweaks$tempGuiList.add(new CapacitorIndicatorGuiPiece(-15, 60));
     }
 }

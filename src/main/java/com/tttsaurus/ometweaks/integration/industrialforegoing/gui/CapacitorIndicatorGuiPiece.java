@@ -4,11 +4,11 @@ import net.ndrei.teslacorelib.gui.BasicContainerGuiPiece;
 import net.ndrei.teslacorelib.gui.BasicTeslaGuiContainer;
 import javax.annotation.Nonnull;
 
-public class SideBarGuiPiece extends BasicContainerGuiPiece
+public class CapacitorIndicatorGuiPiece extends BasicContainerGuiPiece
 {
-    public SideBarGuiPiece(int left, int top, int width, int height)
+    public CapacitorIndicatorGuiPiece(int left, int top)
     {
-        super(left, top, width, height);
+        super(left, top, 0, 0);
     }
 
     @Override
@@ -16,10 +16,5 @@ public class SideBarGuiPiece extends BasicContainerGuiPiece
     {
         super.drawBackgroundLayer(container, guiX, guiY, partialTicks, mouseX, mouseY);
 
-//        RenderUtils.storeCommonGlStates();
-//
-//        RenderUtils.renderRoundedRect(guiX + getLeft(), guiY + getTop(), getWidth(), getHeight(), 3f, Color.GREEN.getRGB());
-//
-//        RenderUtils.restoreCommonGlStates();
     }
 }
