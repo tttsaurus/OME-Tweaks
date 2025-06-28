@@ -11,7 +11,8 @@
     "ItemInfinityDrillMixin",
     "JEICustomPluginMixin",
     "PetrifiedFuelGeneratorTileMixin",
-    "PotionStrawHandlerMixin"
+    "PotionStrawHandlerMixin",
+    "WorkingAreaElectricMachineMixin"
   ],
   "client": [],
   "server": []

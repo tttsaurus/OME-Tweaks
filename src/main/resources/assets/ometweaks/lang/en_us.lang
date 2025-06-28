@@ -16,3 +16,5 @@ ometweaks.industrialforegoing.jei.petrified_fuel_gen.power=Power: %d RF/tick
 ometweaks.industrialforegoing.jei.petrified_fuel_gen.burn_time=Burn Time: %d ticks
 ometweaks.industrialforegoing.jei.petrified_fuel_gen.title=Petrified Generator Burn Time
 ometweaks.industrialforegoing.jei.animal_rancher.title=Animal Rancher
+
+gui.industrialforegoing.side_config.capacitor=Capacitor
