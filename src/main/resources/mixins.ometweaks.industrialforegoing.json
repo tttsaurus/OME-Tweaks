@@ -8,11 +8,13 @@
     "AbstractFuelGeneratorMixin",
     "AnimalResourceHarvesterTileMixin",
     "CustomElectricMachineMixin",
+    "ElectricTileEntityMixin",
     "IFCustomFluidBlockMixin",
     "ItemInfinityDrillMixin",
     "JEICustomPluginMixin",
     "PetrifiedFuelGeneratorTileMixin",
-    "PotionStrawHandlerMixin"
+    "PotionStrawHandlerMixin",
+    "SidedTileEntityMixin"
   ],
   "client": [],
   "server": []

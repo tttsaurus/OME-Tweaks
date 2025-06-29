@@ -4,10 +4,9 @@ import com.buuz135.industrial.tile.CustomElectricMachine;
 import com.buuz135.industrial.tile.WorkingAreaElectricMachine;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.tttsaurus.ometweaks.integration.industrialforegoing.machine.capacitor.CapacitorSlotInjector;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.machine.capacitor.CapacitorInventoryInjector;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.machine.capacitor.IMachineWithCapacitor;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.machine.gui.CapacitorIndicatorGuiPiece;
-import crazypants.enderio.api.capacitor.CapabilityCapacitorData;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 import net.ndrei.teslacorelib.gui.BasicTeslaGuiContainer;
 import net.ndrei.teslacorelib.gui.IGuiContainerPiece;
@@ -16,27 +15,22 @@ import org.spongepowered.asm.mixin.Unique;
 import java.util.List;
 
 @Mixin(CustomElectricMachine.class)
-public class CustomElectricMachineMixin
+public class CustomElectricMachineMixin implements IMachineWithCapacitor
 {
     @Unique
     private ItemStackHandler OME_Tweaks$capacitorStackHandler;
 
-    @WrapMethod(method = "protectedUpdate", remap = false)
-    public void protectedUpdate(Operation<Float> original)
+    @Override
+    public ItemStackHandler getCapacitorStackHandler()
     {
-        ItemStack itemStack = OME_Tweaks$capacitorStackHandler.getStackInSlot(0);
-
-        if (itemStack.isEmpty()) return;
-        if (!itemStack.hasCapability(CapabilityCapacitorData.getCapNN(), null)) return;
-
-        original.call();
+        return OME_Tweaks$capacitorStackHandler;
     }
 
     @WrapMethod(method = "initializeInventories", remap = false)
     public void extraInventory(Operation<Void> original)
     {
         original.call();
-        OME_Tweaks$capacitorStackHandler = CapacitorSlotInjector.addCapacitorInventory((WorkingAreaElectricMachine)(Object)this);
+        OME_Tweaks$capacitorStackHandler = CapacitorInventoryInjector.addCapacitorInventory((WorkingAreaElectricMachine)(Object)this);
     }
 
     @WrapMethod(method = "getGuiContainerPieces", remap = false)

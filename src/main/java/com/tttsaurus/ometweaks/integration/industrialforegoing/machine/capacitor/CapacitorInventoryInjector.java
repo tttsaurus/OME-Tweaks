@@ -2,6 +2,7 @@ package com.tttsaurus.ometweaks.integration.industrialforegoing.machine.capacito
 
 import com.tttsaurus.ometweaks.function.IAction_2Param;
 import com.tttsaurus.ometweaks.function.IAction_3Param;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.machine.IEnergyStorageProvider;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.machine.gui.SideBarLeftGuiPiece;
 import crazypants.enderio.api.capacitor.CapabilityCapacitorData;
 import net.minecraft.inventory.Slot;
@@ -16,14 +17,16 @@ import net.ndrei.teslacorelib.gui.IGuiContainerPiece;
 import net.ndrei.teslacorelib.gui.TiledRenderedGuiPiece;
 import net.ndrei.teslacorelib.inventory.BoundingRectangle;
 import net.ndrei.teslacorelib.inventory.ColoredItemHandler;
+import net.ndrei.teslacorelib.inventory.EnergyStorage;
 import net.ndrei.teslacorelib.tileentities.ElectricMachine;
 import net.ndrei.teslacorelib.tileentities.SidedTileEntity;
+import javax.annotation.Nonnull;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;
 import java.util.List;
 
-public class CapacitorSlotInjector
+public class CapacitorInventoryInjector
 {
     private static boolean isFuncsInit = false;
     private static IAction_2Param<SidedTileEntity, IItemHandler> addInventory;
@@ -42,7 +45,7 @@ public class CapacitorSlotInjector
                 Method addInventory = SidedTileEntity.class.getDeclaredMethod("addInventory", IItemHandler.class);
                 addInventory.setAccessible(true);
                 MethodHandle handle = lookup.unreflect(addInventory);
-                CapacitorSlotInjector.addInventory = (arg0, arg1) ->
+                CapacitorInventoryInjector.addInventory = (arg0, arg1) ->
                 {
                     try
                     {
@@ -58,7 +61,7 @@ public class CapacitorSlotInjector
                 Method addInventoryToStorage = SidedTileEntity.class.getDeclaredMethod("addInventoryToStorage", ItemStackHandler.class, String.class);
                 addInventoryToStorage.setAccessible(true);
                 MethodHandle handle = lookup.unreflect(addInventoryToStorage);
-                CapacitorSlotInjector.addInventoryToStorage = (arg0, arg1, arg2) ->
+                CapacitorInventoryInjector.addInventoryToStorage = (arg0, arg1, arg2) ->
                 {
                     try
                     {
@@ -77,6 +80,16 @@ public class CapacitorSlotInjector
 
         ItemStackHandler itemStackHandler = new ItemStackHandler(1)
         {
+            @Override
+            public @Nonnull ItemStack extractItem(int slot, int amount, boolean simulate)
+            {
+                IEnergyStorageProvider provider = (IEnergyStorageProvider)machine;
+                EnergyStorage energyStorage = provider.get();
+                if (energyStorage != null)
+                    energyStorage.takePower(Long.MAX_VALUE);
+                return super.extractItem(slot, amount, simulate);
+            }
+
             @Override
             protected void onContentsChanged(int slot)
             {
