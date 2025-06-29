@@ -6,6 +6,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.gui.CapacitorIndicatorGuiPiece;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.gui.SideBarGuiPiece;
+import crazypants.enderio.api.capacitor.CapabilityCapacitorData;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
@@ -36,6 +37,7 @@ public class WorkingAreaElectricMachineMixin
     {
         ItemStack itemStack = OME_Tweaks$capacitorStackHandler.getStackInSlot(0);
         if (itemStack.isEmpty()) return 0f;
+        if (!itemStack.hasCapability(CapabilityCapacitorData.getCapNN(), null)) return 0f;
         return original.call();
     }
 
@@ -63,19 +65,26 @@ public class WorkingAreaElectricMachineMixin
 
         OME_Tweaks$capacitorStackHandler = new ItemStackHandler(1)
         {
+            @Override
             protected void onContentsChanged(int slot)
             {
                 this0.markDirty();
+            }
+
+            @Override
+            public int getSlotLimit(int slot)
+            {
+                return 1;
             }
         };
 
         try
         {
-            addInventory.invoke(this0, new ColoredItemHandler(OME_Tweaks$capacitorStackHandler, EnumDyeColor.GREEN, "capacitor", new BoundingRectangle(-15, 60, 18, 18))
+            addInventory.invoke(this0, new ColoredItemHandler(OME_Tweaks$capacitorStackHandler, EnumDyeColor.PURPLE, "capacitor", new BoundingRectangle(-15, 60, 18, 18))
             {
                 public boolean canInsertItem(int slot, ItemStack stack)
                 {
-                    return true;
+                    return stack.hasCapability(CapabilityCapacitorData.getCapNN(), null);
                 }
 
                 public boolean canExtractItem(int slot)
@@ -87,7 +96,7 @@ public class WorkingAreaElectricMachineMixin
                 {
                     List<IGuiContainerPiece> pieces = super.getGuiContainerPieces(container);
                     BoundingRectangle box = this.getBoundingBox();
-                    pieces.add(new SideBarGuiPiece(box.getLeft() - 2, box.getTop() - 2, 22, 22));
+                    pieces.add(new SideBarGuiPiece(box.getLeft() - 4, box.getTop() - 4, 26, 26));
                     pieces.add(new TiledRenderedGuiPiece(box.getLeft(), box.getTop(), 18, 18, 1, 1, BasicTeslaGuiContainer.Companion.getMACHINE_BACKGROUND(), 108, 225, EnumDyeColor.GRAY));
                     return pieces;
                 }

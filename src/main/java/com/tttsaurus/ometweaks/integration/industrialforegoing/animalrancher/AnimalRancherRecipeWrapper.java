@@ -1,8 +1,8 @@
 package com.tttsaurus.ometweaks.integration.industrialforegoing.animalrancher;
 
 import com.buuz135.industrial.proxy.BlockRegistry;
-import com.tttsaurus.ometweaks.utils.EntityRenderer;
-import com.tttsaurus.ometweaks.utils.RenderUtils;
+import com.tttsaurus.ometweaks.render.EntityRenderer;
+import com.tttsaurus.ometweaks.render.RenderUtils;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
 import mezz.jei.api.recipe.IRecipeWrapper;

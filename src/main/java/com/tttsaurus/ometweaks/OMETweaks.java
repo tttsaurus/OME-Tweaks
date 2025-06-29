@@ -1,5 +1,6 @@
 package com.tttsaurus.ometweaks;
 
+import com.tttsaurus.ometweaks.gui.GuiResources;
 import com.tttsaurus.ometweaks.integration.*;
 import com.tttsaurus.ometweaks.utils.FileUtils;
 import net.minecraft.item.Item;
@@ -152,6 +153,10 @@ public class OMETweaks
         LOGGER.info("OME-Tweaks finished writing module classes to local.");
 
         LOGGER.info("Pre Init Stage");
+
+        GuiResources.init();
+        LOGGER.info("GUI resources loaded.");
+
         for (Map.Entry<OMETweaksModule, OMETweaksModuleSignature> entry: MODULES.entrySet())
         {
             OMETweaksModule module = entry.getKey();
