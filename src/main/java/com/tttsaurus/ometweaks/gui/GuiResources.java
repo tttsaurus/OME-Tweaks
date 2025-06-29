@@ -106,6 +106,12 @@ public final class GuiResources
                 mcVanillaBgBottomCenter,
                 mcVanillaBgBottomRight));
 
+        Texture2D sidebarLeftTex = null;
+        image = getBufferedImageFromRl(new ResourceLocation("ometweaks:textures/gui/sidebar_left_component.png"));
+        if (image != null)
+            sidebarLeftTex = RenderUtils.createTexture2D(image);
+        ImagePrefab sidebarLeftComponent = new ImagePrefab(sidebarLeftTex);
+
         Texture2D missingTexture = null;
         image = getBufferedImageFromRl(new ResourceLocation("ometweaks:textures/gui/missing_texture.png"));
         if (image != null)
@@ -127,5 +133,6 @@ public final class GuiResources
         GuiResources.missingTexture.ninePatchBorder.bottomRight.sizeDeductionByPixels = false;
 
         register("vanilla_background", mcVanillaBg);
+        register("sidebar_left_component", sidebarLeftComponent);
     }
 }

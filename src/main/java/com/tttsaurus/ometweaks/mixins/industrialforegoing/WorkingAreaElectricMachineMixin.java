@@ -5,7 +5,7 @@ import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.gui.CapacitorIndicatorGuiPiece;
-import com.tttsaurus.ometweaks.integration.industrialforegoing.gui.SideBarGuiPiece;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.gui.SideBarLeftGuiPiece;
 import crazypants.enderio.api.capacitor.CapabilityCapacitorData;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.EnumDyeColor;
@@ -96,7 +96,7 @@ public class WorkingAreaElectricMachineMixin
                 {
                     List<IGuiContainerPiece> pieces = super.getGuiContainerPieces(container);
                     BoundingRectangle box = this.getBoundingBox();
-                    pieces.add(new SideBarGuiPiece(box.getLeft() - 4, box.getTop() - 4, 26, 26));
+                    pieces.add(new SideBarLeftGuiPiece(box.getLeft(), box.getTop(), 18, 18));
                     pieces.add(new TiledRenderedGuiPiece(box.getLeft(), box.getTop(), 18, 18, 1, 1, BasicTeslaGuiContainer.Companion.getMACHINE_BACKGROUND(), 108, 225, EnumDyeColor.GRAY));
                     return pieces;
                 }
