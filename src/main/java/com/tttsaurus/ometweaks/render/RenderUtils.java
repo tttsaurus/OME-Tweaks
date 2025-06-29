@@ -382,9 +382,6 @@ public final class RenderUtils
         float g = (float)(color >> 8 & 255) / 255.0F;
         float b = (float)(color & 255) / 255.0F;
 
-        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, INT_BUFFER_16);
-        int textureID = INT_BUFFER_16.get(0);
-
         GlStateManager.enableTexture2D();
         GlStateManager.disableLighting();
         GlStateManager.enableBlend();
@@ -404,8 +401,6 @@ public final class RenderUtils
         bufferbuilder.pos(x + width, y, zLevel).tex(widthTiling, 0).endVertex();
         bufferbuilder.pos(x, y, zLevel).tex(0, 0).endVertex();
         tessellator.draw();
-
-        GlStateManager.bindTexture(textureID);
     }
     public static void renderTexture2DFullScreen(int textureId)
     {
@@ -425,9 +420,6 @@ public final class RenderUtils
         float r = (float)(color >> 16 & 255) / 255.0F;
         float g = (float)(color >> 8 & 255) / 255.0F;
         float b = (float)(color & 255) / 255.0F;
-
-        GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, INT_BUFFER_16);
-        int textureID = INT_BUFFER_16.get(0);
 
         ScaledResolution resolution = new ScaledResolution(Minecraft.getMinecraft());
         double width = resolution.getScaledWidth_double();
@@ -452,8 +444,6 @@ public final class RenderUtils
         buffer.pos(width, 0, zLevel).tex(widthTiling, 0).endVertex();
         buffer.pos(0, 0, zLevel).tex(0, 0).endVertex();
         tessellator.draw();
-
-        GlStateManager.bindTexture(textureID);
     }
 
     @Nullable

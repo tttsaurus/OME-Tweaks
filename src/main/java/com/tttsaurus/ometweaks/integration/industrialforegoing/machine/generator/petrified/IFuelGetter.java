@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.integration.industrialforegoing.generator.petrified;
+package com.tttsaurus.ometweaks.integration.industrialforegoing.machine.generator.petrified;
 
 import net.minecraft.item.ItemStack;
 

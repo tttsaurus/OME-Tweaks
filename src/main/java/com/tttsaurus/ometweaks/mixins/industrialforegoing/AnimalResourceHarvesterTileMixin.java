@@ -4,7 +4,7 @@ import com.buuz135.industrial.tile.agriculture.AnimalResourceHarvesterTile;
 import com.buuz135.industrial.utils.ItemStackUtils;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.tttsaurus.ometweaks.integration.industrialforegoing.animalrancher.AnimalRancherOutput;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.machine.worker.animalrancher.AnimalRancherOutput;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.IndustrialForegoingModule;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.DamageSource;

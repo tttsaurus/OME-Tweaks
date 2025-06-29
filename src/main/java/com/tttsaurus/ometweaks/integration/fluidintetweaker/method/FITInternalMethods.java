@@ -3,6 +3,8 @@ package com.tttsaurus.ometweaks.integration.fluidintetweaker.method;
 import com.tttsaurus.fluidintetweaker.common.core.WorldIngredient;
 import com.tttsaurus.fluidintetweaker.common.core.interaction.ComplexOutput;
 import com.tttsaurus.fluidintetweaker.common.impl.interaction.FluidInteractionRecipeManager;
+import com.tttsaurus.ometweaks.function.IFunc_1Param;
+import com.tttsaurus.ometweaks.function.IFunc_2Param;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Method;

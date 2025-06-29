@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.integration.industrialforegoing.generator.petrified;
+package com.tttsaurus.ometweaks.integration.industrialforegoing.machine.generator.petrified;
 
 import com.tttsaurus.ometweaks.integration.industrialforegoing.IndustrialForegoingModule;
 import mezz.jei.api.ingredients.IIngredients;

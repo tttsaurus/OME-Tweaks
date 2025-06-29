@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.integration.industrialforegoing.generator.petrified;
+package com.tttsaurus.ometweaks.integration.industrialforegoing.machine.generator.petrified;
 
 import com.buuz135.industrial.utils.Reference;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.IndustrialForegoingModule;

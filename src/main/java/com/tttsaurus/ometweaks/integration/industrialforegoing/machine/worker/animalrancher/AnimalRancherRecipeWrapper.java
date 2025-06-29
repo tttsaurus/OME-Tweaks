@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.integration.industrialforegoing.animalrancher;
+package com.tttsaurus.ometweaks.integration.industrialforegoing.machine.worker.animalrancher;
 
 import com.buuz135.industrial.proxy.BlockRegistry;
 import com.tttsaurus.ometweaks.render.EntityRenderer;

@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.integration.industrialforegoing.gui;
+package com.tttsaurus.ometweaks.integration.industrialforegoing.machine.gui;
 
 import net.ndrei.teslacorelib.gui.BasicContainerGuiPiece;
 import net.ndrei.teslacorelib.gui.BasicTeslaGuiContainer;

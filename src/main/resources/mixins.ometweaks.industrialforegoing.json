@@ -7,12 +7,12 @@
   "mixins": [
     "AbstractFuelGeneratorMixin",
     "AnimalResourceHarvesterTileMixin",
+    "CustomElectricMachineMixin",
     "IFCustomFluidBlockMixin",
     "ItemInfinityDrillMixin",
     "JEICustomPluginMixin",
     "PetrifiedFuelGeneratorTileMixin",
-    "PotionStrawHandlerMixin",
-    "WorkingAreaElectricMachineMixin"
+    "PotionStrawHandlerMixin"
   ],
   "client": [],
   "server": []

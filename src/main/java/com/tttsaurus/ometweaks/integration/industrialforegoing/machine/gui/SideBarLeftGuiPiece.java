@@ -1,4 +1,4 @@
-package com.tttsaurus.ometweaks.integration.industrialforegoing.gui;
+package com.tttsaurus.ometweaks.integration.industrialforegoing.machine.gui;
 
 import com.tttsaurus.ometweaks.gui.GuiResources;
 import com.tttsaurus.ometweaks.render.ImagePrefab;
