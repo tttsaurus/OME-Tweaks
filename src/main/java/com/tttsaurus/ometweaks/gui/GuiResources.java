@@ -112,6 +112,12 @@ public final class GuiResources
             sidebarLeftTex = RenderUtils.createTexture2D(image);
         ImagePrefab sidebarLeftComponent = new ImagePrefab(sidebarLeftTex);
 
+        Texture2D capacitorLogoTex = null;
+        image = getBufferedImageFromRl(new ResourceLocation("ometweaks:textures/gui/capacitor_logo.png"));
+        if (image != null)
+            capacitorLogoTex = RenderUtils.createTexture2D(image);
+        ImagePrefab capacitorLogo = new ImagePrefab(capacitorLogoTex);
+
         Texture2D missingTexture = null;
         image = getBufferedImageFromRl(new ResourceLocation("ometweaks:textures/gui/missing_texture.png"));
         if (image != null)
@@ -134,5 +140,6 @@ public final class GuiResources
 
         register("vanilla_background", mcVanillaBg);
         register("sidebar_left_component", sidebarLeftComponent);
+        register("capacitor_logo", capacitorLogo);
     }
 }

@@ -2,8 +2,9 @@ package com.tttsaurus.ometweaks.integration.industrialforegoing.machine.capacito
 
 import com.tttsaurus.ometweaks.function.IAction_2Param;
 import com.tttsaurus.ometweaks.function.IAction_3Param;
-import com.tttsaurus.ometweaks.integration.industrialforegoing.machine.IEnergyStorageProvider;
-import com.tttsaurus.ometweaks.integration.industrialforegoing.machine.gui.SideBarLeftGuiPiece;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.machine.IMachineEnergyStorageProvider;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.machine.capacitor.gui.CapacitorIndicatorGuiPiece;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.machine.capacitor.gui.CapacitorSideBarGuiPiece;
 import crazypants.enderio.api.capacitor.CapabilityCapacitorData;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.EnumDyeColor;
@@ -14,7 +15,6 @@ import net.ndrei.teslacorelib.containers.BasicTeslaContainer;
 import net.ndrei.teslacorelib.containers.FilteredSlot;
 import net.ndrei.teslacorelib.gui.BasicTeslaGuiContainer;
 import net.ndrei.teslacorelib.gui.IGuiContainerPiece;
-import net.ndrei.teslacorelib.gui.TiledRenderedGuiPiece;
 import net.ndrei.teslacorelib.inventory.BoundingRectangle;
 import net.ndrei.teslacorelib.inventory.ColoredItemHandler;
 import net.ndrei.teslacorelib.inventory.EnergyStorage;
@@ -83,8 +83,8 @@ public class CapacitorInventoryInjector
             @Override
             public @Nonnull ItemStack extractItem(int slot, int amount, boolean simulate)
             {
-                IEnergyStorageProvider provider = (IEnergyStorageProvider)machine;
-                EnergyStorage energyStorage = provider.get();
+                IMachineEnergyStorageProvider provider = (IMachineEnergyStorageProvider)machine;
+                EnergyStorage energyStorage = provider.getEnergyStorage();
                 if (energyStorage != null)
                     energyStorage.takePower(Long.MAX_VALUE);
                 return super.extractItem(slot, amount, simulate);
@@ -119,8 +119,12 @@ public class CapacitorInventoryInjector
             {
                 List<IGuiContainerPiece> pieces = super.getGuiContainerPieces(container);
                 BoundingRectangle box = this.getBoundingBox();
-                pieces.add(new SideBarLeftGuiPiece(box.getLeft(), box.getTop(), 18, 18));
-                pieces.add(new TiledRenderedGuiPiece(box.getLeft(), box.getTop(), 18, 18, 1, 1, BasicTeslaGuiContainer.Companion.getMACHINE_BACKGROUND(), 108, 225, EnumDyeColor.GRAY));
+
+                int left = box.getLeft();
+                int top = box.getTop();
+                pieces.add(new CapacitorSideBarGuiPiece(left, top, 18, 24));
+                pieces.add(new CapacitorIndicatorGuiPiece(left, top, itemStackHandler));
+
                 return pieces;
             }
 

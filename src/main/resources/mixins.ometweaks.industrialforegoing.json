@@ -16,6 +16,8 @@
     "PotionStrawHandlerMixin",
     "SidedTileEntityMixin"
   ],
-  "client": [],
+  "client": [
+    "BasicTeslaGuiContainerMixin"
+  ],
   "server": []
 }
