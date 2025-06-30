@@ -118,6 +118,30 @@ public final class GuiResources
             capacitorLogoTex = RenderUtils.createTexture2D(image);
         ImagePrefab capacitorLogo = new ImagePrefab(capacitorLogoTex);
 
+        Texture2D indicatorArrow0Tex = null;
+        image = getBufferedImageFromRl(new ResourceLocation("ometweaks:textures/gui/indicator_arrow_0.png"));
+        if (image != null)
+            indicatorArrow0Tex = RenderUtils.createTexture2D(image);
+        ImagePrefab indicatorArrow0 = new ImagePrefab(indicatorArrow0Tex);
+
+        Texture2D indicatorArrow1Tex = null;
+        image = getBufferedImageFromRl(new ResourceLocation("ometweaks:textures/gui/indicator_arrow_1.png"));
+        if (image != null)
+            indicatorArrow1Tex = RenderUtils.createTexture2D(image);
+        ImagePrefab indicatorArrow1 = new ImagePrefab(indicatorArrow1Tex);
+
+        Texture2D indicatorArrow2Tex = null;
+        image = getBufferedImageFromRl(new ResourceLocation("ometweaks:textures/gui/indicator_arrow_2.png"));
+        if (image != null)
+            indicatorArrow2Tex = RenderUtils.createTexture2D(image);
+        ImagePrefab indicatorArrow2 = new ImagePrefab(indicatorArrow2Tex);
+
+        Texture2D indicatorArrow3Tex = null;
+        image = getBufferedImageFromRl(new ResourceLocation("ometweaks:textures/gui/indicator_arrow_3.png"));
+        if (image != null)
+            indicatorArrow3Tex = RenderUtils.createTexture2D(image);
+        ImagePrefab indicatorArrow3 = new ImagePrefab(indicatorArrow3Tex);
+
         Texture2D missingTexture = null;
         image = getBufferedImageFromRl(new ResourceLocation("ometweaks:textures/gui/missing_texture.png"));
         if (image != null)
@@ -141,5 +165,9 @@ public final class GuiResources
         register("vanilla_background", mcVanillaBg);
         register("sidebar_left_component", sidebarLeftComponent);
         register("capacitor_logo", capacitorLogo);
+        register("indicator_arrow_0", indicatorArrow0);
+        register("indicator_arrow_1", indicatorArrow1);
+        register("indicator_arrow_2", indicatorArrow2);
+        register("indicator_arrow_3", indicatorArrow3);
     }
 }
