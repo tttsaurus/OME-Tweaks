@@ -5,10 +5,13 @@ import com.tttsaurus.ometweaks.integration.LoadingStage;
 import com.tttsaurus.ometweaks.integration.OMETweaksModule;
 import com.tttsaurus.ometweaks.integration.OMETweaksModuleSignature;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.Loader;
 
 @OMETweaksModuleSignature("SCP")
 public final class SCPModule extends OMETweaksModule
 {
+    public final static boolean IS_MOD_LOADED = Loader.isModLoaded("scp");
+
     public static boolean ENABLE_SCP_MODULE;
     public static boolean DISABLE_SCP_SLEEP_DEPRIVATION_CAP;
     public static boolean DISABLE_SCP_SHADOW_INFESTATION_CAP;

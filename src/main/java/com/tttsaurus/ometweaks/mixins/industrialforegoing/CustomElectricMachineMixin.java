@@ -1,9 +1,9 @@
 package com.tttsaurus.ometweaks.mixins.industrialforegoing;
 
 import com.buuz135.industrial.tile.CustomElectricMachine;
-import com.buuz135.industrial.tile.WorkingAreaElectricMachine;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.IndustrialForegoingModule;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.machine.capacitor.CapacitorInventoryInjector;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.machine.capacitor.IMachineWithCapacitor;
 import net.minecraftforge.items.ItemStackHandler;
@@ -26,6 +26,8 @@ public class CustomElectricMachineMixin implements IMachineWithCapacitor
     public void extraInventory(Operation<Void> original)
     {
         original.call();
-        OME_Tweaks$capacitorStackHandler = CapacitorInventoryInjector.addCapacitorInventory((WorkingAreaElectricMachine)(Object)this);
+        if (!IndustrialForegoingModule.ENABLE_IF_EIO_CAPACITOR_COMPAT) return;
+
+        OME_Tweaks$capacitorStackHandler = CapacitorInventoryInjector.addCapacitorInventory((CustomElectricMachine)(Object)this);
     }
 }

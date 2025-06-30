@@ -29,6 +29,7 @@ public final class IndustrialForegoingModule extends OMETweaksModule
     public final static boolean IS_MOD_LOADED = Loader.isModLoaded("industrialforegoing");
 
     public static boolean ENABLE_IF_MODULE;
+    public static boolean ENABLE_IF_MACHINE_JEI_EXCLUSION;
     public static boolean ENABLE_IF_INFINITY_DRILL_BLACKLIST;
     public final static List<ItemStack> IF_INFINITY_DRILL_BLACKLIST = new ArrayList<>();
     public static boolean ENABLE_IF_INFINITY_DRILL_HARVEST_LEVEL;
@@ -55,6 +56,8 @@ public final class IndustrialForegoingModule extends OMETweaksModule
     public static boolean ENABLE_IF_CUSTOM_ANIMAL_RANCHER_FORTUNE;
     public static boolean ENABLE_IF_CUSTOM_ANIMAL_RANCHER_JEI;
     public final static Map<EntityEntry, AnimalRancherOutput> IF_CUSTOM_ANIMAL_RANCHER_RECIPES = new HashMap<>();
+    public static boolean ENABLE_IF_EIO_CAPACITOR_COMPAT;
+    public static boolean ENABLE_IF_EIO_CAPACITOR_ON_REMOVE_CLEAR_ENERGY;
 
     private String[] RAW_IF_INFINITY_DRILL_BLACKLIST;
     private String[] RAW_IF_PETRIFIED_FUEL_GENERATOR_FUELS;
@@ -67,6 +70,8 @@ public final class IndustrialForegoingModule extends OMETweaksModule
         if (currentStage.equals(LoadingStage.MIXIN))
         {
             ENABLE_IF_MODULE = config.getBoolean("Enable", "general.if", false, "Enable Industrial Foregoing Module / Whether mixins will be loaded");
+
+            ENABLE_IF_MACHINE_JEI_EXCLUSION = config.getBoolean("Enable Machine JEI Exclusion", "general.if", true, "Enable JEI Exclusion Compat with Industrial Foregoing Machine GUI");
 
             ENABLE_IF_INFINITY_DRILL_BLACKLIST = config.getBoolean("Enable", "general.if.infinity_drill.blacklist", false, "Enable Industrial Foregoing Infinity Drill Blacklist");
             RAW_IF_INFINITY_DRILL_BLACKLIST = config.getStringList("Infinity Drill Blacklist", "general.if.infinity_drill.blacklist", new String[]{}, "A list of block registry names that infinity drill cannot harvest (Example: minecraft:dirt@0 or ignore '@' like minecraft:dirt)");
@@ -111,6 +116,9 @@ public final class IndustrialForegoingModule extends OMETweaksModule
             ENABLE_IF_CUSTOM_ANIMAL_RANCHER_FORTUNE = config.getBoolean("Affected By Fortune", "general.if.animal_rancher", true, "Whether fortune addons work on those recipes");
             ENABLE_IF_CUSTOM_ANIMAL_RANCHER_JEI = config.getBoolean("Custom Animal Rancher JEI", "general.if.animal_rancher", true, "Whether to enable its own JEI category");
             RAW_IF_CUSTOM_ANIMAL_RANCHER_RECIPES = config.getStringList("Custom Animal Rancher Recipes", "general.if.animal_rancher", new String[]{"minecraft:zombie, water * 100, minecraft:apple * 2, 0.1, 2.0"}, "A list of custom animal rancher recipes (Example: minecraft:zombie, water * 100, minecraft:apple * 2, 0.1, 2.0)\nFormat: <entity_registry_name>,<fluid_output>,<item_output>,<chance>,<damage>\n- <entity_registry_name> is a place to input resource location and optional args\n  - You can use optional args to define model transformation in JEI\n  - Example: rotate_z:180\n- <fluid_output> is a fluid registry name (Optional: * amount) (Put a null is fine)\n- <item_output> is in the form of owner:item_name@optional_meta (Optional: * amount) (Put a null is fine)\n- <chance> is a percentage (e.g. 0.3 = 30%)\n- <damage> is a float (e.g. 2.0)\n\n");
+
+            ENABLE_IF_EIO_CAPACITOR_COMPAT = config.getBoolean("Enable", "general.if.eio_capacitor", false, "Enable Industrial Foregoing Ender IO Capacitor Compat\nA capacitor slot will be added to all CustomElectricMachine subclasses\nAnd machines will be locked without a capacitor");
+            ENABLE_IF_EIO_CAPACITOR_ON_REMOVE_CLEAR_ENERGY = config.getBoolean("Enable Energy Removal", "general.if.eio_capacitor", true, "Enable energy storage to clear when removing capacitors (which is Ender IO machine behavior)");
         }
 
         if (currentStage.equals(LoadingStage.POST_INIT))

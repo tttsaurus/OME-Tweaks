@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +17,8 @@ import java.util.Map;
 @OMETweaksModuleSignature("JEI")
 public final class JEIModule extends OMETweaksModule
 {
+    public final static boolean IS_MOD_LOADED = Loader.isModLoaded("jei");
+
     public static boolean ENABLE_JEI_MODULE;
     public static boolean ENABLE_JEI_CATEGORY_MODIFICATION;
     public final static Map<String, CategoryModification> JEI_CATEGORY_MODIFICATION = new HashMap<>();

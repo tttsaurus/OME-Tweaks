@@ -48,17 +48,17 @@ public class OMELateMixinLoader implements ILateMixinLoader
 
         if (OMEConfig.ENABLE)
         {
-            if (JEIModule.ENABLE_JEI_MODULE && Loader.isModLoaded("jei"))
+            if (JEIModule.IS_MOD_LOADED && JEIModule.ENABLE_JEI_MODULE)
                 list.add("mixins.ometweaks.jei.json");
-            if (IndustrialForegoingModule.ENABLE_IF_MODULE && Loader.isModLoaded("industrialforegoing"))
+            if (IndustrialForegoingModule.IS_MOD_LOADED && IndustrialForegoingModule.ENABLE_IF_MODULE)
                 list.add("mixins.ometweaks.industrialforegoing.json");
-            if (SCPModule.ENABLE_SCP_MODULE && Loader.isModLoaded("scp"))
+            if (SCPModule.IS_MOD_LOADED && SCPModule.ENABLE_SCP_MODULE)
                 list.add("mixins.ometweaks.scp.json");
-            if (InWorldCraftingModule.ENABLE_IWC_MODULE && Loader.isModLoaded("inworldcrafting"))
+            if (InWorldCraftingModule.IS_MOD_LOADED && InWorldCraftingModule.ENABLE_IWC_MODULE)
                 list.add("mixins.ometweaks.inworldcrafting.json");
-            if (ThermalFoundationModule.ENABLE_TF_MODULE && Loader.isModLoaded("thermalfoundation"))
+            if (ThermalFoundationModule.IS_MOD_LOADED && ThermalFoundationModule.ENABLE_TF_MODULE)
                 list.add("mixins.ometweaks.thermalfoundation.json");
-            if (ExtraUtils2Module.ENABLE_XU2_MODULE && Loader.isModLoaded("extrautils2"))
+            if (ExtraUtils2Module.IS_MOD_LOADED && ExtraUtils2Module.ENABLE_XU2_MODULE)
                 list.add("mixins.ometweaks.extrautils2.json");
         }
 

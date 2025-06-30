@@ -5,10 +5,13 @@ import com.tttsaurus.ometweaks.integration.LoadingStage;
 import com.tttsaurus.ometweaks.integration.OMETweaksModule;
 import com.tttsaurus.ometweaks.integration.OMETweaksModuleSignature;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.Loader;
 
 @OMETweaksModuleSignature("Thermal Foundation")
 public final class ThermalFoundationModule extends OMETweaksModule
 {
+    public final static boolean IS_MOD_LOADED = Loader.isModLoaded("thermalfoundation");
+
     public static boolean ENABLE_TF_MODULE;
     public static boolean DISABLE_TF_CRYOTHEUM_INTERACTIONS;
     public static boolean DISABLE_TF_MANA_INTERACTIONS;

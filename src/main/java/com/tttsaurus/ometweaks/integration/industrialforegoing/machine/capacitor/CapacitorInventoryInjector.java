@@ -2,6 +2,7 @@ package com.tttsaurus.ometweaks.integration.industrialforegoing.machine.capacito
 
 import com.tttsaurus.ometweaks.function.IAction_2Param;
 import com.tttsaurus.ometweaks.function.IAction_3Param;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.IndustrialForegoingModule;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.machine.IMachineEnergyStorageProvider;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.machine.capacitor.gui.CapacitorIndicatorGuiPiece;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.machine.capacitor.gui.CapacitorSideBarGuiPiece;
@@ -83,10 +84,13 @@ public class CapacitorInventoryInjector
             @Override
             public @Nonnull ItemStack extractItem(int slot, int amount, boolean simulate)
             {
-                IMachineEnergyStorageProvider provider = (IMachineEnergyStorageProvider)machine;
-                EnergyStorage energyStorage = provider.getEnergyStorage();
-                if (energyStorage != null)
-                    energyStorage.takePower(Long.MAX_VALUE);
+                if (IndustrialForegoingModule.ENABLE_IF_EIO_CAPACITOR_ON_REMOVE_CLEAR_ENERGY)
+                {
+                    IMachineEnergyStorageProvider provider = (IMachineEnergyStorageProvider)machine;
+                    EnergyStorage energyStorage = provider.getEnergyStorage();
+                    if (energyStorage != null)
+                        energyStorage.takePower(Long.MAX_VALUE);
+                }
                 return super.extractItem(slot, amount, simulate);
             }
 

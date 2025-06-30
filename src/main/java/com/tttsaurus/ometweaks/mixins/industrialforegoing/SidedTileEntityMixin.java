@@ -3,6 +3,7 @@ package com.tttsaurus.ometweaks.mixins.industrialforegoing;
 import com.buuz135.industrial.tile.CustomElectricMachine;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.IndustrialForegoingModule;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.machine.capacitor.IMachineWithCapacitor;
 import crazypants.enderio.api.capacitor.CapabilityCapacitorData;
 import net.minecraft.item.ItemStack;
@@ -16,6 +17,8 @@ public class SidedTileEntityMixin
     @WrapMethod(method = "isPaused", remap = false)
     public boolean isPaused(Operation<Boolean> original)
     {
+        if (!IndustrialForegoingModule.ENABLE_IF_EIO_CAPACITOR_COMPAT) return original.call();
+
         SidedTileEntity this0 = (SidedTileEntity)(Object)this;
 
         if (this0 instanceof CustomElectricMachine electricMachine)
