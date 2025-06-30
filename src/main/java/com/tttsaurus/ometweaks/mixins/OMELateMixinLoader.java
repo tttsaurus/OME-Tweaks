@@ -11,7 +11,6 @@ import com.tttsaurus.ometweaks.integration.scp.SCPModule;
 import com.tttsaurus.ometweaks.integration.thermalfoundation.ThermalFoundationModule;
 import com.tttsaurus.ometweaks.utils.FileUtils;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.Loader;
 import zone.rong.mixinbooter.ILateMixinLoader;
 import java.io.File;
 import java.util.ArrayList;

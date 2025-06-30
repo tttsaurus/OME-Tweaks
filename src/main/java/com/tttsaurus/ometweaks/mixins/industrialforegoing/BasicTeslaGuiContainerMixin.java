@@ -19,7 +19,7 @@ public class BasicTeslaGuiContainerMixin implements IMachineGuiContainer
     @Unique
     public Class<? extends SidedTileEntity> tileEntityClass;
 
-    @Inject(method = "<init>", at = @At("TAIL"), remap = false)
+    @Inject(method = "<init>", at = @At("RETURN"), remap = false)
     public void onConstruct(int guiId, Container container, SidedTileEntity entity, CallbackInfo ci)
     {
         tileEntityClass = entity.getClass();

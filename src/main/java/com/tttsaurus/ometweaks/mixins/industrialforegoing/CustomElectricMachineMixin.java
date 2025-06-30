@@ -3,6 +3,7 @@ package com.tttsaurus.ometweaks.mixins.industrialforegoing;
 import com.buuz135.industrial.tile.CustomElectricMachine;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.tttsaurus.ometweaks.integration.enderio.EnderIOModule;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.IndustrialForegoingModule;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.machine.capacitor.CapacitorInventoryInjector;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.machine.capacitor.IMachineWithCapacitor;
@@ -26,7 +27,7 @@ public class CustomElectricMachineMixin implements IMachineWithCapacitor
     public void extraInventory(Operation<Void> original)
     {
         original.call();
-        if (!IndustrialForegoingModule.ENABLE_IF_EIO_CAPACITOR_COMPAT) return;
+        if (!IndustrialForegoingModule.ENABLE_IF_EIO_CAPACITOR_COMPAT || !EnderIOModule.IS_MOD_LOADED) return;
 
         OME_Tweaks$capacitorStackHandler = CapacitorInventoryInjector.addCapacitorInventory((CustomElectricMachine)(Object)this);
     }
