@@ -4,12 +4,21 @@ import com.buuz135.industrial.tile.agriculture.CropSowerTile;
 import com.buuz135.industrial.utils.ItemStackUtils;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.tttsaurus.ometweaks.integration.industrialforegoing.machine.IMachineWorldProvider;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.items.IItemHandler;
 import net.ndrei.teslacorelib.gui.BasicTeslaGuiContainer;
 import net.ndrei.teslacorelib.gui.IGuiContainerPiece;
@@ -21,6 +30,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.List;
 
 @Mixin(CropSowerTile.class)
@@ -45,6 +56,19 @@ public class CropSowerTileMixin
         return OME_Tweaks$currPos;
     }
 
+    @Unique
+    private boolean OME_Tweaks$hasWorked;
+
+    @Inject(method = "work", at = @At("TAIL"), cancellable = true, remap = false)
+    public void afterWork(CallbackInfoReturnable<Float> cir)
+    {
+        if (OME_Tweaks$hasWorked)
+        {
+            OME_Tweaks$hasWorked = false;
+            cir.setReturnValue(1f);
+        }
+    }
+
     @WrapOperation(
             method = "work",
             at = @At(
@@ -53,8 +77,40 @@ public class CropSowerTileMixin
             ))
     public void extraWork(FakePlayer instance, EnumHand enumHand, ItemStack itemStack, Operation<Void> original)
     {
-        // todo: custom hoe
+        IMachineWorldProvider worldProvider = (IMachineWorldProvider)(CropSowerTile)(Object)this;
+        World world = worldProvider.getWorld();
+
+        if (hoeGround)
+        {
+            // teastory compat
+            if (itemStack.getItem().getRegistryName() != null && itemStack.getItem().getRegistryName().toString().equals("teastory:item_xian_rice_seedling"))
+            {
+                IBlockState blockState = world.getBlockState(OME_Tweaks$currPos.offset(EnumFacing.DOWN));
+                if (blockState.getBlock().equals(Blocks.FARMLAND))
+                {
+                    IBlockState field = null;
+                    Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("teastory:field"));
+                    if (block != null) field = block.getDefaultState();
+
+                    if (field != null)
+                    {
+                        world.setBlockState(OME_Tweaks$currPos.offset(EnumFacing.DOWN), field);
+                        instance.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(Items.WATER_BUCKET));
+                        block.onBlockActivated(world, OME_Tweaks$currPos.offset(EnumFacing.DOWN), field, instance, EnumHand.MAIN_HAND, EnumFacing.DOWN, 0, 0, 0);
+                    }
+                }
+            }
+        }
+
         original.call(instance, enumHand, itemStack);
+
+        // teastory compat
+        if (itemStack.getItem().getRegistryName() != null && itemStack.getItem().getRegistryName().toString().equals("teastory:item_xian_rice_seedling"))
+        {
+            instance.setPositionAndRotation(OME_Tweaks$currPos.getX(), OME_Tweaks$currPos.getY(), OME_Tweaks$currPos.getZ(), 90.0F, 90.0F);
+            itemStack.useItemRightClick(world, instance, EnumHand.MAIN_HAND);
+            OME_Tweaks$hasWorked = true;
+        }
     }
 
     @Shadow(remap = false)
@@ -75,6 +131,7 @@ public class CropSowerTileMixin
             {
                 boolean canInsert = super.canInsertItem(slot, stack) && (stack.getItem() instanceof IPlantable || ItemStackUtils.isStackOreDict(stack, "treeSapling") || ItemStackUtils.isChorusFlower(stack));
                 // todo: custom logic
+                canInsert = true;
                 return canInsert;
             }
 
