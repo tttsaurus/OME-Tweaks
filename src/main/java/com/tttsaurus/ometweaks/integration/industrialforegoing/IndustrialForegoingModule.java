@@ -58,10 +58,15 @@ public final class IndustrialForegoingModule extends OMETweaksModule
     public final static Map<EntityEntry, AnimalRancherOutput> IF_CUSTOM_ANIMAL_RANCHER_RECIPES = new HashMap<>();
     public static boolean ENABLE_IF_EIO_CAPACITOR_COMPAT;
     public static boolean ENABLE_IF_EIO_CAPACITOR_ON_REMOVE_CLEAR_ENERGY;
+    public static boolean ENABLE_IF_PLANT_SOWER_MOD;
+    public static boolean ENABLE_IF_PLANT_SOWER_TEASTORY_COMPAT;
+    public static boolean ENABLE_IF_PLANT_SOWER_EXTRA_ACCEPTABLE_CROPS;
+    public final static List<ItemStack> IF_PLANT_SOWER_EXTRA_ACCEPTABLE_CROPS = new ArrayList<>();
 
     private String[] RAW_IF_INFINITY_DRILL_BLACKLIST;
     private String[] RAW_IF_PETRIFIED_FUEL_GENERATOR_FUELS;
     private String[] RAW_IF_CUSTOM_ANIMAL_RANCHER_RECIPES;
+    private String[] RAW_IF_PLANT_SOWER_EXTRA_ACCEPTABLE_CROPS;
 
     @ConfigLoadingStage({LoadingStage.MIXIN, LoadingStage.POST_INIT})
     @Override
@@ -119,6 +124,11 @@ public final class IndustrialForegoingModule extends OMETweaksModule
 
             ENABLE_IF_EIO_CAPACITOR_COMPAT = config.getBoolean("Enable", "general.if.eio_capacitor", false, "Enable Industrial Foregoing Ender IO Capacitor Compat\nA capacitor slot will be added to all CustomElectricMachine subclasses\nAnd machines will be locked without a capacitor");
             ENABLE_IF_EIO_CAPACITOR_ON_REMOVE_CLEAR_ENERGY = config.getBoolean("Enable Energy Removal", "general.if.eio_capacitor", true, "Enable energy storage to clear when removing capacitors (which is Ender IO machine behavior)");
+
+            ENABLE_IF_PLANT_SOWER_MOD = config.getBoolean("Enable", "general.if.plant_sower", false, "Enable Industrial Foregoing Plant Sower Modifications");
+            ENABLE_IF_PLANT_SOWER_TEASTORY_COMPAT = config.getBoolean("Enable Tea the Story Compat", "general.if.plant_sower", false, "Allow plant sower to plant Tea the Story crops");
+            ENABLE_IF_PLANT_SOWER_EXTRA_ACCEPTABLE_CROPS = config.getBoolean("Enable Extra Acceptable Crops", "general.if.plant_sower", false, "Allow plant sower to accept more crop items");
+            RAW_IF_PLANT_SOWER_EXTRA_ACCEPTABLE_CROPS = config.getStringList("Extra Acceptable Crops", "general.if.plant_sower", new String[]{"betternether:bone_mushroom"}, "A list of item registry names. Optionally use @meta after the registry name");
         }
 
         if (currentStage.equals(LoadingStage.POST_INIT))
@@ -278,6 +288,24 @@ public final class IndustrialForegoingModule extends OMETweaksModule
                 value.damage = damage;
 
                 IndustrialForegoingModule.IF_CUSTOM_ANIMAL_RANCHER_RECIPES.put(entry, value);
+            }
+            //</editor-fold>
+
+            //<editor-fold desc="parse plant sower crops">
+            IndustrialForegoingModule.IF_PLANT_SOWER_EXTRA_ACCEPTABLE_CROPS.clear();
+            for (String arg: RAW_IF_PLANT_SOWER_EXTRA_ACCEPTABLE_CROPS)
+            {
+                String[] itemArgs = arg.split("@");
+                if (itemArgs.length == 0 || itemArgs.length > 2) continue;
+                int meta = 0;
+                if (itemArgs.length == 2)
+                    try { meta = Integer.parseInt(itemArgs[1]); }
+                    catch (NumberFormatException e) { continue; }
+                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemArgs[0]));
+                if (item == null) continue;
+                ItemStack itemStack = new ItemStack(item, 1, meta);
+
+                IF_PLANT_SOWER_EXTRA_ACCEPTABLE_CROPS.add(itemStack);
             }
             //</editor-fold>
         }
