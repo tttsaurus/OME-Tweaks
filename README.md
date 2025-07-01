@@ -15,6 +15,8 @@ This mod aims to add a bunch of configurable QoL tweaks to other mods.
     - Optional JEI page overhaul
   - Add options to disable fluid potion effects
   - Add options to add custom animal rancher recipes and a new JEI category
+  - Allow machines to accept Ender IO capacitors
+  - Allow plant sower to accept more modded crops
 - **SCP Lockdown**
   - Add config to disable several SCP capabilities
 - **In World Crafting**
