@@ -27,6 +27,8 @@ This mod aims to add a bunch of configurable QoL tweaks to other mods.
   - Add compat to mining node so it can detect fluid interactions from [Fluid-Interaction-Tweaker](https://github.com/tttsaurus/Fluid-Interaction-Tweaker)
 - **Ender IO**
   - Add config to add custom capacitors and grinding balls
+- **TAIGA**
+  - Add config to disable tinker book TAIGA page
 
 ## Dependency
 - Mixinbooter 10.0+
