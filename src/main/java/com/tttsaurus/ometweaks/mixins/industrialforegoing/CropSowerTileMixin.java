@@ -108,6 +108,11 @@ public class CropSowerTileMixin
                             block.onBlockActivated(world, OME_Tweaks$currPos.offset(EnumFacing.DOWN), field, instance, EnumHand.MAIN_HAND, EnumFacing.DOWN, 0, 0, 0);
                         }
                     }
+                    else if (blockState.getBlock().getRegistryName() != null && blockState.getBlock().getRegistryName().toString().equals("teastory:field"))
+                    {
+                        instance.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(Items.WATER_BUCKET));
+                        blockState.getBlock().onBlockActivated(world, OME_Tweaks$currPos.offset(EnumFacing.DOWN), blockState, instance, EnumHand.MAIN_HAND, EnumFacing.DOWN, 0, 0, 0);
+                    }
                 }
             }
         }
