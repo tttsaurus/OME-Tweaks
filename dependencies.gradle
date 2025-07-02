@@ -70,4 +70,7 @@ dependencies {
 
     // Ender Core
     compileOnly rfg.deobf('curse.maven:endercore-231868:4671384')
+
+    // TAIGA Replant Replant
+    compileOnly rfg.deobf('curse.maven:taiga-replant-replant-971802:5086860')
 }
