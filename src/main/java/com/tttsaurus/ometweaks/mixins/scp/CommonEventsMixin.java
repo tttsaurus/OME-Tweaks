@@ -15,7 +15,7 @@ import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.tttsaurus.ometweaks.integration.scp.SCPModule;
 import com.tttsaurus.ometweaks.integration.scp.capability.SCPNegativeCapabilities;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -26,12 +26,13 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Mixin(CommonEvents.class)
 public class CommonEventsMixin
 {
     @Unique
-    private static final Map<EntityPlayer, SCPNegativeCapabilities> OME_Tweaks$negativeCapabilityCache = new HashMap<>();
+    private static final Map<UUID, SCPNegativeCapabilities> OME_Tweaks$negativeCapabilityCache = new HashMap<>();
 
     /**
      * @author tttsaurus
@@ -41,12 +42,12 @@ public class CommonEventsMixin
     @SubscribeEvent
     private static void onPlayerTick(TickEvent.PlayerTickEvent playerTickEvent, Operation<Void> original)
     {
-        EntityPlayer player = playerTickEvent.player;
-        World world = player.world;
+        World world = playerTickEvent.player.world;
 
         if (world.isRemote) return;
+        if (!(playerTickEvent.player instanceof EntityPlayerMP player)) return;
 
-        SCPNegativeCapabilities capabilities = OME_Tweaks$negativeCapabilityCache.get(player);
+        SCPNegativeCapabilities capabilities = OME_Tweaks$negativeCapabilityCache.get(player.getUniqueID());
         if (capabilities == null)
         {
             capabilities = new SCPNegativeCapabilities();
@@ -57,7 +58,7 @@ public class CommonEventsMixin
             capabilities.killedEntities = (IKilledEntitiesCapability)player.getCapability(Capabilities.KILLED_ENTITIES_CAPABILITY, (EnumFacing)null);
             capabilities.cowbell = (ICowbellCapability)player.getCapability(Capabilities.COWBELL_CAPABILITY, (EnumFacing)null);
             capabilities.lostItems = (ILostItemsCapability)player.getCapability(Capabilities.LOST_ITEMS_CAPABILITY, (EnumFacing)null);
-            OME_Tweaks$negativeCapabilityCache.put(player, capabilities);
+            OME_Tweaks$negativeCapabilityCache.put(player.getUniqueID(), capabilities);
         }
 
         if (SCPModule.DISABLE_SCP_SLEEP_DEPRIVATION_CAP)
