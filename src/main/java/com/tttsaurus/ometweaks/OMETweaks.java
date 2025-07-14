@@ -8,6 +8,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
@@ -154,8 +155,11 @@ public class OMETweaks
 
         LOGGER.info("Pre Init Stage");
 
-        GuiResources.init();
-        LOGGER.info("GUI resources loaded.");
+        if (FMLCommonHandler.instance().getSide().isClient())
+        {
+            GuiResources.init();
+            LOGGER.info("GUI resources loaded.");
+        }
 
         for (Map.Entry<OMETweaksModule, OMETweaksModuleSignature> entry: MODULES.entrySet())
         {
