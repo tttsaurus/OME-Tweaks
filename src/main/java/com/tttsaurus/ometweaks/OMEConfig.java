@@ -29,7 +29,7 @@ public final class OMEConfig
         {
             CONFIG.load();
 
-            ENABLE = CONFIG.getBoolean("Enable", "general", true, "Enable OME Tweaks");
+            ENABLE = CONFIG.getBoolean("Enable", "general", true, "Enable OME Tweaks\nThis is a toggle for all tweaks under \"general\" category");
         }
         catch (Exception ignored) { }
         finally
