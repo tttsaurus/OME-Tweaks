@@ -3,6 +3,7 @@ package com.tttsaurus.ometweaks.mixins;
 import com.tttsaurus.ometweaks.OMEConfig;
 import com.tttsaurus.ometweaks.OMETweaks;
 import com.tttsaurus.ometweaks.integration.*;
+import com.tttsaurus.ometweaks.integration._omefactory.OMEFactoryModule;
 import com.tttsaurus.ometweaks.integration.extrautils2.ExtraUtils2Module;
 import com.tttsaurus.ometweaks.integration.industrialforegoing.IndustrialForegoingModule;
 import com.tttsaurus.ometweaks.integration.inworldcrafting.InWorldCraftingModule;
@@ -62,6 +63,12 @@ public class OMELateMixinLoader implements ILateMixinLoader
                 list.add("mixins.ometweaks.extrautils2.json");
             if (TAIGAModule.IS_MOD_LOADED && TAIGAModule.ENABLE_TAIGA_MODULE)
                 list.add("mixins.ometweaks.taiga.json");
+        }
+
+        if (OMEFactoryModule.ENABLE_OMEFACTORY_MODULE)
+        {
+            if (OMEFactoryModule.IS_TOP_LOADED && OMEFactoryModule.ENABLE_PLAYER_SAFE_ZONE && OMEFactoryModule.DISABLE_TOP_OUTSIDE_SAFE_ZONE)
+                list.add("mixins.ometweaks._omefactory.top.json");
         }
 
         return list;

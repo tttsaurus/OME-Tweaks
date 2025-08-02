@@ -21,6 +21,7 @@ import java.util.List;
 public class OMEFactoryModule extends OMETweaksModule
 {
     public static final boolean IS_GAMESTAGES_LOADED = Loader.isModLoaded("gamestages");
+    public static final boolean IS_TOP_LOADED = Loader.isModLoaded("theoneprobe");
 
     public static boolean ENABLE_OMEFACTORY_MODULE;
 
@@ -34,6 +35,7 @@ public class OMEFactoryModule extends OMETweaksModule
     public static int PLAYER_SAFE_ZONE_RADIUS;
     public static final List<PotionEffect> SAFE_ZONE_OUTSIDE_EFFECTS = new ArrayList<>();
     public static String GAMESTAGE_TO_DISABLE_SAFE_ZONE;
+    public static boolean DISABLE_TOP_OUTSIDE_SAFE_ZONE;
 
     private String[] RAW_SAFE_ZONE_OUTSIDE_EFFECTS;
 
@@ -55,6 +57,7 @@ public class OMEFactoryModule extends OMETweaksModule
             PLAYER_SAFE_ZONE_RADIUS = config.getInt("Safe Zone Radius", "omefactory.safe_zone", 64, 16, 0x7fffffff, "The safe zone radius");
             RAW_SAFE_ZONE_OUTSIDE_EFFECTS = config.getStringList("Safe Zone Outside Effects", "omefactory.safe_zone", new String[0], "The potion effects applied to player when leaving the safe zone");
             GAMESTAGE_TO_DISABLE_SAFE_ZONE = config.getString("Gamestage That Disables Safe Zone", "omefactory.safe_zone", "", "The gamestage that disables safe zone");
+            DISABLE_TOP_OUTSIDE_SAFE_ZONE = config.getBoolean("Disable TOP Hud Outside Safe Zone", "omefactory.safe_zone", false, "Whether to disable TOP hud outside the safe zone");
         }
 
         if (currentStage.equals(LoadingStage.POST_INIT))

@@ -76,4 +76,7 @@ dependencies {
 
     // Gamestages
     compileOnly rfg.deobf('curse.maven:game-stages-268655:2951840')
+
+    // TheOneSmeagle
+    compileOnly rfg.deobf('curse.maven:theonesmeagle-977883:6615945')
 }

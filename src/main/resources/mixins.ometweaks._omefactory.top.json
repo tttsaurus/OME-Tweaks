@@ -1,0 +1,12 @@
+{
+  "package": "com.tttsaurus.ometweaks.mixins._omefactory.top",
+  "refmap": "mixins.ometweaks.refmap.json",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "OverlayRendererMixin"
+  ],
+  "client": [],
+  "server": []
+}
