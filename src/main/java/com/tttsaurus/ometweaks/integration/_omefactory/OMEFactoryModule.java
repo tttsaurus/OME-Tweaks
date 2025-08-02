@@ -22,6 +22,7 @@ public class OMEFactoryModule extends OMETweaksModule
 {
     public static final boolean IS_GAMESTAGES_LOADED = Loader.isModLoaded("gamestages");
     public static final boolean IS_TOP_LOADED = Loader.isModLoaded("theoneprobe");
+    public static final boolean IS_TELEPASTRIES_LOADED = Loader.isModLoaded("telepastries");
 
     public static boolean ENABLE_OMEFACTORY_MODULE;
 
@@ -36,6 +37,8 @@ public class OMEFactoryModule extends OMETweaksModule
     public static final List<PotionEffect> SAFE_ZONE_OUTSIDE_EFFECTS = new ArrayList<>();
     public static String GAMESTAGE_TO_DISABLE_SAFE_ZONE;
     public static boolean DISABLE_TOP_OUTSIDE_SAFE_ZONE;
+
+    public static boolean DISABLE_CAKE_AUTO_DESTROY;
 
     private String[] RAW_SAFE_ZONE_OUTSIDE_EFFECTS;
 
@@ -58,6 +61,8 @@ public class OMEFactoryModule extends OMETweaksModule
             RAW_SAFE_ZONE_OUTSIDE_EFFECTS = config.getStringList("Safe Zone Outside Effects", "omefactory.safe_zone", new String[0], "The potion effects applied to player when leaving the safe zone");
             GAMESTAGE_TO_DISABLE_SAFE_ZONE = config.getString("Gamestage That Disables Safe Zone", "omefactory.safe_zone", "", "The gamestage that disables safe zone");
             DISABLE_TOP_OUTSIDE_SAFE_ZONE = config.getBoolean("Disable TOP Hud Outside Safe Zone", "omefactory.safe_zone", false, "Whether to disable TOP hud outside the safe zone");
+
+            DISABLE_CAKE_AUTO_DESTROY = config.getBoolean("Disable Cake Auto Distroy", "omefactory.cake", true, "Prevent cakes to destroy when the block blow them is destroyed");
         }
 
         if (currentStage.equals(LoadingStage.POST_INIT))

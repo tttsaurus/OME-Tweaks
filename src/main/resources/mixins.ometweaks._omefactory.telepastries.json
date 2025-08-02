@@ -1,13 +1,11 @@
 {
-  "package": "com.tttsaurus.ometweaks.mixins.early",
+  "package": "com.tttsaurus.ometweaks.mixins._omefactory.telepastries",
   "refmap": "mixins.ometweaks.refmap.json",
   "target": "@env(DEFAULT)",
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "BlockCakeMixin",
-    "GenLayerMixin",
-    "MinecraftMixin"
+    "BlockPastryBaseMixin"
   ],
   "client": [],
   "server": []

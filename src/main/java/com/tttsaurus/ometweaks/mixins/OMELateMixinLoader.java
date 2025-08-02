@@ -72,6 +72,8 @@ public class OMELateMixinLoader implements ILateMixinLoader
         {
             if (OMEFactoryModule.IS_TOP_LOADED && OMEFactoryModule.ENABLE_PLAYER_SAFE_ZONE && OMEFactoryModule.DISABLE_TOP_OUTSIDE_SAFE_ZONE)
                 list.add("mixins.ometweaks._omefactory.top.json");
+            if (OMEFactoryModule.IS_TELEPASTRIES_LOADED && OMEFactoryModule.DISABLE_CAKE_AUTO_DESTROY)
+                list.add("mixins.ometweaks._omefactory.telepastries.json");
         }
 
         return list;

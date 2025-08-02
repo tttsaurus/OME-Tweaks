@@ -79,4 +79,7 @@ dependencies {
 
     // TheOneSmeagle
     compileOnly rfg.deobf('curse.maven:theonesmeagle-977883:6615945')
+
+    // Tele Pastries
+    compileOnly rfg.deobf('curse.maven:telepastries-319466:2706079')
 }
