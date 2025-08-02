@@ -2,7 +2,9 @@ package com.tttsaurus.ometweaks;
 
 import com.tttsaurus.ometweaks.gui.GuiResources;
 import com.tttsaurus.ometweaks.integration.*;
+import com.tttsaurus.ometweaks.render.RenderUtils;
 import com.tttsaurus.ometweaks.utils.FileUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -185,6 +187,12 @@ public class OMETweaks
     public void init(FMLInitializationEvent event)
     {
         LOGGER.info("Init Stage");
+
+        if (FMLCommonHandler.instance().getSide().isClient())
+        {
+            RenderUtils.fontRenderer = Minecraft.getMinecraft().fontRenderer;
+        }
+
         for (Map.Entry<OMETweaksModule, OMETweaksModuleSignature> entry: MODULES.entrySet())
         {
             OMETweaksModule module = entry.getKey();

@@ -18,3 +18,6 @@ ometweaks.industrialforegoing.jei.petrified_fuel_gen.title=Petrified Generator B
 ometweaks.industrialforegoing.jei.animal_rancher.title=Animal Rancher
 
 gui.industrialforegoing.side_config.capacitor=Capacitor
+
+omefactory.safe_zone.str1=You're outside the safe zone!
+omefactory.safe_zone.str2=You're nearly outside the safe zone!

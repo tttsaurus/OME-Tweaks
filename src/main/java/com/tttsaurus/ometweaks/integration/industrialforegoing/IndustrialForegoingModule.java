@@ -305,7 +305,7 @@ public final class IndustrialForegoingModule extends OMETweaksModule
                 if (item == null) continue;
                 ItemStack itemStack = new ItemStack(item, 1, meta);
 
-                IF_PLANT_SOWER_EXTRA_ACCEPTABLE_CROPS.add(itemStack);
+                IndustrialForegoingModule.IF_PLANT_SOWER_EXTRA_ACCEPTABLE_CROPS.add(itemStack);
             }
             //</editor-fold>
         }

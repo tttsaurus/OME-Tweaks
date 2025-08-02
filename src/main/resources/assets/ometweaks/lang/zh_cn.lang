@@ -18,3 +18,6 @@ ometweaks.industrialforegoing.jei.petrified_fuel_gen.title=火力发电-燃烧�
 ometweaks.industrialforegoing.jei.animal_rancher.title=动物牧场
 
 gui.industrialforegoing.side_config.capacitor=电容
+
+omefactory.safe_zone.str1=你已经处于安全区域之外!
+omefactory.safe_zone.str2=你即将处于安全区域之外!

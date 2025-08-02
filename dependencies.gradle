@@ -73,4 +73,7 @@ dependencies {
 
     // TAIGA Replant Replant
     compileOnly rfg.deobf('curse.maven:taiga-replant-replant-971802:5086860')
+
+    // Gamestages
+    compileOnly rfg.deobf('curse.maven:game-stages-268655:2951840')
 }
