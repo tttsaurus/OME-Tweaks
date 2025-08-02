@@ -11,6 +11,7 @@ import com.tttsaurus.ometweaks.integration.jei.JEIModule;
 import com.tttsaurus.ometweaks.integration.scp.SCPModule;
 import com.tttsaurus.ometweaks.integration.taiga.TAIGAModule;
 import com.tttsaurus.ometweaks.integration.thermalfoundation.ThermalFoundationModule;
+import com.tttsaurus.ometweaks.integration.top.TOPModule;
 import com.tttsaurus.ometweaks.utils.FileUtils;
 import net.minecraftforge.common.config.Configuration;
 import zone.rong.mixinbooter.ILateMixinLoader;
@@ -63,6 +64,8 @@ public class OMELateMixinLoader implements ILateMixinLoader
                 list.add("mixins.ometweaks.extrautils2.json");
             if (TAIGAModule.IS_MOD_LOADED && TAIGAModule.ENABLE_TAIGA_MODULE)
                 list.add("mixins.ometweaks.taiga.json");
+            if (TOPModule.IS_MOD_LOADED && TOPModule.ENABLE_TOP_MODULE)
+                list.add("mixins.ometweaks.top.json");
         }
 
         if (OMEFactoryModule.ENABLE_OMEFACTORY_MODULE)
