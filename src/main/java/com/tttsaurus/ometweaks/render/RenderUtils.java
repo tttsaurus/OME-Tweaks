@@ -41,6 +41,8 @@ public final class RenderUtils
     //<editor-fold desc="gl state management">
     public static void storeCommonGlStates()
     {
+        FLOAT_BUFFER_16.clear();
+        INT_BUFFER_16.clear();
         GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D, INT_BUFFER_16);
         textureID = INT_BUFFER_16.get(0);
         GL11.glGetFloat(GL11.GL_CURRENT_COLOR, FLOAT_BUFFER_16);
